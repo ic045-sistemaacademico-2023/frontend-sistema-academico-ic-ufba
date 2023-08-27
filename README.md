@@ -9,22 +9,26 @@
 
 ## Tecnologias
 1. JavaScript
-2. React
-3. Tailwind
+2. ReactJS
+3. Tailwind CSS
 
 ## Protótipo
 ### https://docs.google.com/document/d/1wK5GjQg-D7RmzVUL4DWulFPB6uAa7GnDpn7zJ90VuR4/edit?usp=sharing
 
 ## Time de Desenvolvimento
 
-|                                                                  |                                              |                                  |                                    |                                    |
-| ---------------------------------------------------------------- | -------------------------------------------- | -------------------------------- | ---------------------------------- | ---------------------------------- |
-|  **Karen Botelho**, Gerente do Projeto e desenvolvedor    |  **Gustavo Mendel**, Vice Gerente do Projeto | **Elis Marcela**, desenvolvedor |  **Victor Andrade**, desenvolvedor |  **Glauber**, desenvolvedor        |
-|  **Igor Dantas**, desenvolvedor                                  |  **Samuel**, desenvolvedor                   |  **Judai Abdon**, desenvolvedor  |  **Lávio**, desenvolvedor          |  **Vitor de Jesus**, desenvolvedor |
-
-  
-Repositório do Frontend
+| Nome           | Cargo                                   |
+| -------------- | --------------------------------------- |
+| Karen Botelho  | Gerente do Projeto e desenvolvedor      |
+| Gustavo Mendel | Vice Gerente do Projeto e desenvolvedor |
+| Elis Marcela   | Desenvolvedor                           |
+| Victor Andrade | Desenvolvedor                           |
+| Glauber        | Desenvolvedor                           |
+| Igor Dantas    | Desenvolvedor                           |
+| Judai Abdon    | Desenvolvedor                           |
+| Lávio          | Desenvolvedor                           |
+| Vitor de Jesus | Desenvolvedor                           |
+| Lucas Natanael | Desenvolvedor                           |
 
 ## Setup
 
-1. 
