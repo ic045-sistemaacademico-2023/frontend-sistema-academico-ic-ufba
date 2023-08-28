@@ -8,6 +8,8 @@
 
 ## [Requisitos](https://docs.google.com/presentation/d/1a3dgAwdtRAF2NXGnoe2KquYpQRfYFTteFK93tTGccS0/edit?usp=sharing)
 
+## [Modelagem do Banco de Dados](https://drawsql.app/teams/grupo2-3/diagrams/sistema-academico)
+
 ## [Protótipo](https://www.figma.com/file/43HvdK6cT0hJ4XjSFZDL04/SIGA---IC045?type=design&mode=design&t=ogiUXiYnDVzzZ5J4-1)
 
 ## Tecnologias
