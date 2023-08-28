@@ -42,7 +42,7 @@ Requer o [NodeJS](https://nodejs.org/pt-br) instalado no seu Linux, pelo menos n
 ### Clonando o repositório
 
 ```bash
-git clone https://github.com/ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba-.git sistema-academico-ic
+git clone https://github.com/ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba.git sistema-academico-ic
 cd sistema-academico-ic
 ```
 
