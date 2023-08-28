@@ -4,12 +4,9 @@
 
 ### IC045: Tópicos em Sistemas de Informação e Web I
 
-
-
 ## [Requisitos](https://docs.google.com/presentation/d/1a3dgAwdtRAF2NXGnoe2KquYpQRfYFTteFK93tTGccS0/edit?usp=sharing)
+
 ## [Protótipo](https://www.figma.com/file/wP6PIRd9qBeLcVg6oAhmXa/IC045-%E2%80%93-Sistema-Acad%C3%AAmico?type=design&node-id=0%3A1&mode=design&t=Q2H3Z0lLVXlxUGJa-1)
-
-
 
 ## Tecnologias
 1. JavaScript
