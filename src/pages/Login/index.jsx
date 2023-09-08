@@ -161,6 +161,9 @@ function LoginPage() {
             <p className="esquecer-senha" onClick={esquecido}>
               Esqueceu a senha?
             </p>
+            <a className="esquecer-senha" href="/">
+              Primeira página
+            </a>
             {abrirMenu && (
               <div className="recuperarSenha">
                 <form>

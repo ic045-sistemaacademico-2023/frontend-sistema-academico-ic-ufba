@@ -1,8 +1,8 @@
-function SidebarItem({ icon, title }) {
+function SidebarItem({ icon, title, link }) {
   return (
     <li>
       <a
-        href="#"
+        href={link}
         className="flex items-center p-2 rounded-lg hover:text-gray-500 text-white hover:bg-gray-700 group"
       >
         {icon}
