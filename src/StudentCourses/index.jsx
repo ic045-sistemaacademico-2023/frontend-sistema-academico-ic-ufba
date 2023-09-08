@@ -42,7 +42,7 @@ function StudentCourses({ studentCourses }) {
               <td className="px-6 py-4">{course.componenteCurricular}</td>
               <td className="px-6 py-4">{course.ch}</td>
               <td className="px-6 py-4">{course.turma}</td>
-              <td className="px-6 py-4">{course.dia}</td>
+              <td className="px-6 py-4">{course.dias}</td>
               <td className="px-6 py-4">{course.horario}</td>
               <td className="px-6 py-4">{course.local}</td>
               <td className="px-6 py-4">{course.docente}</td>
