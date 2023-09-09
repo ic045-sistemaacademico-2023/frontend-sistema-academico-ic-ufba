@@ -1,6 +1,6 @@
 function StudentCourses({ studentCourses }) {
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="bg-blue-50 p-5 z-10 m-5 shadow-lg rounded-lg">
       <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-5">
           <tr>
@@ -32,7 +32,12 @@ function StudentCourses({ studentCourses }) {
         </thead>
         <tbody>
           {studentCourses.map((course, index) => (
-            <tr key={index} className="bg-white border-b">
+            <tr
+              key={index}
+              className={`${
+                index % 2 == 0 ? "bg-white" : "bg-gray-100"
+              } border-b`}
+            >
               <th
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
@@ -51,43 +56,6 @@ function StudentCourses({ studentCourses }) {
         </tbody>
       </table>
     </div>
-
-    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    // <div className="text-gray-700">
-    //   <h2 className="text-lg font-semibold mb-2 ">Matérias Cursadas</h2>
-    //   <ul>
-    //     {studentCourses.map((course, index) => (
-    //       <li key={index} className="mb-4">
-    //         <p>
-    //           <strong>Código:</strong> {course.codigo}
-    //         </p>
-    //         <p>
-    //           <strong>Componente Curricular:</strong>{" "}
-    //           {course.componenteCurricular}
-    //         </p>
-    //         <p>
-    //           <strong>Carga Horária:</strong> {course.ch} horas
-    //         </p>
-    //         <p>
-    //           <strong>Turma:</strong> {course.turma}
-    //         </p>
-    //         <p>
-    //           <strong>Dia:</strong> {course.dia}
-    //         </p>
-    //         <p>
-    //           <strong>Horário:</strong> {course.horario}
-    //         </p>
-    //         <p>
-    //           <strong>Local:</strong> {course.local}
-    //         </p>
-    //         <p>
-    //           <strong>Docente:</strong> {course.docente}
-    //         </p>
-    //         {index !== studentCourses.length - 1 && <hr className="my-2" />}
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </div>
   );
 }
 

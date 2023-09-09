@@ -9,8 +9,8 @@ https://colorhunt.co/palette/f6f1f1afd3e219a7ce146c94
   line-height: 1.5;
   font-weight: 400;
 
-  color: #146C94;
-  background-color: #F6F1F1;
+  color: #146c94;
+  background-color: #f6f1f1;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -43,16 +43,16 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #146C94;
-  color: #F6F1F1;
+  background-color: #146c94;
+  color: #f6f1f1;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  color: #19A7CE;
+  color: #19a7ce;
 }
 button:active {
-  color: #AFD3E2;
+  color: #afd3e2;
 }
 
 button:focus,

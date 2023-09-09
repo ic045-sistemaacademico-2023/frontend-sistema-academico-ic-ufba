@@ -3,22 +3,48 @@ function StudentInfos({ studentData }) {
   const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 
   return (
-    <div className="bg-gray-200 p-5 z-10 m-5 rounded-lg">
+    <div
+      id="student-info"
+      className="bg-blue-50 p-5 z-10 m-5 shadow-lg rounded-lg"
+    >
       <h1 className="text-xl text-gray-700 font-bold">
         Comprovante de Matrícula - Período {currentYear}.{currentPeriod}
       </h1>
-      <div className="flex justify-evenly mt-5 text-left text-blue-900">
-        <div className="flex flex-col font-medium">
-          <h5>Nome: {studentData.nome}</h5>
-          <h5>Matrícula: {studentData.matricula}</h5>
-          <h5>Curso: {studentData.curso}</h5>
+      <dl className="grid grid-cols-3 gap-4 mt-5">
+        <div className="flex flex-col">
+          <dt className="text-sm text-gray-500">Nome:</dt>
+          <dd className="text-lg font-medium">{studentData.nome}</dd>
         </div>
-        <div className="flex flex-col font-medium">
-          <h5>Período de Ingresso: {studentData.periodoDeIngresso}</h5>
-          <h5>Curriculo: {studentData.curriculo}</h5>
-          <h5>CR: {studentData.cr}</h5>
+
+        <div className="flex flex-col">
+          <dt className="text-sm text-gray-500">Matrícula:</dt>
+          <dd className="text-lg font-medium">{studentData.matricula}</dd>
         </div>
-      </div>
+
+        <div className="flex flex-col">
+          <dt className="text-sm text-gray-500">Curso:</dt>
+          <dd className="text-lg font-medium">{studentData.curso}</dd>
+        </div>
+
+        <div className="flex flex-col">
+          <dt className="text-sm text-gray-500">Período de Ingresso:</dt>
+          <dd className="text-lg font-medium">
+            {studentData.periodoDeIngresso}
+          </dd>
+        </div>
+
+        <div className="flex flex-col">
+          <dt className="text-sm text-gray-500">Ano do Currículo:</dt>
+          <dd className="text-lg font-medium">{studentData.curriculo}</dd>
+        </div>
+
+        <div className="flex flex-col">
+          <dt className="text-sm text-gray-500">
+            Coeficiente de Rendimento (CR):
+          </dt>
+          <dd className="text-lg font-medium">{studentData.cr}</dd>
+        </div>
+      </dl>
     </div>
   );
 }
