@@ -4,6 +4,8 @@
 
 ### IC045: Tópicos em Sistemas de Informação e Web I
 
+## [Deploy](https://ic045-siag.netlify.app)
+
 ## [Drive](https://drive.google.com/drive/folders/1QJ4PaNYhIkvsSdNPGOQN3nP7j8SYYtgN?usp=sharing)
 
 ## [Requisitos](https://docs.google.com/document/d/1Dzjv17Old3uu1rwtQg_xaMUMJ1OL9CvtbSKM_gnplww/edit?usp=drive_link)
@@ -11,10 +13,11 @@
 ## [Modelagem do banco de dados](https://dbdesigner.page.link/28BjhNgupwdhX9Tp8)
 
 ## [Protótipo](https://www.figma.com/file/43HvdK6cT0hJ4XjSFZDL04/SIGA---IC045?type=design&mode=design&t=ogiUXiYnDVzzZ5J4-1)
+
 ## [Documento de Arquitetura de Software](https://docs.google.com/document/d/1b8DwGg7oZ-APcK7_UBkhEQnsvwaKZnzY/edit?usp=sharing&ouid=114509522047919530579&rtpof=true&sd=true)
 
-
 ## Tecnologias
+
 1. JavaScript
 2. ReactJS
 3. Tailwind CSS
@@ -33,8 +36,6 @@
 | Vitor de Jesus | Desenvolvedor                           |
 | Lucas Natanael | Desenvolvedor                           |
 
-
-
 ## Setup
 
 Todo o ambiente de desenvolvimento desde projeto é baseado em sistemas Unix (**Linux** e **Mac**), entretanto este mesmo ambiente pode ser replicado no Windows com o WSL (Windows Subsystem for Linux).
@@ -48,15 +49,11 @@ git clone https://github.com/ic045-sistemaacademico-2023/frontend-sistema-academ
 cd sistema-academico-ic
 ```
 
-
-
 ### Instalando o Yarn
 
 ```bash
 npm install -g yarn
 ```
-
-
 
 ### Baixe os node_modules e execute o programa
 
@@ -65,9 +62,4 @@ yarn
 yarn dev
 ```
 
-
-
 Agora abra o link pelo navegador: [http://127.0.0.1:5173/](http://127.0.0.1:5173)
-
-
-
