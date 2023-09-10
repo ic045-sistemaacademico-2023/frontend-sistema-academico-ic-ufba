@@ -2,18 +2,18 @@ export const content = ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"];
 export const theme = {
   extend: {
     colors: {
-          primary: {
-            50: "#eefcfd",
-            100: "#d4f5f9",
-            200: "#aeebf3",
-            300: "#76daea",
-            400: "#37c1d9",
-            500: "#1ca5be",
-            600: "#1a84a0",
-            700: "#1c6b82",
-            800: "#1f586b",
-            900: "#1e495b",
-            950: "#0e2f3e",
+      primary: {
+        50: "#eefcfd",
+        100: "#d4f5f9",
+        200: "#aeebf3",
+        300: "#76daea",
+        400: "#37c1d9",
+        500: "#1ca5be",
+        600: "#1a84a0",
+        700: "#1c6b82",
+        800: "#1f586b",
+        900: "#1e495b",
+        950: "#0e2f3e",
       },
     },
     fontSize: {

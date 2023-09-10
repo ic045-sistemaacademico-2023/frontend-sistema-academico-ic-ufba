@@ -11,20 +11,22 @@ function LoginPage() {
   const [erro, setErro] = useState({
     exibir: false,
     mensagem: "",
-  })
+  });
 
   const onSubmitLogin = (event) => {
     event.preventDefault();
     if (matricula === "") {
       setErro({
         exibir: true,
-        mensagem: "Você não digitou sua matrícula. Para efetuar o login é necessário digitar a matrícula e a senha",
-      })
+        mensagem:
+          "Você não digitou sua matrícula. Para efetuar o login é necessário digitar a matrícula e a senha",
+      });
     } else if (senha === "") {
       setErro({
         exibir: true,
-        mensagem: 'Você precisa digitar uma senha para efetuar o login. Se você esqueceu a senha, clique em ok e depois em "Esqueceu a senha?"',
-      })
+        mensagem:
+          'Você precisa digitar uma senha para efetuar o login. Se você esqueceu a senha, clique em ok e depois em "Esqueceu a senha?"',
+      });
     }
   };
 
@@ -39,13 +41,15 @@ function LoginPage() {
     if (email === "") {
       setErro({
         exibir: true,
-        mensagem: "Você não digitou seu e-mail. Para recuperar a senha é necessário digitar o e-mail",
-      })
+        mensagem:
+          "Você não digitou seu e-mail. Para recuperar a senha é necessário digitar o e-mail",
+      });
     } else if (!emailValido) {
       setErro({
         exibir: true,
-        mensagem: "Você está tentando recuperar a senha com um e-mail inválido. Verifique se o e-mail que você digitou está correto e tente novamente. Caso não lembre do e-mail de recuperação, compareça ao colegiado",
-      })
+        mensagem:
+          "Você está tentando recuperar a senha com um e-mail inválido. Verifique se o e-mail que você digitou está correto e tente novamente. Caso não lembre do e-mail de recuperação, compareça ao colegiado",
+      });
     }
   };
 
@@ -61,13 +65,14 @@ function LoginPage() {
               <div className="modal-bg">
                 <div className="erro-conteudo w-1/3 rounded-lg bg-white p-5 border-2 border-primary-700 border-solid">
                   <h2>Atenção!</h2>
-                  <p>
-                    {erro.mensagem}
-                  </p>
-                  <Botao onClick={() => setErro({
-                                    exibir: false,
-                                    mensagem: "",
-                                  })}
+                  <p>{erro.mensagem}</p>
+                  <Botao
+                    onClick={() =>
+                      setErro({
+                        exibir: false,
+                        mensagem: "",
+                      })
+                    }
                   >
                     Ok
                   </Botao>
@@ -106,7 +111,10 @@ function LoginPage() {
               </div>
             </form>
 
-            <p className="cursor-pointer underline" onClick={() => setAbrirMenu(true)}>
+            <p
+              className="cursor-pointer underline"
+              onClick={() => setAbrirMenu(true)}
+            >
               Esqueceu a senha?
             </p>
             <a className="cursor-pointer underline" href="/">
@@ -127,11 +135,14 @@ function LoginPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       onBlur={(e) => {
-                        const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-                        setEmailValido(regex.test(e.target.value))
+                        const regex =
+                          /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                        setEmailValido(regex.test(e.target.value));
                       }}
                     />
-                    {!emailValido && <span className="erro">*E-mail inválido</span>}
+                    {!emailValido && (
+                      <span className="erro">*E-mail inválido</span>
+                    )}
                   </div>
                   <Botao onClick={onSubmitRecuperar}>Recuperar Senha</Botao>
                 </form>
