@@ -5,12 +5,12 @@ function StudentInfos({ studentData }) {
   return (
     <div
       id="student-info"
-      className="bg-blue-50 p-5 z-10 m-5 shadow-lg rounded-lg"
+      className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg"
     >
       <h1 className="text-xl text-gray-700 font-bold">
         Comprovante de Matrícula - Período {currentYear}.{currentPeriod}
       </h1>
-      <dl className="grid grid-cols-3 gap-4 mt-5">
+      <dl className="grid grid-cols-3 gap-4 mt-5 ">
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Nome:</dt>
           <dd className="text-lg font-medium">{studentData.nome}</dd>

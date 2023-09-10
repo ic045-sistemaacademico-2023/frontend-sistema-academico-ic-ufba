@@ -1,6 +1,6 @@
 import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
-import StudentCourses from "../../StudentCourses";
+import StudentCourses from "../../componentes/StudentCourses";
 
 import { studentData } from "./data";
 import { studentCourses } from "./courses";
@@ -59,13 +59,13 @@ function StudentPage() {
       <StudentCourses studentCourses={studentCourses} />
       <div className="mt-6">
         <button
-          className="text-gray-900 focus:text-blue-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+          className="text-gray-900 focus:text-primary-400 hover:text-primary-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
           onClick={exportToPDF}
         >
           Download
         </button>
         <button
-          className="text-gray-900 focus:text-blue-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+          className="text-gray-900 focus:text-primary-400 hover:text-primary-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
           onClick={handlePrint}
         >
           Imprimir
