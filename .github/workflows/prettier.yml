@@ -11,7 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: Install dependencies
         run: npm install
@@ -20,9 +23,12 @@ jobs:
         run: npm run format
 
       - name: Commit changes
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add -A
           git commit -m "Auto-format with Prettier"
-          git push https://${{ secrets.GITHUB_GH_TOKEN }}@github.com/ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba.git HEAD:main
+          git push origin main
