@@ -25,4 +25,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           git commit -m "Auto-format with Prettier"
-          git push https://${{ secrets.GH_TOKEN }}@github.com/ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba.git HEAD:main
+          git push https://${{ secrets.GITHUB_GH_TOKEN }}@github.com/ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba.git HEAD:main
