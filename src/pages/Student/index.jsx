@@ -39,7 +39,7 @@ function exportToPDF() {
   doc.text(
     `Período de Ingresso: ${studentData.periodoDeIngresso}`,
     pdfOptions.margin.left,
-    60
+    60,
   );
   doc.text(`Currículo: ${studentData.curriculo}`, pdfOptions.margin.left, 70);
   doc.text(`CR: ${studentData.cr}`, pdfOptions.margin.left, 80);
