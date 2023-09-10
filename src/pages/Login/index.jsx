@@ -1,178 +1,138 @@
 import Botao from "../../componentes/Botao";
-import CampoCpf from "../../componentes/CampoCpf";
-import CampoSenha from "../../componentes/CampoSenha";
-import CampoEmail from "../../componentes/CampoEmail";
-import "./styles.css";
 import { useState } from "react";
+import InputField from "../../componentes/Forms/InputField";
 
 function LoginPage() {
   const [abrirMenu, setAbrirMenu] = useState(false);
-  const [cpf, setCpf] = useState("");
+  const [matricula, setMatricula] = useState("");
   const [senha, setSenha] = useState("");
   const [email, setEmail] = useState("");
-  const [cpfValido, setCpfValido] = useState(true); // true ou false
-  const [emailValido, setEmailValido] = useState(true); // true ou false
-  const [exibirErroCpf, setExibirErroCpf] = useState(false);
-  const [exibirErroSenha, setExibirErroSenha] = useState(false);
-  const [exibirErroCpfVazio, setExibirErroCpfVazio] = useState(false);
-  const [exibirErroEmail, setExibirErroEmail] = useState(false);
-  const [exibirErroEmailVazio, setExibirErroEmailVazio] = useState(false);
+  const [emailValido, setEmailValido] = useState(true);
+  const [erro, setErro] = useState({
+    exibir: false,
+    mensagem: "",
+  })
 
-  const onSubmitLogin = (evento) => {
-    evento.preventDefault();
-    if (cpf === "") {
-      console.log("CPF não preenchido");
-      setExibirErroCpfVazio(true);
+  const onSubmitLogin = (event) => {
+    event.preventDefault();
+    if (matricula === "") {
+      setErro({
+        exibir: true,
+        mensagem: "Você não digitou sua matrícula. Para efetuar o login é necessário digitar a matrícula e a senha",
+      })
     } else if (senha === "") {
-      console.log("Senha não preenchida");
-      setExibirErroSenha(true);
-    } else if (cpfValido) {
-      console.log("Formulario submetido");
-      console.log(cpf);
-      console.log(senha);
-    } else {
-      console.log("CPF inválido");
-      setExibirErroCpf(true);
+      setErro({
+        exibir: true,
+        mensagem: 'Você precisa digitar uma senha para efetuar o login. Se você esqueceu a senha, clique em ok e depois em "Esqueceu a senha?"',
+      })
     }
   };
 
-  const onClear = (evento) => {
-    evento.preventDefault();
-    console.log("Formulário limpo");
-    setCpf("");
+  const onClear = (event) => {
+    event.preventDefault();
+    setMatricula("");
     setSenha("");
   };
 
-  const onSubmitRecuperar = (evento) => {
-    evento.preventDefault();
+  const onSubmitRecuperar = (event) => {
+    event.preventDefault();
     if (email === "") {
-      console.log("E-mail não preenchido");
-      setExibirErroEmailVazio(true);
-    } else if (emailValido) {
-      console.log("Formulario submetido");
-      console.log(email);
-    } else {
-      console.log("E-mail inválido");
-      setExibirErroEmail(true);
+      setErro({
+        exibir: true,
+        mensagem: "Você não digitou seu e-mail. Para recuperar a senha é necessário digitar o e-mail",
+      })
+    } else if (!emailValido) {
+      setErro({
+        exibir: true,
+        mensagem: "Você está tentando recuperar a senha com um e-mail inválido. Verifique se o e-mail que você digitou está correto e tente novamente. Caso não lembre do e-mail de recuperação, compareça ao colegiado",
+      })
     }
-  };
-
-  const esquecido = (evento) => {
-    evento.preventDefault();
-    console.log("Esqueceu a senha?");
-    setAbrirMenu(true);
   };
 
   return (
     <main>
-      <div className="div-externa">
-        <div className="div-interna">
-          <div className="div-login">
-            <h1>Sistema Acadêmico</h1>
-            <h2>Login</h2>
-            {exibirErroCpf && (
-              <div className="tela-erro">
-                <div className="erro-conteudo">
-                  <h2>Atenção!</h2>
-                  <p>Você está tentando fazer o login com um CPF inválido</p>
-                  <p>
-                    Verifique se o CPF que você digitou está correto e tente
-                    novamente.
-                  </p>
-                  <Botao onClick={() => setExibirErroCpf(false)}>Ok</Botao>
-                </div>
-              </div>
-            )}
-            {exibirErroSenha && (
-              <div className="tela-erro">
-                <div className="erro-conteudo">
-                  <h2>Atenção!</h2>
-                  <p>Você precisa digitar uma senha para efetuar o login</p>
-                  <p>
-                    Se você esqueceu a senha, clique em ok e depois em "Esqueceu
-                    a senha?"
-                  </p>
-                  <Botao onClick={() => setExibirErroSenha(false)}>Ok</Botao>
-                </div>
-              </div>
-            )}
-            {exibirErroCpfVazio && (
-              <div className="tela-erro">
-                <div className="erro-conteudo">
+      <div className="bg-primary-700 flex px-20">
+        <div className="bg-primary-500 flex w-full h-full px-5">
+          <div className="min-h-screen w-full h-full flex flex-col items-center justify-center bg-white">
+            <h1 className="text-primary-800 text-2xl">Sistema Acadêmico</h1>
+            <h2 className="text-primary-700 text-lg">Login</h2>
+
+            {erro.exibir && (
+              <div className="modal-bg">
+                <div className="erro-conteudo w-1/3 rounded-lg bg-white p-5 border-2 border-primary-700 border-solid">
                   <h2>Atenção!</h2>
                   <p>
-                    Você não digitou seu CPF, para efetuar o login é necessário
-                    digitar o CPF e a senha
+                    {erro.mensagem}
                   </p>
-                  <p>Tente novamente</p>
-                  <Botao onClick={() => setExibirErroCpfVazio(false)}>Ok</Botao>
-                </div>
-              </div>
-            )}
-            {exibirErroEmail && (
-              <div className="tela-erro">
-                <div className="erro-conteudo">
-                  <h2>Atenção!</h2>
-                  <p>
-                    Você está tentando recuperar a senha com um e-mail inválido
-                  </p>
-                  <p>
-                    Verifique se o e-mail que você digitou está correto e tente
-                    novamente.
-                  </p>
-                  <p>
-                    Caso não lembre do e-mail de recuperação, compareça ao
-                    colegiado
-                  </p>
-                  <Botao onClick={() => setExibirErroEmail(false)}>Ok</Botao>
-                </div>
-              </div>
-            )}
-            {exibirErroEmailVazio && (
-              <div className="tela-erro">
-                <div className="erro-conteudo">
-                  <h2>Atenção!</h2>
-                  <p>
-                    Você não digitou seu e-mail, para recuperar a senha é
-                    necessário digitar o e-mail
-                  </p>
-                  <p>Tente novamente</p>
-                  <Botao onClick={() => setExibirErroEmailVazio(false)}>
+                  <Botao onClick={() => setErro({
+                                    exibir: false,
+                                    mensagem: "",
+                                  })}
+                  >
                     Ok
                   </Botao>
                 </div>
               </div>
             )}
 
-            <form>
-              <CampoCpf
-                cpf={cpf}
-                aoAlterar={(valor) => setCpf(valor)}
-                cpfValido={cpfValido}
-                validarCampo={(valor) => setCpfValido(valor)}
+            <form className="p-5">
+              <div className="flex flex-col">
+                <InputField
+                  type="text"
+                  id="matricula"
+                  name="matricula"
+                  required="required"
+                  label="Matrícula"
+                  placeholder="Digite sua matrícula"
+                  value={matricula}
+                  onChange={(e) => setMatricula(e.target.value)}
+                />
+              </div>
+
+              <InputField
+                type="password"
+                id="password"
+                name="password"
+                required="required"
+                placeholder="Digite sua senha"
+                label="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
               />
-              <CampoSenha
-                senha={senha}
-                aoAlterar={(valor) => setSenha(valor)}
-              />
-              <Botao onClick={onSubmitLogin}>Login</Botao>
-              <Botao onClick={onClear}>Limpar</Botao>
+
+              <div className="flex justify-center gap-2">
+                <Botao onClick={onSubmitLogin}>Login</Botao>
+                <Botao onClick={onClear}>Limpar</Botao>
+              </div>
             </form>
-            <p className="esquecer-senha" onClick={esquecido}>
+
+            <p className="cursor-pointer underline" onClick={() => setAbrirMenu(true)}>
               Esqueceu a senha?
             </p>
-            <a className="esquecer-senha" href="/">
+            <a className="cursor-pointer underline" href="/">
               Primeira página
             </a>
+
             {abrirMenu && (
               <div className="recuperarSenha">
                 <form>
-                  <CampoEmail
-                    email={email}
-                    aoAlterar={(valor) => setEmail(valor)}
-                    emailValido={emailValido}
-                    validarCampo={(valor) => setEmailValido(valor)}
-                  />
+                  <div className="flex flex-col">
+                    <InputField
+                      type="email"
+                      id="email"
+                      name="email"
+                      required="required"
+                      placeholder="Digite seu e-mail"
+                      label="E-mail"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      onBlur={(e) => {
+                        const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+                        setEmailValido(regex.test(e.target.value))
+                      }}
+                    />
+                    {!emailValido && <span className="erro">*E-mail inválido</span>}
+                  </div>
                   <Botao onClick={onSubmitRecuperar}>Recuperar Senha</Botao>
                 </form>
               </div>
