@@ -9,12 +9,22 @@ function Sidebar() {
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-primary-900 flex flex-col place-content-between">
-        <ul className="space-y-2 font-medium">
-          <SidebarItem
-            title={"Matrícula"}
-            link={"/"}
-            icon={<User size={18} />}
-          />
+        <ul>
+          <ul className="space-y-2 font-medium">
+            <SidebarItem
+              title={"Matrícula"}
+              link={"/"}
+              icon={<User size={18} />}
+            />
+          </ul>
+          <ul className="space-y-2 font-medium">
+            <SidebarItem
+              title={"EmentaDisciplina"}
+              link={"/ementa-disciplina"}
+              icon={<User size={18} />}
+            />
+          </ul>
+
         </ul>
         <ul className="space-y-2 font-medium">
           <SidebarItem
@@ -23,6 +33,7 @@ function Sidebar() {
             icon={<User size={18} />}
           />
         </ul>
+
       </div>
     </aside>
   );
