@@ -46,8 +46,8 @@ const SelectField = ({
         ))}
       </select>
       {error && (
-        <p class="mt-2 text-sm text-left ml-1 text-red-600 dark:text-red-500">
-          <span class="font-medium">{error}</span>
+        <p className="mt-2 text-sm text-left ml-1 text-red-600 dark:text-red-500">
+          <span className="font-medium">{error}</span>
         </p>
       )}
     </div>
