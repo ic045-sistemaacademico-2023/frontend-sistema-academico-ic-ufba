@@ -1,6 +1,6 @@
 import Button from "../../componentes/Button";
 import { useState } from "react";
-import InputField from "../../componentes/Forms/InputField/InputField";
+import InputField from "../../componentes/Forms/InputField";
 
 function LoginPage() {
   const [abrirMenu, setAbrirMenu] = useState(false);
