@@ -50,8 +50,8 @@ function LoginPage() {
       <div className="bg-primary-500 flex px-28">
         <div className="bg-primary-300 flex w-full h-full px-6">
           <div className="min-h-screen w-full h-full flex flex-col items-center justify-center bg-white">
-            <h1 className="text-primary-800 text-2xl">Sistema Acadêmico</h1>
-            <h2 className="text-primary-700 text-lg">Login</h2>
+            <h1 className="text-primary-700 text-3xl">Sistema Acadêmico</h1>
+            <h2 className="text-primary-500 text-xl mt-5">Login</h2>
 
             <form className="p-5 w-96">
               <div className="flex flex-col">
