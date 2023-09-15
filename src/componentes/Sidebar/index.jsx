@@ -15,6 +15,11 @@ function Sidebar() {
             link={"/"}
             icon={<User size={18} />}
           />
+          <SidebarItem
+            title={"Disciplinas"}
+            link={"/disciplinas"}
+            icon={<User size={18} />}
+          />
         </ul>
         <ul className="space-y-2 font-medium">
           <SidebarItem
