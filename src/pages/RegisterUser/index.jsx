@@ -2,8 +2,8 @@ import { cpf as cpfValidator } from "cpf-cnpj-validator";
 
 import { useState } from "react";
 import Button from "../../componentes/Button";
-import InputField from "../../componentes/Forms/InputField/InputField";
-import SelectField from "../../componentes/Forms/SelectField/SelectField";
+import InputField from "../../componentes/Forms/InputField";
+import SelectField from "../../componentes/Forms/SelectField";
 import Sidebar from "../../componentes/Sidebar";
 import { roles } from "./roles";
 
