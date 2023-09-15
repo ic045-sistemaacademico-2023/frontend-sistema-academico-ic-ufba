@@ -7,6 +7,7 @@ import { studentCourses } from "./courses";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import Button from "../../componentes/Button";
 
 function handlePrint() {
   const sidebar = document.querySelector(".pl-64");
@@ -58,18 +59,8 @@ function StudentPage() {
       <StudentInfos studentData={studentData} />
       <StudentCourses studentCourses={studentCourses} />
       <div className="mt-6">
-        <button
-          className="text-gray-900 focus:text-primary-400 hover:text-primary-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-          onClick={exportToPDF}
-        >
-          Download
-        </button>
-        <button
-          className="text-gray-900 focus:text-primary-400 hover:text-primary-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-          onClick={handlePrint}
-        >
-          Imprimir
-        </button>
+        <Button onClick={exportToPDF}>Download</Button>
+        <Button onClick={handlePrint}>Imprimir</Button>
       </div>
     </div>
   );

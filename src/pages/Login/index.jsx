@@ -1,6 +1,6 @@
-import Botao from "../../componentes/Botao";
+import Button from "../../componentes/Button";
 import { useState } from "react";
-import InputField from "../../componentes/Forms/InputField";
+import InputField from "../../componentes/Forms/InputField/InputField";
 
 function LoginPage() {
   const [abrirMenu, setAbrirMenu] = useState(false);
@@ -55,8 +55,8 @@ function LoginPage() {
 
   return (
     <main>
-      <div className="bg-primary-700 flex px-20">
-        <div className="bg-primary-500 flex w-full h-full px-5">
+      <div className="bg-primary-500 flex px-28">
+        <div className="bg-primary-300 flex w-full h-full px-6">
           <div className="min-h-screen w-full h-full flex flex-col items-center justify-center bg-white">
             <h1 className="text-primary-800 text-2xl">Sistema Acadêmico</h1>
             <h2 className="text-primary-700 text-lg">Login</h2>
@@ -66,7 +66,7 @@ function LoginPage() {
                 <div className="erro-conteudo w-1/3 rounded-lg bg-white p-5 border-2 border-primary-700 border-solid">
                   <h2>Atenção!</h2>
                   <p>{erro.mensagem}</p>
-                  <Botao
+                  <Button
                     onClick={() =>
                       setErro({
                         exibir: false,
@@ -75,12 +75,12 @@ function LoginPage() {
                     }
                   >
                     Ok
-                  </Botao>
+                  </Button>
                 </div>
               </div>
             )}
 
-            <form className="p-5">
+            <form className="p-5 w-96">
               <div className="flex flex-col">
                 <InputField
                   type="text"
@@ -106,8 +106,8 @@ function LoginPage() {
               />
 
               <div className="flex justify-center gap-2">
-                <Botao onClick={onSubmitLogin}>Login</Botao>
-                <Botao onClick={onClear}>Limpar</Botao>
+                <Button onClick={onSubmitLogin}>Login</Button>
+                <Button onClick={onClear}>Limpar</Button>
               </div>
             </form>
 
@@ -144,7 +144,7 @@ function LoginPage() {
                       <span className="erro">*E-mail inválido</span>
                     )}
                   </div>
-                  <Botao onClick={onSubmitRecuperar}>Recuperar Senha</Botao>
+                  <Button onClick={onSubmitRecuperar}>Recuperar Senha</Button>
                 </form>
               </div>
             )}
