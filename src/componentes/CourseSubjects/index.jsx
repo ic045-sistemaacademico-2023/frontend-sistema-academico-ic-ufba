@@ -1,9 +1,14 @@
+import Button from "../Button";
 import CourseCard from "./CourseCard";
 
 function CourseSubjects({ courseData }) {
   return (
     <div className="pt-10">
       <h1 className="text-xl">{courseData.nome}</h1>
+      {/* <div>
+        <Button>Obrigatórias</Button>
+        <Button>Optativas</Button>
+      </div> */}
       <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
         <table className="w-full text-sm text-left text-gray-700">
           <thead className="text-xs text-gray-900 uppercase bg-gray-5">
@@ -32,6 +37,7 @@ function CourseSubjects({ courseData }) {
                 </td>
                 <td className="px-6 py-4 flex gap-5">
                   {semester.map((subject) => (
+                    // TODO: ao clicar no card, possibilitar se inscrever na materia?
                     <CourseCard data={subject} key={subject.id} />
                   ))}
                 </td>

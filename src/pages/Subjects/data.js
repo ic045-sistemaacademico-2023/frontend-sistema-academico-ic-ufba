@@ -10,7 +10,7 @@ export const courseData = {
       },
       {
         id: 2,
-        nome: "Python Programming",
+        nome: "Python Programming Longer Text",
         codigo: "MATA02",
       },
       {
