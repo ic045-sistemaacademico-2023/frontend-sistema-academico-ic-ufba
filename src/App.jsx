@@ -6,6 +6,7 @@ import StudentPage from "./pages/Student";
 import SubjectsPage from "./pages/Subjects";
 import RegisterUser from "./pages/RegisterUser";
 import PasswordReset from "./pages/PasswordReset";
+import Sidebar from "./componentes/Sidebar";
 
 function App() {
   return (
