@@ -5,7 +5,7 @@ export default function CourseCard({ data }) {
         data?.concluido ? "bg-green-100 hover:bg-green-200" : ""
       }`}
     >
-      <p className="text-lg">{data.codigo}</p>
+      <p className="text-md">{data.codigo}</p>
       <p>{data.nome}</p>
     </div>
   );
