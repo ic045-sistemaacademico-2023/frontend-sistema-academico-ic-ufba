@@ -12,7 +12,7 @@ function Sidebar() {
         <ul className="space-y-2 font-medium">
           <SidebarItem
             title={"Matrícula"}
-            link={"/"}
+            link={"/comprovante-matricula"}
             icon={<User size={18} />}
           />
           <SidebarItem

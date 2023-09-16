@@ -63,7 +63,7 @@ function PasswordReset() {
             </form>
 
             <Link href="/login">Login</Link>
-            <Link href="/">Primeira página</Link>
+            <Link href="/comprovante-matricula">Primeira página</Link>
           </div>
         </div>
       </div>
