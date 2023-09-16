@@ -9,7 +9,7 @@ function CourseSubjects({ courseData }) {
         <Button>Obrigatórias</Button>
         <Button>Optativas</Button>
       </div> */}
-      <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
+      <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg overflow-auto">
         <table className="w-full text-sm text-left text-gray-700">
           <thead className="text-xs text-gray-900 uppercase bg-gray-5">
             <tr>
