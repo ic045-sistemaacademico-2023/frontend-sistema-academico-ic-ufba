@@ -16,6 +16,11 @@ function Sidebar() {
             icon={<User size={18} />}
           />
           <SidebarItem
+            title={"Histórico"}
+            link={"/historico"}
+            icon={<User size={18} />}
+          />
+          <SidebarItem
             title={"Disciplinas"}
             link={"/disciplinas"}
             icon={<User size={18} />}
