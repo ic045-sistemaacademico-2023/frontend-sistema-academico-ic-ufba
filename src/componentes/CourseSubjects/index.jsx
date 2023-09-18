@@ -1,4 +1,3 @@
-import Button from "../Button";
 import CourseCard from "./CourseCard";
 
 function CourseSubjects({ courseData }) {
@@ -22,9 +21,9 @@ function CourseSubjects({ courseData }) {
             </tr>
           </thead>
           <tbody>
-            {courseData.materias.map((semester, index) => (
+            {courseData.disciplinas.map((semester, index) => (
               <tr
-                key={index}
+                key={semester.periodo}
                 className={`${
                   index % 2 == 0 ? "bg-white" : "bg-primary-50"
                 } border border-gray-100 hover:bg-primary-100`}
@@ -33,10 +32,10 @@ function CourseSubjects({ courseData }) {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
                 >
-                  {index + 1}
+                  {semester.periodo}
                 </td>
                 <td className="px-6 py-4 flex gap-5">
-                  {semester.map((subject) => (
+                  {semester.disciplinas.map((subject) => (
                     // TODO: ao clicar no card, possibilitar se inscrever na materia?
                     <CourseCard data={subject} key={subject.id} />
                   ))}
