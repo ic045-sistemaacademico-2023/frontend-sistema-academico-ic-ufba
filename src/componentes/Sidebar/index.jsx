@@ -21,11 +21,6 @@ function Sidebar() {
             icon={<User size={18} />}
           />
           <SidebarItem
-            title={"Ementa da Disciplina"}
-            link={"/ementa-disciplina"}
-            icon={<User size={18} />}
-          />
-          <SidebarItem
             title={"Cadastrar Usuário"}
             link={"/cadastro-usuario"}
             icon={<User size={18} />}
