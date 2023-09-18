@@ -21,7 +21,7 @@ function CourseSubjects({ courseData }) {
             </tr>
           </thead>
           <tbody>
-            {courseData.disciplinas.map((semester, index) => (
+            {courseData.grade.map((semester, index) => (
               <tr
                 key={semester.periodo}
                 className={`${

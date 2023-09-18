@@ -1,6 +1,6 @@
 export const courseSubjects = {
   nome: "Ciência da Computação",
-  disciplinas: [
+  grade: [
     {
       periodo: 1,
       disciplinas: [
