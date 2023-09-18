@@ -31,7 +31,7 @@ function exportToPDF() {
   };
 
   doc.setFontSize(18);
-  doc.text("Comprovante de Matrícula", pdfOptions.margin.left, 15);
+  doc.text("Histórico Universitário", pdfOptions.margin.left, 15);
 
   doc.setFontSize(12);
   doc.text(`Nome: ${studentData.nome}`, pdfOptions.margin.left, 30);
@@ -49,7 +49,7 @@ function exportToPDF() {
 
   doc.autoTable({ html: table, startY: y, ...pdfOptions });
 
-  doc.save(`Comprovante de Matrícula - ${studentData.nome}.pdf`);
+  doc.save(`Historico Universitario - ${studentData.nome}.pdf`);
 }
 
 function HistoryPage() {
