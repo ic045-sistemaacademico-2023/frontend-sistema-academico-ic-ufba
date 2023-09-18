@@ -16,6 +16,7 @@ function App() {
         <Route exact path="/" element={<LoginPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/disciplinas" element={<SubjectsPage />} />
+        <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
         <Route exact path="/cadastro-usuario" element={<RegisterUser />} />
         <Route exact path="/comprovante-matricula" element={<StudentPage />} />
         <Route exact path="/historico" element={<HistoryPage />} />
