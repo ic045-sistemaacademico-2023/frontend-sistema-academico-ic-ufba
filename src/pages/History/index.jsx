@@ -61,7 +61,7 @@ function HistoryPage() {
         pageTitle={"Components Curriculares Cursados"}
       />
       <StudentHistory studentHistory={studentHistory} />
-      <div className="mt-6">
+      <div className="mt-6 mb-5">
         <Button onClick={exportToPDF}>Download</Button>
         <Button onClick={handlePrint}>Imprimir</Button>
       </div>
