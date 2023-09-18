@@ -1,9 +1,9 @@
 import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
-import StudentCourses from "../../componentes/StudentCourses";
+import StudentHistory from "../../componentes/StudentHistory";
 
 import { studentData } from "./data";
-import { studentCourses } from "./courses";
+import { studentHistory } from "./history";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -31,7 +31,7 @@ function exportToPDF() {
   };
 
   doc.setFontSize(18);
-  doc.text("Comprovante de Matrícula", pdfOptions.margin.left, 15);
+  doc.text("Histórico Universitário", pdfOptions.margin.left, 15);
 
   doc.setFontSize(12);
   doc.text(`Nome: ${studentData.nome}`, pdfOptions.margin.left, 30);
@@ -49,27 +49,19 @@ function exportToPDF() {
 
   doc.autoTable({ html: table, startY: y, ...pdfOptions });
 
-  doc.save(`Comprovante de Matrícula - ${studentData.nome}.pdf`);
+  doc.save(`Historico Universitario - ${studentData.nome}.pdf`);
 }
 
-const currentYear = new Date().getFullYear();
-const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
-
-function StudentPage() {
+function HistoryPage() {
   return (
     <div className="w-full pl-64">
       <Sidebar />
       <StudentInfos
         studentData={studentData}
-        pageTitle={
-          "Comprovante de Matrícula - Período " +
-          currentYear +
-          "." +
-          currentPeriod
-        }
+        pageTitle={"Components Curriculares Cursados"}
       />
-      <StudentCourses studentCourses={studentCourses} />
-      <div className="mt-6">
+      <StudentHistory studentHistory={studentHistory} />
+      <div className="mt-6 mb-5">
         <Button onClick={exportToPDF}>Download</Button>
         <Button onClick={handlePrint}>Imprimir</Button>
       </div>
@@ -77,4 +69,4 @@ function StudentPage() {
   );
 }
 
-export default StudentPage;
+export default HistoryPage;

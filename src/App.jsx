@@ -5,6 +5,7 @@ import LoginPage from "./pages/Login";
 import StudentPage from "./pages/Student";
 import SubjectsPage from "./pages/Subjects";
 import RegisterUser from "./pages/RegisterUser";
+import HistoryPage from "./pages/History";
 import PasswordReset from "./pages/PasswordReset";
 import SubjectSillabus from "./pages/SubjectSillabus";
 
@@ -17,6 +18,7 @@ function App() {
         <Route exact path="/disciplinas" element={<SubjectsPage />} />
         <Route exact path="/cadastro-usuario" element={<RegisterUser />} />
         <Route exact path="/comprovante-matricula" element={<StudentPage />} />
+        <Route exact path="/historico" element={<HistoryPage />} />
         <Route exact path="/password-reset" element={<PasswordReset />} />
         <Route exact path="/ementa-disciplina" element={<SubjectSillabus />} />
       </Routes>
