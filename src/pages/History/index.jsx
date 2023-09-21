@@ -10,16 +10,7 @@ import "jspdf-autotable";
 import Button from "../../componentes/Button";
 
 function handlePrint() {
-  const sidebar = document.querySelector(".pl-64");
-  if (sidebar) {
-    sidebar.classList.remove("pl-64");
-  }
-
   window.print();
-
-  if (sidebar) {
-    sidebar.classList.add("pl-64");
-  }
 }
 
 function exportToPDF() {
@@ -56,11 +47,13 @@ function HistoryPage() {
   return (
     <div className="w-full pl-64">
       <Sidebar />
-      <StudentInfos
-        studentData={studentData}
-        pageTitle={"Components Curriculares Cursados"}
-      />
-      <StudentHistory studentHistory={studentHistory} />
+      <div className="printable">
+        <StudentInfos
+          studentData={studentData}
+          pageTitle={"Components Curriculares Cursados"}
+        />
+        <StudentHistory studentHistory={studentHistory} />
+      </div>
       <div className="mt-6 mb-5">
         <Button onClick={exportToPDF}>Download</Button>
         <Button onClick={handlePrint}>Imprimir</Button>
@@ -68,5 +61,6 @@ function HistoryPage() {
     </div>
   );
 }
+
 
 export default HistoryPage;
