@@ -3,8 +3,8 @@ import { courses } from "./data";
 
 export default function CoursesPage() {
   const onClickCourse = (codigo) => {
-    window.open(`/cursos/${codigo}`, "_self")
-  }
+    window.open(`/cursos/${codigo}`, "_self");
+  };
 
   return (
     <div className="w-full pl-64">
@@ -49,16 +49,22 @@ export default function CoursesPage() {
                   <div className="text-sm text-gray-900">{course.nome}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <div className="text-sm text-gray-900">{course.periodoCurriculo}</div>
+                  <div className="text-sm text-gray-900">
+                    {course.periodoCurriculo}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <div className="text-sm text-gray-900">{course.turno}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <div className="text-sm text-gray-900">{course.duracaoMinima}</div>
+                  <div className="text-sm text-gray-900">
+                    {course.duracaoMinima}
+                  </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <div className="text-sm text-gray-900">{course.duracaoMaxima}</div>
+                  <div className="text-sm text-gray-900">
+                    {course.duracaoMaxima}
+                  </div>
                 </td>
               </tr>
             ))}
