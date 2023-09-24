@@ -3,7 +3,7 @@ import { courses } from "./data";
 
 export default function CoursesPage() {
   const onClickCourse = (codigo) => {
-    window.open(`/disciplinas/${codigo}`, "_self")
+    window.open(`/cursos/${codigo}`, "_self")
   }
 
   return (
