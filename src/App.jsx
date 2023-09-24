@@ -8,6 +8,7 @@ import RegisterUser from "./pages/RegisterUser";
 import HistoryPage from "./pages/History";
 import PasswordReset from "./pages/PasswordReset";
 import SubjectSillabus from "./pages/SubjectSillabus";
+import CoursesPage from "./pages/Courses";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/historico" element={<HistoryPage />} />
         <Route exact path="/password-reset" element={<PasswordReset />} />
         <Route exact path="/ementa-disciplina" element={<SubjectSillabus />} />
+        <Route exact path="/cursos" element={<CoursesPage />} />
       </Routes>
     </BrowserRouter>
   );
