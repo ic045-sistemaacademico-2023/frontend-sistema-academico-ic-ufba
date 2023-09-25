@@ -3,7 +3,7 @@ import CourseCard from "./CourseCard";
 function CourseSubjects({ courseData }) {
   return (
     <div className="pt-10">
-      <h1 className="text-xl">{courseData.nome}</h1>
+      <h1 className="text-xl text-gray-700 font-bold">{courseData.nome}</h1>
       {/* <div>
         <Button>Obrigatórias</Button>
         <Button>Optativas</Button>
