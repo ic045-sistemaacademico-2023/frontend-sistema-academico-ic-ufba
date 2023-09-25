@@ -26,12 +26,22 @@ function Sidebar() {
             icon={<User size={18} />}
           />
           <SidebarItem
+            title={"Turma"}
+            link={"/turma/123"}
+            icon={<User size={18} />}
+          />
+          <SidebarItem
             title={"Cadastrar Usuário"}
             link={"/cadastro-usuario"}
             icon={<User size={18} />}
           />
           <SidebarItem
-            title={"Outros cursos"}
+            title={"Cadastrar Curso"}
+            link={"/cadastro-curso"}
+            icon={<User size={18} />}
+          />
+          <SidebarItem
+            title={"Ementas"}
             link={"/cursos"}
             icon={<User size={18} />}
           />
@@ -43,6 +53,10 @@ function Sidebar() {
           <SidebarItem
             title={"Cadastrar Turma"}
             link={"/cadastrar-turma"}
+          />
+          <SidebarItem
+            title={"Usuarios"}
+            link={"/usuarios"}
             icon={<User size={18} />}
           />
         </ul>
