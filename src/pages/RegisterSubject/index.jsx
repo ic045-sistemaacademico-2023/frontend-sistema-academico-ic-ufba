@@ -1,7 +1,7 @@
 //import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import Sidebar from "../../componentes/Sidebar";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import TextField from "../../componentes/Forms/TextField";
 import Button from "../../componentes/Button";
@@ -10,6 +10,9 @@ import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = yup.object().shape({
   componenteCurricular: yup
@@ -75,11 +78,9 @@ function RegisterSubject() {
     );
   }, [watch("chTeorica"), watch("chPratica")]);
 
-  const [success, setSuccess] = useState(false);
-
   const onSubmit = (data) => {
-    setSuccess(true);
     console.log(data);
+    toast.success("Disciplina cadastrada com sucesso!");
   };
 
   return (
@@ -194,13 +195,7 @@ function RegisterSubject() {
         </div>
         <div>
           <Button type="submit">Cadastrar</Button>
-          {success && (
-            <p className="mt-5 text-sm text-center ml-1 text-green-500">
-              <span className="font-medium">
-                Disciplina cadastrado com sucesso!
-              </span>
-            </p>
-          )}
+          <ToastContainer position="bottom-right" />
         </div>
       </form>
     </div>
