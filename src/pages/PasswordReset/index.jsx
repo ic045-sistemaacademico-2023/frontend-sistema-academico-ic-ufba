@@ -2,13 +2,13 @@ import Button from "../../componentes/Button";
 import { useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import Link from "../../componentes/Link";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function PasswordReset() {
   const [email, setEmail] = useState("");
 
   const [emailError, setEmailError] = useState("");
-
-  const [success, setSuccess] = useState(false);
 
   const validateEmail = () => {
     const regex =
@@ -28,7 +28,7 @@ function PasswordReset() {
     validateEmail();
 
     if (emailError === "") {
-      setSuccess(true);
+      toast.success("Email enviado com sucesso!");
     }
   };
 
@@ -55,11 +55,7 @@ function PasswordReset() {
               <Button onClick={onSubmitLogin} type="submit">
                 Recuperar
               </Button>
-              {success && (
-                <p className="mt-5 text-sm text-center ml-1 text-green-500">
-                  <span className="font-medium">Sucesso</span>
-                </p>
-              )}
+              <ToastContainer position="bottom-right" />
             </form>
 
             <Link href="/login">Login</Link>

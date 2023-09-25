@@ -38,8 +38,8 @@ const SelectField = forwardRef(
           {...rest}
           ref={ref}
         >
-          <option value="" disabled>
-            Selecione um cargo
+          <option key="" value="" disabled>
+            {placeholder}
           </option>
           {options.map((option) => (
             <option key={option.id} value={option.value}>

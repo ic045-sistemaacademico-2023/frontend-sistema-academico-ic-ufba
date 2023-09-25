@@ -1,6 +1,5 @@
 import { cpf as cpfValidator } from "cpf-cnpj-validator";
 
-import { useState } from "react";
 import Button from "../../componentes/Button";
 import InputField from "../../componentes/Forms/InputField";
 import SelectField from "../../componentes/Forms/SelectField";
@@ -9,8 +8,11 @@ import { roles } from "./roles";
 
 import { useForm } from "react-hook-form";
 
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const schema = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
@@ -54,11 +56,9 @@ function RegisterUser() {
     resolver: yupResolver(schema),
   });
 
-  const [success, setSuccess] = useState(false);
-
   const onSubmit = (data) => {
-    setSuccess(true);
     console.log(data);
+    toast.success("Usuário cadastrado com sucesso!");
   };
 
   return (
@@ -101,6 +101,7 @@ function RegisterUser() {
             label={"Cargo"}
             options={roles}
             currentValue={watch("role")}
+            placeholder={"Selecione um cargo"}
             error={errors.role?.message}
           />
         </div>
@@ -122,13 +123,7 @@ function RegisterUser() {
         </div>
         <div>
           <Button type="submit">Cadastrar</Button>
-          {success && (
-            <p className="mt-5 text-sm text-center ml-1 text-green-500">
-              <span className="font-medium">
-                Usuário cadastrado com sucesso!
-              </span>
-            </p>
-          )}
+          {/* <ToastContainer position="bottom-right" /> */}
         </div>
       </form>
     </div>
