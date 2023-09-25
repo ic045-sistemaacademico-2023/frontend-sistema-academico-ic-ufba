@@ -1,3 +1,6 @@
+import Button from "../../componentes/Button";
+
+
 function UserTable({ users }) {
     return (
         <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
@@ -25,8 +28,8 @@ function UserTable({ users }) {
                             <td className="px-6 py-4">{user.cargo}</td>
                             <td className="px-6 py-4">{user.status}</td>
                             <td className="px-6 py-4">
-                                <button className="bg-primary-700 text-white px-4 mr-2 py-2 rounded hover:bg-primary-800">Editar</button>
-                                <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Deletar</button>
+                                <Button >Editar</Button>
+                                <Button secondary color="">Deletar</Button>
                             </td>
                         </tr>
                     ))}
