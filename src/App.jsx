@@ -1,16 +1,16 @@
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
 
-import LoginPage from "./pages/Login";
-import StudentPage from "./pages/Student";
-import SubjectsPage from "./pages/Subjects";
-import RegisterUser from "./pages/RegisterUser";
-import HistoryPage from "./pages/History";
-import PasswordReset from "./pages/PasswordReset";
-import SubjectSillabus from "./pages/SubjectSillabus";
 import CoursesPage from "./pages/Courses";
-import RegisterCourse from "./pages/RegisterCourse";
+import HistoryPage from "./pages/History";
+import LoginPage from "./pages/Login";
+import PasswordReset from "./pages/PasswordReset";
 import RegisterClass from "./pages/RegisterClass";
+import RegisterSubject from "./pages/RegisterSubject";
+import RegisterUser from "./pages/RegisterUser";
+import StudentPage from "./pages/Student";
+import SubjectSillabus from "./pages/SubjectSillabus";
+import SubjectsPage from "./pages/Subjects";
 
 function App() {
   return (
@@ -26,7 +26,11 @@ function App() {
         <Route exact path="/password-reset" element={<PasswordReset />} />
         <Route exact path="/ementa-disciplina" element={<SubjectSillabus />} />
         <Route exact path="/cursos" element={<CoursesPage />} />
-        <Route exact path="/cadastrar-disciplina" element={<RegisterCourse />} />
+        <Route
+          exact
+          path="/cadastro-disciplina"
+          element={<RegisterSubject />}
+        />
         <Route exact path="/cadastrar-turma" element={<RegisterClass />} />
       </Routes>
     </BrowserRouter>

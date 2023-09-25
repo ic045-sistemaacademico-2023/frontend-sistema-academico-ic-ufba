@@ -37,7 +37,7 @@ function Sidebar() {
           />
           <SidebarItem
             title={"Cadastrar Disciplina"}
-            link={"/cadastrar-disciplina"}
+            link={"/cadastro-disciplina"}
             icon={<User size={18} />}
           />
           <SidebarItem

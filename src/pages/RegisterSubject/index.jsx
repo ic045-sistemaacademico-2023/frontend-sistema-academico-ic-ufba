@@ -1,13 +1,10 @@
 //import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import Sidebar from "../../componentes/Sidebar";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import TextField from "../../componentes/Forms/TextField";
 import Button from "../../componentes/Button";
-//import SelectField from "../../componentes/Forms/SelectField";
-
-//import { roles } from "./roles";
 
 import { useForm } from "react-hook-form";
 
@@ -15,24 +12,42 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup.object().shape({
-  componenteCurricular: yup.string().required("O nome da disciplina é obrigatório"),
+  componenteCurricular: yup
+    .string()
+    .required("O nome da disciplina é obrigatório"),
   codigo: yup.string().required("O código da disciplina é obrigatório"),
-  departamento: yup.string().required("O departamento da disciplina é obrigatório"),
-  ch: yup.number().integer("Insira um valor numérico").required("A carga horária da disciplina é obrigatória"),
-  chTeorica: yup.number().integer("Insira um valor numérico").required("A carga horária teórica da disciplina é obrigatória"),
-  chPratica: yup.number().integer("Insira um valor numérico").required("A carga horária prática da disciplina é obrigatória"),
+  departamento: yup
+    .string()
+    .required("O departamento da disciplina é obrigatório"),
+  ch: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? 0 : value))
+    .min(1, "A carga horária da disciplina é obrigatória")
+    .required("A carga horária da disciplina é obrigatória"),
+  chTeorica: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? 0 : value))
+    .required("A carga horária teórica da disciplina é obrigatória"),
+  chPratica: yup
+    .number()
+    .transform((value) => (Number.isNaN(value) ? 0 : value))
+    .required("A carga horária prática da disciplina é obrigatória"),
   ementa: yup.string().required("A ementa da disciplina é obrigatória"),
-  objetivos: yup.string().required("Os objetivos da disciplina são obrigatórios"),
+  objetivos: yup
+    .string()
+    .required("Os objetivos da disciplina são obrigatórios"),
   conteudo: yup.string().required("O conteúdo da disciplina é obrigatório"),
-  bibliografia: yup.string().required("A bibliografia da disciplina é obrigatória"),
+  bibliografia: yup
+    .string()
+    .required("A bibliografia da disciplina é obrigatória"),
 });
 
 const initialValues = {
   codigo: "",
   componenteCurricular: "",
-  ch: 0,
-  chPratica: 0,
-  chTeorica: 0,
+  ch: "",
+  chPratica: "",
+  chTeorica: "",
   departamento: "",
   ementa: "",
   objetivos: "",
@@ -40,12 +55,12 @@ const initialValues = {
   bibliografia: "",
 };
 
-function RegisterCourse() {
+function RegisterSubject() {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
+    setValue,
     watch,
   } = useForm({
     mode: "onSubmit",
@@ -53,24 +68,19 @@ function RegisterCourse() {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    setValue(
+      "ch",
+      parseInt(watch("chTeorica") || 0) + parseInt(watch("chPratica") || 0),
+    );
+  }, [watch("chTeorica"), watch("chPratica")]);
+
   const [success, setSuccess] = useState(false);
 
   const onSubmit = (data) => {
     setSuccess(true);
     console.log(data);
   };
-
-  const [ch, setCh] = useState(0);
-  const [chTeorica, setChTeorica] = useState(0);
-  const [chPratica, setChPratica] = useState(0);
-
-  // Atualiza o valor de ch sempre que chTeorica ou chPratica mudar
-  useEffect(() => {
-    const total = parseInt(chTeorica) + parseInt(chPratica);
-    setCh(total);
-    setValue('ch', total);  // Atualiza o valor do campo 'ch'
-  }, [chTeorica, chPratica]);
-  
 
   return (
     <div className="w-full pl-64">
@@ -114,35 +124,41 @@ function RegisterCourse() {
               <div className="w-1/3">
                 <InputField
                   {...register("chTeorica")}
-                  value={chTeorica}
-                  onChange={(e) => setChTeorica(e.target.value)}
-                  type={"text"}
+                  type={"number"}
                   placeholder={"CH teórica"}
-                  error={errors.chTeorica?.message}
                 />
               </div>
               <div className="h-12 mx-2">+</div>
               <div className="w-1/3">
                 <InputField
                   {...register("chPratica")}
-                  value={chPratica}
-                  onChange={(e) => setChPratica(e.target.value)}
-                  type={"text"}
+                  type={"number"}
                   placeholder={"CH prática"}
-                  error={errors.chPratica?.message}
                 />
               </div>
               <div className="h-12 mx-2">=</div>
               <div className="w-1/3">
                 <InputField
                   {...register("ch")}
-                  value={ch}
-                  type={"text"}
+                  disabled={true}
+                  type={"number"}
                   placeholder={"CH total"}
-                  error={errors.ch?.message}
                   readOnly
                 />
               </div>
+            </div>
+            <div className="flex items-center">
+              {(errors.ch || errors.chPratica || errors.chTeorica) && (
+                <p className="mt-[-15px] text-sm text-left ml-1 text-red-600 dark:text-red-500">
+                  <span className="font-medium">{errors.ch?.message}</span>
+                  <span className="font-medium">
+                    {errors.chPratica?.message}
+                  </span>
+                  <span className="font-medium">
+                    {errors.chTeorica?.message}
+                  </span>
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -191,4 +207,4 @@ function RegisterCourse() {
   );
 }
 
-export default RegisterCourse;
+export default RegisterSubject;
