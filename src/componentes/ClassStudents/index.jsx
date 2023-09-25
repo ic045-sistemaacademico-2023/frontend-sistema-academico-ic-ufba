@@ -42,12 +42,8 @@ function ClassStudents({ classStudents }) {
               </th>
               <td className="px-6 py-4">{student.nome}</td>
               <td className="px-6 py-4">{student.curso}</td>
-              <td className="px-6 py-4">
-                {student.nota}
-              </td>
-              <td className="px-6 py-4">
-                {student.faltas}
-              </td>
+              <td className="px-6 py-4">{student.nota}</td>
+              <td className="px-6 py-4">{student.faltas}</td>
               <td className="px-6 py-4">
                 <Button>Editar</Button>
               </td>
