@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import CoursesPage from "./pages/Courses";
 import HistoryPage from "./pages/History";
 import LoginPage from "./pages/Login";
 import PasswordReset from "./pages/PasswordReset";
