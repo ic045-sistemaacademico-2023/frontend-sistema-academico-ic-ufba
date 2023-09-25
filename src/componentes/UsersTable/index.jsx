@@ -25,7 +25,7 @@ function UserTable({ users }) {
                             <td className="px-6 py-4">{user.cpf}</td>
                             <td className="px-6 py-4">{user.nome}</td>
                             <td className="px-6 py-4">{user.email}</td>
-                            <td className="px-6 py-4">{user.cargo}</td>
+                            <td className="px-6 py-4">{user.role}</td>
                             <td className="px-6 py-4">{user.status}</td>
                             <td className="px-6 py-4">
                                 <Button >Editar</Button>
