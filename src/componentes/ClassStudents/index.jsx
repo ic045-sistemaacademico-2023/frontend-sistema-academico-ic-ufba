@@ -21,6 +21,9 @@ function ClassStudents({ classStudents }) {
             <th scope="col" className="px-6 py-3">
               Faltas
             </th>
+            <th scope="col" className="px-6 py-3">
+              Ações
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -40,10 +43,13 @@ function ClassStudents({ classStudents }) {
               <td className="px-6 py-4">{student.nome}</td>
               <td className="px-6 py-4">{student.curso}</td>
               <td className="px-6 py-4">
-                {student.nota} <Button>Editar</Button>
+                {student.nota}
               </td>
               <td className="px-6 py-4">
-                {student.faltas} <Button>Editar</Button>
+                {student.faltas}
+              </td>
+              <td className="px-6 py-4">
+                <Button>Editar</Button>
               </td>
             </tr>
           ))}
