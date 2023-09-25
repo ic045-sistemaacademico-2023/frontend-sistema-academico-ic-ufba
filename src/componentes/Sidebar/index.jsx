@@ -35,6 +35,16 @@ function Sidebar() {
             link={"/cursos"}
             icon={<User size={18} />}
           />
+          <SidebarItem
+            title={"Cadastrar Disciplina"}
+            link={"/cadastrar-disciplina"}
+            icon={<User size={18} />}
+          />
+          <SidebarItem
+            title={"Cadastrar Turma"}
+            link={"/cadastrar-turma"}
+            icon={<User size={18} />}
+          />
         </ul>
         <ul className="space-y-2 font-medium">
           <SidebarItem
