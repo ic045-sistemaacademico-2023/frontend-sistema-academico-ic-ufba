@@ -31,6 +31,11 @@ function Sidebar() {
             icon={<User size={18} />}
           />
           <SidebarItem
+            title={"Cadastrar Curso"}
+            link={"/cadastro-curso"}
+            icon={<User size={18} />}
+          />
+          <SidebarItem
             title={"Outros cursos"}
             link={"/cursos"}
             icon={<User size={18} />}
