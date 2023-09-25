@@ -24,8 +24,9 @@ function CourseSubjects({ courseData }) {
             {courseData.grade.map((semester, index) => (
               <tr
                 key={semester.periodo}
-                className={`${index % 2 == 0 ? "bg-white" : "bg-primary-50"
-                  } border border-gray-100 hover:bg-primary-100`}
+                className={`${
+                  index % 2 == 0 ? "bg-white" : "bg-primary-50"
+                } border border-gray-100 hover:bg-primary-100`}
               >
                 <td
                   scope="row"
