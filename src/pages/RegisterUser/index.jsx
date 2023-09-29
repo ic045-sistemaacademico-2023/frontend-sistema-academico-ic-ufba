@@ -11,8 +11,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import api from "../../utils/api";
 
 const schema = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
@@ -56,9 +58,25 @@ function RegisterUser() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    toast.success("Usuário cadastrado com sucesso!");
+    try {
+      const response = await api.post("/user/", {
+        nome: data.name,
+        cpf: data.cpf,
+        email: data.email,
+        senha: data.password,
+        role: data.role,
+      });
+      if (response.status === 201) {
+        toast.success("Usuário cadastrado com sucesso!");
+      } else {
+        toast.error("Erro ao cadastrar usuário");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao cadastrar usuário");
+    }
   };
 
   return (
@@ -123,7 +141,7 @@ function RegisterUser() {
         </div>
         <div>
           <Button type="submit">Cadastrar</Button>
-          {/* <ToastContainer position="bottom-right" /> */}
+          <ToastContainer position="bottom-right" />
         </div>
       </form>
     </div>

@@ -4,13 +4,23 @@ import Sidebar from "../../componentes/Sidebar/index.jsx";
 import api from "../../utils/api.js";
 import { useEffect, useState } from "react";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function UsersPage() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    api.get("/user/all").then((response) => {
-      setUsers(response.data);
-    });
+    const fetchUsers = async () => {
+      try {
+        const response = await api.get("/user/all");
+        setUsers(response.data);
+      } catch (error) {
+        console.log(error);
+        toast.error("Error ao carregar usuários");
+      }
+    };
+    fetchUsers();
   }, []);
 
   return (
@@ -18,6 +28,7 @@ function UsersPage() {
       <Sidebar />
       <h1 className="text-xl text-gray-700 font-bold">Usuários</h1>
       <UserTable users={users} />
+      <ToastContainer />
     </div>
   );
 }
