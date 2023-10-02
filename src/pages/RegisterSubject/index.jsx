@@ -1,4 +1,3 @@
-//import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import Sidebar from "../../componentes/Sidebar";
 
 import { useEffect } from "react";
@@ -88,7 +87,7 @@ function RegisterSubject() {
       <Sidebar />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-primary-50 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"
+        className="bg-primary-100 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"
       >
         <h1 className="text-xl text-gray-700 font-bold mb-6">
           Cadastrar Disciplina
