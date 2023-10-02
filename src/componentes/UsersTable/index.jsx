@@ -1,5 +1,31 @@
 import Button from "../../componentes/Button";
 
+function formatRole(role) {
+  switch (role) {
+    case "ADMIN":
+      return "Administrador";
+    case "COORDENADOR_DE_CURSO":
+      return "Coordenador de Curso";
+    case "PROFESSOR":
+      return "Professor";
+    case "ALUNO":
+      return "Aluno";
+  }
+}
+
+function formatStatus(status) {
+  switch (status) {
+    case "APPROVED":
+      return "Aprovado";
+    case "DENIED":
+      return "Negado";
+    case "WAITING_APPROVAL":
+      return "Aguardando Aprovação";
+    case "EMAIL_CHECK":
+      return "Verificação de Email";
+  }
+}
+
 function UserTable({ users }) {
   return (
     <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
@@ -37,8 +63,8 @@ function UserTable({ users }) {
               <td className="px-6 py-4">{user.cpf}</td>
               <td className="px-6 py-4">{user.nome}</td>
               <td className="px-6 py-4">{user.email}</td>
-              <td className="px-6 py-4">{user.role}</td>
-              <td className="px-6 py-4">{user.status}</td>
+              <td className="px-6 py-4">{formatRole(user.role)}</td>
+              <td className="px-6 py-4">{formatStatus(user.status)}</td>
               <td className="px-6 py-4">
                 <Button>Editar</Button>
                 <Button secondary color="">
