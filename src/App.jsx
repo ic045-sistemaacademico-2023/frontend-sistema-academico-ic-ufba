@@ -14,6 +14,7 @@ import CourseClassPage from "./pages/CourseClass";
 import CoursesPage from "./pages/Courses";
 import RegisterCourse from "./pages/RegisterCourse";
 import UsersPage from "./pages/Users";
+import ManageUsersPage from "./pages/ManageUsers";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/cadastrar-turma" element={<RegisterClass />} />
         <Route exact path="/cadastro-curso" element={<RegisterCourse />} />
         <Route exact path="/usuarios" element={<UsersPage />} />
+        <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
       </Routes>
     </BrowserRouter>
   );

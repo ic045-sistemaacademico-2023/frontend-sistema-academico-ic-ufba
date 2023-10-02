@@ -26,7 +26,7 @@ function formatStatus(status) {
   }
 }
 
-function UserTable({ users }) {
+function UserTable({ users, isManager = false }) {
   return (
     <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
       <table className="w-full text-sm text-left text-gray-700">
@@ -44,9 +44,11 @@ function UserTable({ users }) {
             <th scope="col" className="px-6 py-3">
               Cargo
             </th>
-            <th scope="col" className="px-6 py-3">
-              Status
-            </th>
+            {!isManager && (
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+            )}
             <th scope="col" className="px-6 py-3">
               Ações
             </th>
@@ -64,13 +66,22 @@ function UserTable({ users }) {
               <td className="px-6 py-4">{user.nome}</td>
               <td className="px-6 py-4">{user.email}</td>
               <td className="px-6 py-4">{formatRole(user.role)}</td>
-              <td className="px-6 py-4">{formatStatus(user.status)}</td>
-              <td className="px-6 py-4">
-                <Button>Editar</Button>
-                <Button secondary color="">
-                  Deletar
-                </Button>
-              </td>
+              {!isManager && <td className="px-6 py-4">{formatStatus(user.status)}</td>}
+              {isManager ? (
+                <td className="px-6 py-4">
+                  <Button>Aprovar</Button>
+                  <Button secondary color="">
+                    Recusar
+                  </Button>
+                </td>
+              ) : (
+                <td className="px-6 py-4">
+                  <Button>Editar</Button>
+                  <Button secondary color="">
+                    Deletar
+                  </Button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
