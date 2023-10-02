@@ -1,6 +1,6 @@
 export const roles = [
-  { id: "admin", value: "admin", name: "Administrador" },
-  { id: "coord", value: "coordenador", name: "Coordenador" },
-  { id: "prof", value: "professor", name: "Professor" },
-  { id: "aluno", value: "aluno", name: "Aluno" },
+  { id: "admin", value: "ADMIN", name: "Administrador" },
+  { id: "coord", value: "COORDENADOR_DE_CURSO", name: "Coordenador" },
+  { id: "prof", value: "PROFESSOR", name: "Professor" },
+  { id: "aluno", value: "ALUNO", name: "Aluno" },
 ];
