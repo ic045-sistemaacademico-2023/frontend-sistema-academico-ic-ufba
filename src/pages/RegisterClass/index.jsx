@@ -20,76 +20,11 @@ const schema = yup.object().shape({
   componenteCurricular: yup
     .string()
     .required("O nome da disciplina é obrigatório"),
-  professor: yup
-    .string()
-    .required("O nome do professor é obrigatório"),
+  professor: yup.string().required("O nome do professor é obrigatório"),
   diasDeAula: yup
     .array()
     .min(1, "Selecione pelo menos um dia de aula")
     .required("Selecione pelo menos um dia de aula"),
-  // horarioInicio1: yup
-  //   .string()
-  //   .required("O horário de início da aula é obrigatório"),
-  // horarioFim1: yup
-  //   .string()
-  //   .required("O horário de fim da aula é obrigatório"),
-  // local1: yup
-  //   .string()
-  //   .required("O local da aula é obrigatório"),
-  // horarioInicio2: yup
-  //   .string()
-  //   .required("O horário de início da aula é obrigatório"),
-  // horarioFim2: yup
-  //   .string()
-  //   .required("O horário de fim da aula é obrigatório"),
-  // local2: yup
-  //   .string()
-  //   .required("O local da aula é obrigatório"),
-  // horarioInicio3: yup
-  //   .string()
-  //   .required("O horário de início da aula é obrigatório"),
-  // horarioFim3: yup
-  //   .string()
-  //   .required("O horário de fim da aula é obrigatório"),
-  // local3: yup
-  //   .string()
-  //   .required("O local da aula é obrigatório"),
-  // horarioInicio4: yup
-  //   .string()
-  //   .required("O horário de início da aula é obrigatório"),
-  // horarioFim4: yup
-  //   .string()
-  //   .required("O horário de fim da aula é obrigatório"),
-  // local4: yup
-  //   .string()
-  //   .required("O local da aula é obrigatório"),
-  // horarioInicio5: yup
-  //   .string()
-  //   .required("O horário de início da aula é obrigatório"),
-  // horarioFim5: yup
-  //   .string()
-  //   .required("O horário de fim da aula é obrigatório"),
-  // local5: yup
-  //   .string()
-  //   .required("O local da aula é obrigatório"),
-  // horarioInicio6: yup
-  //   .string()
-  //   .required("O horário de início da aula é obrigatório"),
-  // horarioFim6: yup
-  //   .string()
-  //   .required("O horário de fim da aula é obrigatório"),
-  // local6: yup
-  //   .string()
-  //   .required("O local da aula é obrigatório"),
-  // horarioInicio7: yup
-  //   .string()
-  //   .required("O horário de início da aula é obrigatório"),
-  // horarioFim7: yup
-  //   .string()
-  //   .required("O horário de fim da aula é obrigatório"),
-  // local7: yup
-  //   .string()
-  //   .required("O local da aula é obrigatório"),
 });
 
 const initialValues = {
@@ -134,67 +69,54 @@ function RegisterClass() {
   });
 
   const onSubmit = (data) => {
-    // Cria um array com todos os horários de início e fim
     const horarios = [
-      data.horarioInicio1, data.horarioFim1,
-      data.horarioInicio2, data.horarioFim2,
-      data.horarioInicio3, data.horarioFim3,
-      data.horarioInicio4, data.horarioFim4,
-      data.horarioInicio5, data.horarioFim5,
-      data.horarioInicio6, data.horarioFim6,
-      data.horarioInicio7, data.horarioFim7
+      data.horarioInicio1,
+      data.horarioFim1,
+      data.horarioInicio2,
+      data.horarioFim2,
+      data.horarioInicio3,
+      data.horarioFim3,
+      data.horarioInicio4,
+      data.horarioFim4,
+      data.horarioInicio5,
+      data.horarioFim5,
+      data.horarioInicio6,
+      data.horarioFim6,
+      data.horarioInicio7,
+      data.horarioFim7,
     ];
-    // Cria um array com todos os locais
-    const locais = [
-      data.local1, data.local2, data.local3, data.local4, data.local5, data.local6, data.local7
-    ]
-    // Filtra o os arrays para remover os horários e locais vazios
-    const horariosFiltrados = horarios.filter(horario => horario !== "" && horario !== "0");
-    const locaisFiltrados = locais.filter(local => local !== "" && local !== "0");
 
-    // Substitui os arrays de horários e locais pelos arrays filtrados
+    const locais = [
+      data.local1,
+      data.local2,
+      data.local3,
+      data.local4,
+      data.local5,
+      data.local6,
+      data.local7,
+    ];
+
+    const horariosFiltrados = horarios.filter(
+      (horario) => horario !== "" && horario !== "0",
+    );
+    const locaisFiltrados = locais.filter(
+      (local) => local !== "" && local !== "0",
+    );
+
     data.horarios = horariosFiltrados;
     data.locais = locaisFiltrados;
 
-    // Remove as propriedades de horário e local do objeto
     for (let i = 1; i <= 7; i++) {
-      delete data['horarioInicio' + i];
-      delete data['horarioFim' + i];
-      delete data['dia' + i];
+      delete data["horarioInicio" + i];
+      delete data["horarioFim" + i];
+      delete data["dia" + i];
     }
     for (let i = 1; i <= 7; i++) {
-      delete data['local' + i];
+      delete data["local" + i];
     }
 
     console.log(data);
     toast.success("Turma cadastrada com sucesso!");
-    
-    // Limpa formulário
-    // setValue("codigoTurma", "");
-    // setValue("componenteCurricular", "");
-    // setValue("professor", "");
-    // setValue("diasDeAula", []);
-    // setValue("horarioInicio1", "");
-    // setValue("horarioFim1", "");
-    // setValue("local1", "");
-    // setValue("horarioInicio2", "");
-    // setValue("horarioFim2", "");
-    // setValue("local2", "");
-    // setValue("horarioInicio3", "");
-    // setValue("horarioFim3", "");
-    // setValue("local3", "");
-    // setValue("horarioInicio4", "");
-    // setValue("horarioFim4", "");
-    // setValue("local4", "");
-    // setValue("horarioInicio5", "");
-    // setValue("horarioFim5", "");
-    // setValue("local5", "");
-    // setValue("horarioInicio6", "");
-    // setValue("horarioFim6", "");
-    // setValue("local6", "");
-    // setValue("horarioInicio7", "");
-    // setValue("horarioFim7", "");
-    // setValue("local7", "");
   };
 
   const diasDeAula = watch("diasDeAula", []);
@@ -204,7 +126,8 @@ function RegisterClass() {
   const [isComponentSelected, setIsComponentSelected] = useState(false);
 
   useEffect(() => {
-    const isAnyWeekdaySelected = diasDeAula && diasDeAula.some(diasDeAula => diasDeAula !== "combinar");
+    const isAnyWeekdaySelected =
+      diasDeAula && diasDeAula.some((diasDeAula) => diasDeAula !== "combinar");
     setIsOptionSelected(isAnyWeekdaySelected);
   }, [diasDeAula]);
 
@@ -221,13 +144,13 @@ function RegisterClass() {
   const [isDomSelected, setIsDomSelected] = useState(false);
 
   useEffect(() => {
-    setIsSegSelected(diasDeAula.includes('SEG'));
-    setIsTerSelected(diasDeAula.includes('TER'));
-    setIsQuaSelected(diasDeAula.includes('QUA'));
-    setIsQuiSelected(diasDeAula.includes('QUI'));
-    setIsSexSelected(diasDeAula.includes('SEX'));
-    setIsSabSelected(diasDeAula.includes('SAB'));
-    setIsDomSelected(diasDeAula.includes('DOM'));
+    setIsSegSelected(diasDeAula.includes("SEG"));
+    setIsTerSelected(diasDeAula.includes("TER"));
+    setIsQuaSelected(diasDeAula.includes("QUA"));
+    setIsQuiSelected(diasDeAula.includes("QUI"));
+    setIsSexSelected(diasDeAula.includes("SEX"));
+    setIsSabSelected(diasDeAula.includes("SAB"));
+    setIsDomSelected(diasDeAula.includes("DOM"));
   }, [diasDeAula]);
 
   return (
@@ -252,7 +175,11 @@ function RegisterClass() {
           <InputField
             {...register("codigoTurma")}
             label={"Código da turma"}
-            value={isComponentSelected && String(subjectClasses.length + 1).padStart(3, '0') || ""}
+            value={
+              (isComponentSelected &&
+                String(subjectClasses.length + 1).padStart(3, "0")) ||
+              ""
+            }
             placeholder={"Preenchido automaticamente"}
             disabled={true}
           />
@@ -278,32 +205,38 @@ function RegisterClass() {
           />
         </div>
 
-        {isComponentSelected && (setValue('codigoTurma', String(subjectClasses.length + 1).padStart(3, '0')),
-          <div className="mb-1">
-            <CourseClasses courseClasses={subjectClasses} />
-          </div>
-        )}
+        {isComponentSelected &&
+          (setValue(
+            "codigoTurma",
+            String(subjectClasses.length + 1).padStart(3, "0"),
+          ),
+          (
+            <div className="mb-1">
+              <CourseClasses courseClasses={subjectClasses} />
+            </div>
+          ))}
 
         {isOptionSelected && (
           <div className="mt-2">
-            {/* Cabeçalho da tabela */}
             <div className="grid md:grid-cols-3 md:gap-6">
               <div>
                 <p className="block mb-2 text-sm font-medium text-gray-900 ml-2 text-left">
-                  Dia:</p>
+                  Dia:
+                </p>
               </div>
               <div>
                 <p className="block mb-2 text-sm font-medium text-gray-900 ml-2 text-left">
-                  Horários de início e final da aula:</p>
+                  Horários de início e final da aula:
+                </p>
               </div>
               <div>
                 <p className="block mb-2 text-sm font-medium text-gray-900 ml-2 text-left">
-                  Local de aula:</p>
+                  Local de aula:
+                </p>
               </div>
             </div>
-            {/* Linhas da tabela */}
             <div>
-              {isSegSelected &&
+              {isSegSelected && (
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div>
                     <InputField
@@ -347,8 +280,8 @@ function RegisterClass() {
                     </div>
                   </div>
                 </div>
-              }
-              {isTerSelected &&
+              )}
+              {isTerSelected && (
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div>
                     <InputField
@@ -392,8 +325,8 @@ function RegisterClass() {
                     </div>
                   </div>
                 </div>
-              }
-              {isQuaSelected &&
+              )}
+              {isQuaSelected && (
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div>
                     <InputField
@@ -437,8 +370,8 @@ function RegisterClass() {
                     </div>
                   </div>
                 </div>
-              }
-              {isQuiSelected &&
+              )}
+              {isQuiSelected && (
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div>
                     <InputField
@@ -482,8 +415,8 @@ function RegisterClass() {
                     </div>
                   </div>
                 </div>
-              }
-              {isSexSelected &&
+              )}
+              {isSexSelected && (
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div>
                     <InputField
@@ -527,8 +460,8 @@ function RegisterClass() {
                     </div>
                   </div>
                 </div>
-              }
-              {isSabSelected &&
+              )}
+              {isSabSelected && (
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div>
                     <InputField
@@ -572,8 +505,8 @@ function RegisterClass() {
                     </div>
                   </div>
                 </div>
-              }
-              {isDomSelected &&
+              )}
+              {isDomSelected && (
                 <div className="grid md:grid-cols-3 md:gap-6">
                   <div>
                     <InputField
@@ -617,9 +550,8 @@ function RegisterClass() {
                     </div>
                   </div>
                 </div>
-              }
+              )}
             </div>
-
           </div>
         )}
         <div>

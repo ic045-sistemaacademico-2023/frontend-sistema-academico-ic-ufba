@@ -1,17 +1,7 @@
 import { forwardRef } from "react";
 
 const MultiCheckboxField = forwardRef(
-  (
-    {
-      id,
-      name,
-      label,
-      options,
-      error,
-      ...rest
-    },
-    ref,
-  ) => {
+  ({ id, name, label, options, error, ...rest }, ref) => {
     return (
       <div className="mb-5">
         {label && (
@@ -24,9 +14,12 @@ const MultiCheckboxField = forwardRef(
         )}
         <div className="flex">
           {options.map((option) => (
-            <div key={option.id} className="flex items-center mb-2 mr-4 p-0.5">
+            <div
+              key={option.id}
+              className="flex items-center mb-2 mr-4 p-0.5 rounded-lg"
+            >
               <input
-                className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-auto p-2.5`}
+                className={`w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-3xl focus:ring-blue-500`}
                 type="checkbox"
                 id={`${id}_${option.value}`}
                 name={name}
@@ -35,7 +28,7 @@ const MultiCheckboxField = forwardRef(
                 ref={ref}
               />
               <label
-                className="mb-2 mt-2 text-sm font-medium text-gray-900 ml-0.5"
+                className="ml-2 text-sm font-medium text-gray-900"
                 htmlFor={`${id}_${option.value}`}
               >
                 {option.name}
@@ -48,7 +41,6 @@ const MultiCheckboxField = forwardRef(
             </p>
           )}
         </div>
-
       </div>
     );
   },
