@@ -30,12 +30,8 @@ function App() {
         <Route exact path="/password-reset" element={<PasswordReset />} />
         <Route exact path="/ementa-disciplina" element={<SubjectSillabus />} />
         <Route exact path="/cursos" element={<CoursesPage />} />
-        <Route
-          exact
-          path="/cadastro-disciplina"
-          element={<RegisterSubject />}
-        />
-        <Route exact path="/cadastrar-turma" element={<RegisterClass />} />
+        <Route exact path="/cadastro-disciplina" element={<RegisterSubject />}/>
+        <Route exact path="/cadastro-turma" element={<RegisterClass />} />
         <Route exact path="/cadastro-curso" element={<RegisterCourse />} />
         <Route exact path="/usuarios" element={<UsersPage />} />
       </Routes>
