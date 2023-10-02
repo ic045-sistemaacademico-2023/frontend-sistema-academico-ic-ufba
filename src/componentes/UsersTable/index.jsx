@@ -66,7 +66,9 @@ function UserTable({ users, isManager = false }) {
               <td className="px-6 py-4">{user.nome}</td>
               <td className="px-6 py-4">{user.email}</td>
               <td className="px-6 py-4">{formatRole(user.role)}</td>
-              {!isManager && <td className="px-6 py-4">{formatStatus(user.status)}</td>}
+              {!isManager && (
+                <td className="px-6 py-4">{formatStatus(user.status)}</td>
+              )}
               {isManager ? (
                 <td className="px-6 py-4">
                   <Button>Aprovar</Button>
