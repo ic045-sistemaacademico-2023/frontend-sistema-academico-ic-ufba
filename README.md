@@ -132,6 +132,8 @@ E pronto... não exatamente, você perceberá que subiu um erro, isso porque a g
 
 `sudo systemctl start mysql.service`
 
+`sudo systemctl enable mysql.service`
+
 `sudo mysql_secure_installation`
 
 Coloque a senha como `root` para padronizar.
