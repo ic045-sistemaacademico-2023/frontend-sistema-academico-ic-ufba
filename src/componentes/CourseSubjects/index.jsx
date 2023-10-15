@@ -1,6 +1,24 @@
+import { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
+import api from "../../utils/api";
+import { toast } from "react-toastify";
 
 function CourseSubjects({ courseData }) {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const fetchCourseSubjects = async () => {
+      try {
+        const response = await api.get(`disciplina/curso/1`);
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+        toast.error("Error ao carregar dados das disciplinas");
+      }
+    };
+    fetchCourseSubjects();
+  }, []);
+
   return (
     <div className="pt-10">
       <h1 className="text-xl text-gray-700 font-bold">{courseData.nome}</h1>
