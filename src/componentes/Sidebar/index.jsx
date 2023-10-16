@@ -1,4 +1,16 @@
-import { CirclesThreePlus, GraduationCap, IdentificationBadge, ListChecks, ListDashes, Plus, PlusCircle, SquaresFour, User, UserPlus, Users } from "@phosphor-icons/react";
+import {
+  CirclesThreePlus,
+  GraduationCap,
+  IdentificationBadge,
+  ListChecks,
+  ListDashes,
+  Plus,
+  PlusCircle,
+  SquaresFour,
+  User,
+  UserPlus,
+  Users,
+} from "@phosphor-icons/react";
 import SidebarItem from "./SidebarItem";
 
 function Sidebar() {
