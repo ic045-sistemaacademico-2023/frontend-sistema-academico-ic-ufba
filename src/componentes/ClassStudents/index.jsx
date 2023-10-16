@@ -7,7 +7,7 @@ function ClassStudents({ classStudents }) {
         <thead className="text-xs text-gray-900 uppercase bg-gray-5">
           <tr>
             <th scope="col" className="px-6 py-3">
-              Matrícula
+              CPF
             </th>
             <th scope="col" className="px-6 py-3">
               Nome
@@ -27,7 +27,7 @@ function ClassStudents({ classStudents }) {
           </tr>
         </thead>
         <tbody>
-          {classStudents.map((student, index) => (
+          {classStudents?.map((student, index) => (
             <tr
               key={index}
               className={`${
@@ -38,12 +38,12 @@ function ClassStudents({ classStudents }) {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               >
-                {student.matricula}
+                {student.usuario.cpf}
               </th>
-              <td className="px-6 py-4">{student.nome}</td>
-              <td className="px-6 py-4">{student.curso}</td>
-              <td className="px-6 py-4">{student.nota}</td>
-              <td className="px-6 py-4">{student.faltas}</td>
+              <td className="px-6 py-4">{student.usuario.nome}</td>
+              <td className="px-6 py-4">{student.curso.nome}</td>
+              <td className="px-6 py-4">{'6.4'}</td>
+              <td className="px-6 py-4">{'4'}</td>
               <td className="px-6 py-4">
                 <Button>Editar</Button>
               </td>

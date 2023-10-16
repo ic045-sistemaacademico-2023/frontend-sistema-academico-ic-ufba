@@ -15,6 +15,7 @@ import CoursesPage from "./pages/Courses";
 import RegisterCourse from "./pages/RegisterCourse";
 import UsersPage from "./pages/Users";
 import ManageUsersPage from "./pages/ManageUsers";
+import CourseClasses from "./componentes/CourseClasses";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route exact path="/disciplinas" element={<SubjectsPage />} />
         <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
         <Route exact path="/turma/:id" element={<CourseClassPage />} />
+        <Route exact path="/turmas" element={<CourseClasses />} />
         <Route exact path="/cadastro-usuario" element={<RegisterUser />} />
         <Route exact path="/comprovante-matricula" element={<StudentPage />} />
         <Route exact path="/historico" element={<HistoryPage />} />

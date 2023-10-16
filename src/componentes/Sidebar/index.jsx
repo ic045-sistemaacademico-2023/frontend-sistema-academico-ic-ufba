@@ -40,7 +40,7 @@ function Sidebar() {
           />
           <SidebarItem
             title={"Turma"}
-            link={"/turma/123"}
+            link={"/turma/1"}
             icon={<GraduationCap size={20} />}
           />
           <SidebarItem

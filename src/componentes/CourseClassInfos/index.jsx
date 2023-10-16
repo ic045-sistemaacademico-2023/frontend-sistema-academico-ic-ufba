@@ -6,37 +6,37 @@ function CourseClassInfos({ course }) {
       </h1>
 
       <div className="grid grid-cols-3 gap-6 mb-6 bg-primary-100 py-5 rounded-lg">
-        <div className>
+        <div>
           <strong className="text-sm text-primary-600 block">
             Disciplina:
           </strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.componenteCurricular}
+            {course?.disciplina?.nome}
           </p>
         </div>
-        <div className>
-          <strong className="text-sm text-primary-600 block">Código:</strong>
+        <div>
+          <strong className="text-sm text-primary-600 block">Professor:</strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.codigo}
+            {course?.professor?.nome}
           </p>
         </div>
-        <div className>
+        <div>
           <strong className="text-sm text-primary-600 block">Turma:</strong>
-          <p className="text-lg font-medium text-primary-800">{course.turma}</p>
+          <p className="text-lg font-medium text-primary-800">{course?.id}</p>
         </div>
         <div>
           <strong className="text-sm text-primary-600 block">Dias:</strong>
-          <p className="text-lg font-medium text-primary-800">{course.dias}</p>
+          <p className="text-lg font-medium text-primary-800">{course?.dias}</p>
         </div>
         <div>
           <strong className="text-sm text-primary-600 block">Horários:</strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.horario}
+            {course?.horario}
           </p>
         </div>
         <div>
           <strong className="text-sm text-primary-600 block">Local:</strong>
-          <p className="text-lg font-medium text-primary-800">{course.local}</p>
+          <p className="text-lg font-medium text-primary-800">{course?.local}</p>
         </div>
       </div>
     </div>
