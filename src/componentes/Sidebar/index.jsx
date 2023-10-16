@@ -1,24 +1,6 @@
 import { CirclesThreePlus, GraduationCap, IdentificationBadge, ListChecks, ListDashes, Plus, PlusCircle, SquaresFour, User, UserPlus, Users } from "@phosphor-icons/react";
 import SidebarItem from "./SidebarItem";
 
-function SidebarSection({ title, children }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center w-full text-left p-2"
-      >
-        {title}
-        <span>{isOpen ? '-' : '+'}</span>
-      </button>
-      {isOpen && children}
-    </div>
-  );
-}
-
-
 function Sidebar() {
   return (
     <aside
