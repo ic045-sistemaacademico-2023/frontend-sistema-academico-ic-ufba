@@ -42,8 +42,8 @@ function ClassStudents({ classStudents }) {
               </th>
               <td className="px-6 py-4">{student.usuario.nome}</td>
               <td className="px-6 py-4">{student.curso.nome}</td>
-              <td className="px-6 py-4">{'6.4'}</td>
-              <td className="px-6 py-4">{'4'}</td>
+              <td className="px-6 py-4">{"6.4"}</td>
+              <td className="px-6 py-4">{"4"}</td>
               <td className="px-6 py-4">
                 <Button>Editar</Button>
               </td>

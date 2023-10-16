@@ -36,7 +36,9 @@ function CourseClassInfos({ course }) {
         </div>
         <div>
           <strong className="text-sm text-primary-600 block">Local:</strong>
-          <p className="text-lg font-medium text-primary-800">{course?.local}</p>
+          <p className="text-lg font-medium text-primary-800">
+            {course?.local}
+          </p>
         </div>
       </div>
     </div>

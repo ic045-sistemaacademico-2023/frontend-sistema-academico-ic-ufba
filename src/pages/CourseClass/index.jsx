@@ -25,7 +25,6 @@ function CourseClassPage() {
     fetchUsers();
   }, [id]);
 
-
   return (
     <div className="w-full pl-64">
       <Sidebar />
