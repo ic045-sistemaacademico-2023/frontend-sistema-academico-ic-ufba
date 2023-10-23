@@ -6,6 +6,7 @@ import TextField from "../../componentes/Forms/TextField";
 import Button from "../../componentes/Button";
 
 import { useForm } from "react-hook-form";
+import api from "../../utils/api";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,14 +15,10 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const schema = yup.object().shape({
-  componenteCurricular: yup
-    .string()
-    .required("O nome da disciplina é obrigatório"),
+  nome: yup.string().required("O nome da disciplina é obrigatório"),
   codigo: yup.string().required("O código da disciplina é obrigatório"),
-  departamento: yup
-    .string()
-    .required("O departamento da disciplina é obrigatório"),
-  ch: yup
+  curso: yup.number().required("O curso da disciplina é obrigatório"),
+  chTotal: yup
     .number()
     .transform((value) => (Number.isNaN(value) ? 0 : value))
     .min(1, "A carga horária da disciplina é obrigatória")
@@ -34,27 +31,28 @@ const schema = yup.object().shape({
     .number()
     .transform((value) => (Number.isNaN(value) ? 0 : value))
     .required("A carga horária prática da disciplina é obrigatória"),
-  ementa: yup.string().required("A ementa da disciplina é obrigatória"),
-  objetivos: yup
-    .string()
-    .required("Os objetivos da disciplina são obrigatórios"),
-  conteudo: yup.string().required("O conteúdo da disciplina é obrigatório"),
-  bibliografia: yup
-    .string()
-    .required("A bibliografia da disciplina é obrigatória"),
+  ementa: yup.string(),
+  objetivos: yup.string(),
+  conteudo: yup.string(),
+  bibliografia: yup.string(),
+  observacao: yup.string(),
+  semestre: yup.number().required("O semestre da disciplina é obrigatório"),
 });
 
 const initialValues = {
   codigo: "",
-  componenteCurricular: "",
-  ch: "",
+  nome: "",
+  chTotal: "",
   chPratica: "",
   chTeorica: "",
-  departamento: "",
+  curso: "",
   ementa: "",
   objetivos: "",
   conteudo: "",
   bibliografia: "",
+  observacao: "",
+  area: "EDUCACAO",
+  semestre: "",
 };
 
 function RegisterSubject() {
@@ -72,14 +70,21 @@ function RegisterSubject() {
 
   useEffect(() => {
     setValue(
-      "ch",
+      "chTotal",
       parseInt(watch("chTeorica") || 0) + parseInt(watch("chPratica") || 0),
     );
   }, [watch("chTeorica"), watch("chPratica")]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
-    toast.success("Disciplina cadastrada com sucesso!");
+    try {
+      const response = await api.post(`disciplina/`, data);
+      console.log('response', response)
+      toast.success("Disciplina cadastrada com sucesso!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Error ao carregar dados das disciplinas");
+    }
   };
 
   return (
@@ -92,13 +97,13 @@ function RegisterSubject() {
         <h1 className="text-xl text-gray-700 font-bold mb-6">
           Cadastrar Disciplina
         </h1>
-        <div className="grid md:grid-cols-2 md:gap-6">
+        <div className="grid md:grid-cols-3 md:gap-6">
           <InputField
-            {...register("componenteCurricular")}
+            {...register("nome")}
             label={"Nome"}
             type={"text"}
             placeholder={"Nome da disciplina"}
-            error={errors.componenteCurricular?.message}
+            error={errors.nome?.message}
           />
           <InputField
             {...register("codigo")}
@@ -107,14 +112,21 @@ function RegisterSubject() {
             placeholder={"Código da disciplina, ex: MAT123"}
             error={errors.codigo?.message}
           />
+          <InputField
+            {...register("semestre")}
+            label={"Semestre da Disciplina"}
+            type={"number"}
+            placeholder={"Semestre da disciplina, ex: 1"}
+            error={errors.semestre?.message}
+          />
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
           <InputField
-            {...register("departamento")}
-            label={"Departamento"}
+            {...register("curso")}
+            label={"Curso"}
             type={"text"}
-            placeholder={"Departamento da disciplina"}
-            error={errors.departamento?.message}
+            placeholder={"Curso da disciplina"}
+            error={errors.curso?.message}
           />
           <div>
             <p className="block mb-2 text-sm font-medium text-gray-900 ml-2 text-left">
@@ -139,7 +151,7 @@ function RegisterSubject() {
               <div className="h-12 mx-2">=</div>
               <div className="w-1/3">
                 <InputField
-                  {...register("ch")}
+                  {...register("chTotal")}
                   disabled={true}
                   type={"number"}
                   placeholder={"CH total"}
@@ -190,6 +202,13 @@ function RegisterSubject() {
             type={"text"}
             placeholder={"Bibliografia da disciplina..."}
             error={errors.bibliografia?.message}
+          />
+          <TextField
+            {...register("observacao")}
+            label={"Observação"}
+            type={"text"}
+            placeholder={"Algum ponto importante a ser observado..."}
+            error={errors.observacao?.message}
           />
         </div>
         <div>

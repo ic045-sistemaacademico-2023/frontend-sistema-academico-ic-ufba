@@ -11,7 +11,7 @@ function SubjectInfos({ course }) {
             Disciplina:
           </strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.componenteCurricular}
+            {course.nome}
           </p>
         </div>
         <div className>
@@ -71,7 +71,7 @@ function SubjectInfos({ course }) {
 
         <div className="mb-6 text-left">
           <strong className="text-xl text-primary-600">Conteúdo:</strong>
-          {course.conteudo.split("\n").map((item, i) => (
+          {course.conteudo && course.conteudo.split("\n").map((item, i) => (
             <p className="text-base text-primary-700 mt-2 text-justify" key={i}>
               {item}
             </p>
@@ -80,7 +80,7 @@ function SubjectInfos({ course }) {
 
         <div className="mb-2 text-left pb-2">
           <strong className="text-xl text-primary-600">Bibliografia:</strong>
-          {course.bibliografia.split("\n").map((item, i) => (
+          {course.bibliografia && course.bibliografia.split("\n").map((item, i) => (
             <p className="text-base text-primary-700 mt-2 text-justify" key={i}>
               {item}
             </p>

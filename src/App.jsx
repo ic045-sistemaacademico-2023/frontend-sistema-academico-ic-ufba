@@ -24,7 +24,7 @@ function App() {
         <Route exact path="/" element={<LoginPage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/disciplinas" element={<SubjectsPage />} />
-        <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
+        <Route exact path="/disciplina/:codigo" element={<SubjectSillabus />} />
         <Route exact path="/turma/:id" element={<CourseClassPage />} />
         <Route exact path="/turmas" element={<CourseClasses />} />
         <Route exact path="/cadastro-usuario" element={<RegisterUser />} />

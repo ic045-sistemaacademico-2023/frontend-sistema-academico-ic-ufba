@@ -1,6 +1,24 @@
+import { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
+import api from "../../utils/api";
+import { toast } from "react-toastify";
 
 function CourseSubjects({ courseData }) {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const fetchCourseSubjects = async () => {
+      try {
+        const response = await api.get(`disciplina/curso/1`);
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+        toast.error("Error ao carregar dados das disciplinas");
+      }
+    };
+    fetchCourseSubjects();
+  }, []);
+
   return (
     <div className="pt-10">
       <h1 className="text-xl text-gray-700 font-bold">{courseData.nome}</h1>
@@ -21,9 +39,9 @@ function CourseSubjects({ courseData }) {
             </tr>
           </thead>
           <tbody>
-            {courseData.grade.map((semester, index) => (
+            {data && Object.values(data).map((semester, index) => (
               <tr
-                key={semester.periodo}
+                key={index}
                 className={`${
                   index % 2 == 0 ? "bg-white" : "bg-primary-50"
                 } border border-gray-100 hover:bg-primary-100`}
@@ -32,10 +50,10 @@ function CourseSubjects({ courseData }) {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
                 >
-                  {semester.periodo}
+                  {index + 1}
                 </td>
                 <td className="px-6 py-4 flex gap-5">
-                  {semester.disciplinas.map((subject) => (
+                  {semester.map((subject) => (
                     // TODO: ao clicar no card, possibilitar se inscrever na materia?
                     <CourseCard data={subject} key={subject.id} />
                   ))}
