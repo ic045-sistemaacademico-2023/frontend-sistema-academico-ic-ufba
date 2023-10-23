@@ -11,27 +11,25 @@ import InputField from "../../componentes/Forms/InputField";
 import MultiSelectField from "../../componentes/Forms/MultiSelectField";
 import SearchableSelectField from "../../componentes/Forms/SearchableSelectField";
 import Button from "../../componentes/Button";
-import CourseClasses from "../../componentes/CourseClasses";
+import api from "../../utils/api";
 
-import { disciplinas, professores, dias, horarios } from "./data";
-import { subjectClasses } from "./subjectClasses";
+import { disciplinas, professores, diasDeAula, horarios } from "./data";
 
 const schema = yup.object().shape({
-  componenteCurricular: yup
-    .string()
-    .required("O nome da disciplina é obrigatório"),
+  disciplina: yup.number().required("O nome da disciplina é obrigatório"),
+  semestre: yup.number().required("O semestre é obrigatório"),
   professor: yup.string().required("O nome do professor é obrigatório"),
-  diasDeAula: yup
+  dias: yup
     .array()
     .min(1, "Selecione pelo menos um dia de aula")
     .required("Selecione pelo menos um dia de aula"),
 });
 
 const initialValues = {
-  codigoTurma: "",
-  componenteCurricular: "",
+  disciplina: "",
+  semestre: "",
   professor: "",
-  diasDeAula: [],
+  dias: [],
   horarioInicio1: "",
   horarioFim1: "",
   local1: "",
@@ -60,7 +58,6 @@ function RegisterClass() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     watch,
   } = useForm({
     mode: "onSubmit",
@@ -68,7 +65,25 @@ function RegisterClass() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  function refatorarDados(data) {
+    const horariosString = [];
+    for (let i = 0; i < data.horarios.length; i += 2) {
+      const inicio = data.horarios[i];
+      const fim = data.horarios[i + 1];
+      horariosString.push(`${inicio}-${fim}`);
+    }
+    const horariosFinal = horariosString.join("/");
+
+    const locaisString = data.locais.join("/");
+
+    return {
+      ...data,
+      horario: horariosFinal,
+      local: locaisString,
+    };
+  }
+
+  const onSubmit = async (data) => {
     const horarios = [
       data.horarioInicio1,
       data.horarioFim1,
@@ -115,25 +130,28 @@ function RegisterClass() {
       delete data["local" + i];
     }
 
-    console.log(data);
-    toast.success("Turma cadastrada com sucesso!");
+    try {
+      const response = await api.post("/turma/", refatorarDados(data));
+      if (response.status === 201) {
+        toast.success("Turma cadastrado com sucesso!");
+      } else {
+        toast.error("Erro ao cadastrar turma");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao cadastrar turma");
+    }
   };
 
-  const diasDeAula = watch("diasDeAula", []);
-  const componenteCurricular = watch("componenteCurricular", []);
+  const dias = watch("dias", []);
 
   const [isOptionSelected, setIsOptionSelected] = useState(false);
-  const [isComponentSelected, setIsComponentSelected] = useState(false);
 
   useEffect(() => {
     const isAnyWeekdaySelected =
-      diasDeAula && diasDeAula.some((diasDeAula) => diasDeAula !== "combinar");
+      dias && dias.some((dias) => dias !== "combinar");
     setIsOptionSelected(isAnyWeekdaySelected);
-  }, [diasDeAula]);
-
-  useEffect(() => {
-    setIsComponentSelected(componenteCurricular !== "");
-  }, [componenteCurricular]);
+  }, [dias]);
 
   const [isSegSelected, setIsSegSelected] = useState(false);
   const [isTerSelected, setIsTerSelected] = useState(false);
@@ -144,14 +162,14 @@ function RegisterClass() {
   const [isDomSelected, setIsDomSelected] = useState(false);
 
   useEffect(() => {
-    setIsSegSelected(diasDeAula.includes("SEG"));
-    setIsTerSelected(diasDeAula.includes("TER"));
-    setIsQuaSelected(diasDeAula.includes("QUA"));
-    setIsQuiSelected(diasDeAula.includes("QUI"));
-    setIsSexSelected(diasDeAula.includes("SEX"));
-    setIsSabSelected(diasDeAula.includes("SAB"));
-    setIsDomSelected(diasDeAula.includes("DOM"));
-  }, [diasDeAula]);
+    setIsSegSelected(dias.includes("SEGUNDA"));
+    setIsTerSelected(dias.includes("TERCA"));
+    setIsQuaSelected(dias.includes("QUARTA"));
+    setIsQuiSelected(dias.includes("QUINTA"));
+    setIsSexSelected(dias.includes("SEXTA"));
+    setIsSabSelected(dias.includes("SABADO"));
+    setIsDomSelected(dias.includes("DOMINGO"));
+  }, [dias]);
 
   return (
     <div className="w-full pl-64">
@@ -165,23 +183,16 @@ function RegisterClass() {
         </h1>
         <div className="grid md:grid-cols-2 md:gap-6">
           <SearchableSelectField
-            {...register("componenteCurricular")}
+            {...register("disciplina")}
             label={"Disciplina"}
             options={disciplinas}
-            currentValue={watch("componenteCurricular")}
             placeholder={"Selecione a disciplina ou digite para filtrar"}
             error={errors.componenteCurricular?.message}
           />
           <InputField
-            {...register("codigoTurma")}
-            label={"Código da turma"}
-            value={
-              (isComponentSelected &&
-                String(subjectClasses.length + 1).padStart(3, "0")) ||
-              ""
-            }
-            placeholder={"Preenchido automaticamente"}
-            disabled={true}
+            {...register("semestre")}
+            placeholder="Digite o semestre"
+            label="Semestre"
           />
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
@@ -197,24 +208,13 @@ function RegisterClass() {
         </div>
         <div className="grid md:grid-cols-1 md:gap-6">
           <MultiSelectField
-            {...register("diasDeAula")}
+            {...register("dias")}
             label={"Dias de aula"}
-            options={dias}
+            options={diasDeAula}
             placeholder={"Selecione o dia"}
-            error={errors.diasDeAula?.message}
+            error={errors.dias?.message}
           />
         </div>
-
-        {isComponentSelected &&
-          (setValue(
-            "codigoTurma",
-            String(subjectClasses.length + 1).padStart(3, "0"),
-          ),
-          (
-            <div className="mb-1">
-              <CourseClasses courseClasses={subjectClasses} />
-            </div>
-          ))}
 
         {isOptionSelected && (
           <div className="mt-2">
