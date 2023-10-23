@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 function SidebarItem({ icon, title, link }) {
   const location = useLocation();

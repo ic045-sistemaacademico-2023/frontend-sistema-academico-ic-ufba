@@ -1,6 +1,6 @@
 export const courseData = {
   codigo: "ECOB40",
-  componenteCurricular: "INTRODUÇÃO À ECONOMIA I",
+  nome: "INTRODUÇÃO À ECONOMIA I",
   ch: 60,
   chPratica: 40,
   chTeorica: 20,
