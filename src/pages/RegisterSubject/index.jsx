@@ -79,7 +79,7 @@ function RegisterSubject() {
     console.log(data);
     try {
       const response = await api.post(`disciplina/`, data);
-      console.log('response', response)
+      console.log("response", response);
       toast.success("Disciplina cadastrada com sucesso!");
     } catch (error) {
       console.log(error);

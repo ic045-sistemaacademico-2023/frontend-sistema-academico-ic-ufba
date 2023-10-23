@@ -27,12 +27,11 @@ function SubjectSillabus() {
     fetchSubjectData();
   }, []);
 
-
   return (
     <div className="w-full pl-64">
       <Sidebar />
 
-      <SubjectInfos course={{...courseData, ...data}} />
+      <SubjectInfos course={{ ...courseData, ...data }} />
       <CourseClasses courseClasses={courseClasses} />
       <div className="py-4 mb-4">
         <Button href="/disciplinas" secondary>
