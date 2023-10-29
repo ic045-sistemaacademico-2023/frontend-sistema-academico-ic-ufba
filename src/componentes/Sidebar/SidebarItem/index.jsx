@@ -7,9 +7,8 @@ function SidebarItem({ icon, title, link }) {
     <li>
       <a
         href={link}
-        className={`${
-          isActive ? "bg-primary-100 text-primary-950" : ""
-        } flex items-center p-2 rounded-lg hover:text-gray-800 text-white hover:bg-primary-100 group text-sm`}
+        className={`${isActive ? "bg-primary-100 text-primary-950" : "text-white"
+          } flex items-center p-2 rounded-lg hover:text-gray-800  hover:bg-primary-100 group text-sm`}
       >
         {icon}
         <span className="ml-3 max-w-[182px] text-left">{title}</span>
