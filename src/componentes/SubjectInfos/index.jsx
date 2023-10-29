@@ -10,9 +10,7 @@ function SubjectInfos({ course }) {
           <strong className="text-sm text-primary-600 block">
             Disciplina:
           </strong>
-          <p className="text-lg font-medium text-primary-800">
-            {course.componenteCurricular}
-          </p>
+          <p className="text-lg font-medium text-primary-800">{course.nome}</p>
         </div>
         <div className>
           <strong className="text-sm text-primary-600 block">Código:</strong>
@@ -71,20 +69,28 @@ function SubjectInfos({ course }) {
 
         <div className="mb-6 text-left">
           <strong className="text-xl text-primary-600">Conteúdo:</strong>
-          {course.conteudo.split("\n").map((item, i) => (
-            <p className="text-base text-primary-700 mt-2 text-justify" key={i}>
-              {item}
-            </p>
-          ))}
+          {course.conteudo &&
+            course.conteudo.split("\n").map((item, i) => (
+              <p
+                className="text-base text-primary-700 mt-2 text-justify"
+                key={i}
+              >
+                {item}
+              </p>
+            ))}
         </div>
 
         <div className="mb-2 text-left pb-2">
           <strong className="text-xl text-primary-600">Bibliografia:</strong>
-          {course.bibliografia.split("\n").map((item, i) => (
-            <p className="text-base text-primary-700 mt-2 text-justify" key={i}>
-              {item}
-            </p>
-          ))}
+          {course.bibliografia &&
+            course.bibliografia.split("\n").map((item, i) => (
+              <p
+                className="text-base text-primary-700 mt-2 text-justify"
+                key={i}
+              >
+                {item}
+              </p>
+            ))}
         </div>
       </div>
     </div>
