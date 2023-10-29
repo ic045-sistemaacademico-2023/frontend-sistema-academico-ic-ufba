@@ -91,7 +91,25 @@ function RegisterClass() {
     getDisciplinas();
   }, []);
 
+  const validateHorarios = (horarios) => {
+    for (const dia of diasDeAula) {
+      const inicio = horarios[`horarioInicio${dia.name}`];
+      const fim = horarios[`horarioFim${dia.name}`];
+
+      if (inicio && fim && inicio >= fim) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
   const onSubmit = async (data) => {
+    if (!validateHorarios(data)) {
+      toast.error("Horário final deve ser maior que o horário de início");
+      return;
+    }
+
     const horarios = [];
     const locais = [];
 
