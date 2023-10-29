@@ -1,31 +1,3 @@
-export const professores = [
-  {
-    name: "A definir",
-    value: 1,
-    id: 0,
-  },
-  {
-    name: "Andrea Valentina Tatiane Assis",
-    value: 1,
-    id: 1,
-  },
-  {
-    name: "Bianca Marli da Paz",
-    value: 1,
-    id: 2,
-  },
-  {
-    name: "Cristiane Nicole Helena das Neves",
-    value: 1,
-    id: 3,
-  },
-  {
-    name: "Davi Alexandre Theo Barbosa",
-    value: 1,
-    id: 4,
-  },
-];
-
 export const disciplinas = [
   { id: 1, name: "MATA02 CÁLCULO A", value: 1 },
   { id: 2, name: "MATA37 INTRODUÇÃO À LÓGICA DE PROGRAMAÇÃO", value: 1 },
@@ -37,14 +9,13 @@ export const disciplinas = [
 ];
 
 export const diasDeAula = [
-  { id: 1, name: "SEG", value: "SEGUNDA" },
-  { id: 2, name: "TER", value: "TERCA" },
-  { id: 3, name: "QUA", value: "QUARTA" },
-  { id: 4, name: "QUI", value: "QUINTA" },
-  { id: 5, name: "SEX", value: "SEXTA" },
-  { id: 6, name: "SAB", value: "SABADO" },
-  { id: 7, name: "DOM", value: "DOMINGO" },
-  { id: 8, name: "A Combinar", value: "combinar" },
+  { id: 1, name: "SEG", value: "SEGUNDA", label: "Segunda" },
+  { id: 2, name: "TER", value: "TERÇA", label: "Terça" },
+  { id: 3, name: "QUA", value: "QUARTA", label: "Quarta" },
+  { id: 4, name: "QUI", value: "QUINTA", label: "Quinta" },
+  { id: 5, name: "SEX", value: "SEXTA", label: "Sexta" },
+  { id: 6, name: "SAB", value: "SÁBADO", label: "Sábado" },
+  { id: 7, name: "DOM", value: "DOMINGO", label: "Domingo" },
 ];
 
 export const horarios = [
