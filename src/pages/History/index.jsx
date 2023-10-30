@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
+
 import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
 import StudentHistory from "../../componentes/StudentHistory";
 
-import { studentData } from "./data";
 import { studentHistory } from "./history";
 
 import jsPDF from "jspdf";
@@ -44,21 +46,39 @@ function exportToPDF() {
 }
 
 function HistoryPage() {
+  const [studentData, setStudentData] = useState(null);
+
+  useEffect(() => {
+    const studentId = 1; //while we don't have a login control system
+    const fetchStudentData = async () => {
+      try {
+        const response = await api.get(`aluno/${studentId}`);
+        setStudentData(response.data);
+      } catch (error) {
+        console.log("Error on fetchStudentData in HistoryPage: ", error);
+        toast.error("Error ao carregar dados do estudante");
+      }
+    };
+    fetchStudentData();
+  }, []);
+
   return (
-    <div className="w-full pl-64">
-      <Sidebar />
-      <div className="printable">
-        <StudentInfos
-          studentData={studentData}
-          pageTitle={"Components Curriculares Cursados"}
-        />
-        <StudentHistory studentHistory={studentHistory} />
+    studentData != null && (
+      <div className="w-full pl-64">
+        <Sidebar />
+        <div className="printable">
+          <StudentInfos
+            studentData={studentData}
+            pageTitle={"Components Curriculares Cursados"}
+          />
+          <StudentHistory studentHistory={studentHistory} />
+        </div>
+        <div className="mt-6 mb-5">
+          <Button onClick={exportToPDF}>Download</Button>
+          <Button onClick={handlePrint}>Imprimir</Button>
+        </div>
       </div>
-      <div className="mt-6 mb-5">
-        <Button onClick={exportToPDF}>Download</Button>
-        <Button onClick={handlePrint}>Imprimir</Button>
-      </div>
-    </div>
+    )
   );
 }
 
