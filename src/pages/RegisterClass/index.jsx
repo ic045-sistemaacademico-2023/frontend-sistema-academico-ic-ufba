@@ -64,6 +64,7 @@ function RegisterClass() {
         }
       } catch (error) {
         console.error(error);
+        toast.error("Erro ao carregar professores");
       }
     }
     getProfessores();
@@ -86,6 +87,7 @@ function RegisterClass() {
         }
       } catch (error) {
         console.error(error);
+        toast.error("Erro ao carregar disciplinas");
       }
     }
     getDisciplinas();
