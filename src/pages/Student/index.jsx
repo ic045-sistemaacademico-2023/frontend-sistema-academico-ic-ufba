@@ -1,25 +1,19 @@
 import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
 import StudentCourses from "../../componentes/StudentCourses";
+import { useEffect, useState } from "react";
 
 import { studentData } from "./data";
 import { studentCourses } from "./courses";
+import api from "../../utils/api";
+import { toast } from "react-toastify";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Button from "../../componentes/Button";
 
 function handlePrint() {
-  const sidebar = document.querySelector(".pl-64");
-  if (sidebar) {
-    sidebar.classList.remove("pl-64");
-  }
-
   window.print();
-
-  if (sidebar) {
-    sidebar.classList.add("pl-64");
-  }
 }
 
 function exportToPDF() {
@@ -56,22 +50,52 @@ const currentYear = new Date().getFullYear();
 const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 
 function StudentPage() {
+  // var studentId = 1;
+
+  // const [student, setStudent] = useState();
+  // const [studentCourses, setStudentCourses] = useState();
+
+  // useEffect(() => {
+  //   const fetchStudent = async () => {
+  //     try {
+  //       const response = await api.get(`/aluno/${studentId}`);
+  //       setStudent(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //       toast.error(`Error ao carregar o aluno ${studentId}`);
+  //     }
+  //   };
+  //   const fetchStudentCourses = async () => {
+  //     try {
+  //       const response = await api.get(`/turma/aluno?id=${studentId}`);
+  //       setStudentCourses(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //       toast.error(`Error ao carregar o turma aluno ${studentId}`);
+  //     }
+  //   };
+  //   fetchStudent();
+  //   fetchStudentCourses();
+  // }, [studentId]);
+
   return (
     <div className="w-full pl-64">
       <Sidebar />
-      <StudentInfos
-        studentData={studentData}
-        pageTitle={
-          "Comprovante de Matrícula - Período " +
-          currentYear +
-          "." +
-          currentPeriod
-        }
-      />
-      <StudentCourses studentCourses={studentCourses} />
-      <div className="mt-6">
-        <Button onClick={exportToPDF}>Download</Button>
-        <Button onClick={handlePrint}>Imprimir</Button>
+      <div className="printable">
+        <StudentInfos
+          studentData={studentData}
+          pageTitle={
+            "Comprovante de Matrícula - Período " +
+            currentYear +
+            "." +
+            currentPeriod
+          }
+        />
+        <StudentCourses studentCourses={studentCourses} />
+        <div className="mt-6">
+          <Button onClick={exportToPDF}>Download</Button>
+          <Button onClick={handlePrint}>Imprimir</Button>
+        </div>
       </div>
     </div>
   );

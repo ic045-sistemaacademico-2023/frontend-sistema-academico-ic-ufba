@@ -5,7 +5,7 @@ import CourseClasses from "../../componentes/CourseClasses";
 import Button from "../../componentes/Button";
 import api from "../../utils/api.js";
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +16,7 @@ function SubjectSillabus() {
   const [classDataLoaded, setClassDataLoaded] = useState(false);
   const { id } = useParams();
 
-useEffect(() => {
+  useEffect(() => {
     const fetchSubject = async () => {
       try {
         const responseSubjectData = await api.get(`/disciplina/${id}`);
@@ -31,7 +31,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchClass = async () => {
       try {
-        const responseClassData = await api.get("/turma/1");        
+        const responseClassData = await api.get("/turma/1");
         setClassData([responseClassData.data]);
       } catch (error) {
         toast.error("Erro ao carregar dados da disciplina");
@@ -57,7 +57,7 @@ useEffect(() => {
         <CourseClasses courseClasses={classData} />
       ) : (
         <strong className="text-sm text-primary-600 block p-4">
-        Carregando dados das turma...
+          Carregando dados das turma...
         </strong>
       )}
       <div className="py-4 mb-4">

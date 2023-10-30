@@ -72,7 +72,10 @@ function SubjectInfos({ subjectData }) {
           <strong className="text-xl text-primary-600">Conteúdo:</strong>
           {subjectData.observacao ? (
             subjectData.observacao.split("\n").map((item, i) => (
-              <p className="text-base text-primary-700 mt-2 text-justify" key={i}>
+              <p
+                className="text-base text-primary-700 mt-2 text-justify"
+                key={i}
+              >
                 {item}
               </p>
             ))
@@ -87,7 +90,10 @@ function SubjectInfos({ subjectData }) {
           <strong className="text-xl text-primary-600">Bibliografia:</strong>
           {subjectData.bibliografia ? (
             subjectData.bibliografia.split("\n").map((item, i) => (
-              <p className="text-base text-primary-700 mt-2 text-justify" key={i}>
+              <p
+                className="text-base text-primary-700 mt-2 text-justify"
+                key={i}
+              >
                 {item}
               </p>
             ))

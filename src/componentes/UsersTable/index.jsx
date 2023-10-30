@@ -28,7 +28,7 @@ function formatStatus(status) {
 
 function UserTable({ users, isManager = false }) {
   return (
-    <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
+    <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
       <table className="w-full text-sm text-left text-gray-700">
         <thead className="text-xs text-gray-900 uppercase bg-gray-5">
           <tr>

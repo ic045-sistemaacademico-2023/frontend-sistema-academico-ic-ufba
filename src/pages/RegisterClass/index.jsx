@@ -11,48 +11,25 @@ import InputField from "../../componentes/Forms/InputField";
 import MultiSelectField from "../../componentes/Forms/MultiSelectField";
 import SearchableSelectField from "../../componentes/Forms/SearchableSelectField";
 import Button from "../../componentes/Button";
-import CourseClasses from "../../componentes/CourseClasses";
+import api from "../../utils/api";
 
-import { disciplinas, professores, dias, horarios } from "./data";
-import { subjectClasses } from "./subjectClasses";
+import { diasDeAula, horarios } from "./data";
 
 const schema = yup.object().shape({
-  componenteCurricular: yup
-    .string()
-    .required("O nome da disciplina é obrigatório"),
+  disciplina: yup.number().required("O nome da disciplina é obrigatório"),
+  semestre: yup.number().required("O semestre é obrigatório"),
   professor: yup.string().required("O nome do professor é obrigatório"),
-  diasDeAula: yup
+  dias: yup
     .array()
     .min(1, "Selecione pelo menos um dia de aula")
     .required("Selecione pelo menos um dia de aula"),
 });
 
 const initialValues = {
-  codigoTurma: "",
-  componenteCurricular: "",
+  disciplina: "",
+  semestre: "",
   professor: "",
-  diasDeAula: [],
-  horarioInicio1: "",
-  horarioFim1: "",
-  local1: "",
-  horarioInicio2: "",
-  horarioFim2: "",
-  local2: "",
-  horarioInicio3: "",
-  horarioFim3: "",
-  local3: "",
-  horarioInicio4: "",
-  horarioFim4: "",
-  local4: "",
-  horarioInicio5: "",
-  horarioFim5: "",
-  local5: "",
-  horarioInicio6: "",
-  horarioFim6: "",
-  local6: "",
-  horarioInicio7: "",
-  horarioFim7: "",
-  local7: "",
+  dias: [],
 };
 
 function RegisterClass() {
@@ -60,7 +37,6 @@ function RegisterClass() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     watch,
   } = useForm({
     mode: "onSubmit",
@@ -68,90 +44,118 @@ function RegisterClass() {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    const horarios = [
-      data.horarioInicio1,
-      data.horarioFim1,
-      data.horarioInicio2,
-      data.horarioFim2,
-      data.horarioInicio3,
-      data.horarioFim3,
-      data.horarioInicio4,
-      data.horarioFim4,
-      data.horarioInicio5,
-      data.horarioFim5,
-      data.horarioInicio6,
-      data.horarioFim6,
-      data.horarioInicio7,
-      data.horarioFim7,
-    ];
+  const [professores, setProfessores] = useState([]);
+  const [disciplinas, setDisciplinas] = useState([]);
 
-    const locais = [
-      data.local1,
-      data.local2,
-      data.local3,
-      data.local4,
-      data.local5,
-      data.local6,
-      data.local7,
-    ];
+  useEffect(() => {
+    async function getProfessores() {
+      try {
+        const response = await api.get("/professor/all");
+        if (response.status === 200) {
+          const professores = response.data.map((professor) => {
+            return {
+              id: professor.id,
+              value: professor.id,
+              name: professor.nome,
+            };
+          });
 
-    const horariosFiltrados = horarios.filter(
-      (horario) => horario !== "" && horario !== "0",
-    );
-    const locaisFiltrados = locais.filter(
-      (local) => local !== "" && local !== "0",
-    );
-
-    data.horarios = horariosFiltrados;
-    data.locais = locaisFiltrados;
-
-    for (let i = 1; i <= 7; i++) {
-      delete data["horarioInicio" + i];
-      delete data["horarioFim" + i];
-      delete data["dia" + i];
+          setProfessores(professores);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao carregar professores");
+      }
     }
-    for (let i = 1; i <= 7; i++) {
-      delete data["local" + i];
+    getProfessores();
+  }, []);
+
+  useEffect(() => {
+    async function getDisciplinas() {
+      try {
+        const response = await api.get("/disciplina/all");
+        if (response.status === 200) {
+          const disciplinas = response.data.map((disciplina) => {
+            return {
+              id: disciplina.id,
+              value: disciplina.id,
+              name: disciplina.nome,
+            };
+          });
+
+          setDisciplinas(disciplinas);
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao carregar disciplinas");
+      }
+    }
+    getDisciplinas();
+  }, []);
+
+  const validateHorarios = (horarios) => {
+    for (const dia of diasDeAula) {
+      const inicio = horarios[`horarioInicio${dia.name}`];
+      const fim = horarios[`horarioFim${dia.name}`];
+
+      if (inicio && fim && inicio >= fim) {
+        return false;
+      }
     }
 
-    console.log(data);
-    toast.success("Turma cadastrada com sucesso!");
+    return true;
   };
 
-  const diasDeAula = watch("diasDeAula", []);
-  const componenteCurricular = watch("componenteCurricular", []);
+  const onSubmit = async (data) => {
+    if (!validateHorarios(data)) {
+      toast.error("Horário final deve ser maior que o horário de início");
+      return;
+    }
+
+    const horarios = [];
+    const locais = [];
+
+    diasDeAula.map((dia) => {
+      const inicio = data[`horarioInicio${dia.name}`];
+      const fim = data[`horarioFim${dia.name}`];
+      const local = data[`local${dia.name}`];
+
+      if (inicio && fim && local) {
+        horarios.push(`${inicio}-${fim}`);
+        locais.push(local);
+      }
+    });
+
+    diasDeAula.forEach((dia) => {
+      delete data[`horarioInicio${dia.name}`];
+      delete data[`horarioFim${dia.name}`];
+      delete data[`dia${dia.name}`];
+      delete data[`local${dia.name}`];
+    });
+
+    data.horario = horarios.join("/");
+    data.local = locais.join("/");
+
+    try {
+      const response = await api.post("/turma/", data);
+      if (response.status === 201) {
+        toast.success("Turma cadastrado com sucesso!");
+      } else {
+        toast.error("Erro ao cadastrar turma");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao cadastrar turma");
+    }
+  };
+
+  const dias = watch("dias", []);
 
   const [isOptionSelected, setIsOptionSelected] = useState(false);
-  const [isComponentSelected, setIsComponentSelected] = useState(false);
 
   useEffect(() => {
-    const isAnyWeekdaySelected =
-      diasDeAula && diasDeAula.some((diasDeAula) => diasDeAula !== "combinar");
-    setIsOptionSelected(isAnyWeekdaySelected);
-  }, [diasDeAula]);
-
-  useEffect(() => {
-    setIsComponentSelected(componenteCurricular !== "");
-  }, [componenteCurricular]);
-
-  const [isSegSelected, setIsSegSelected] = useState(false);
-  const [isTerSelected, setIsTerSelected] = useState(false);
-  const [isQuaSelected, setIsQuaSelected] = useState(false);
-  const [isQuiSelected, setIsQuiSelected] = useState(false);
-  const [isSexSelected, setIsSexSelected] = useState(false);
-  const [isSabSelected, setIsSabSelected] = useState(false);
-  const [isDomSelected, setIsDomSelected] = useState(false);
-
-  useEffect(() => {
-    setIsSegSelected(diasDeAula.includes("SEG"));
-    setIsTerSelected(diasDeAula.includes("TER"));
-    setIsQuaSelected(diasDeAula.includes("QUA"));
-    setIsQuiSelected(diasDeAula.includes("QUI"));
-    setIsSexSelected(diasDeAula.includes("SEX"));
-    setIsSabSelected(diasDeAula.includes("SAB"));
-    setIsDomSelected(diasDeAula.includes("DOM"));
-  }, [diasDeAula]);
+    setIsOptionSelected(dias.length > 0);
+  }, [dias]);
 
   return (
     <div className="w-full pl-64">
@@ -165,23 +169,16 @@ function RegisterClass() {
         </h1>
         <div className="grid md:grid-cols-2 md:gap-6">
           <SearchableSelectField
-            {...register("componenteCurricular")}
+            {...register("disciplina")}
             label={"Disciplina"}
             options={disciplinas}
-            currentValue={watch("componenteCurricular")}
             placeholder={"Selecione a disciplina ou digite para filtrar"}
             error={errors.componenteCurricular?.message}
           />
           <InputField
-            {...register("codigoTurma")}
-            label={"Código da turma"}
-            value={
-              (isComponentSelected &&
-                String(subjectClasses.length + 1).padStart(3, "0")) ||
-              ""
-            }
-            placeholder={"Preenchido automaticamente"}
-            disabled={true}
+            {...register("semestre")}
+            placeholder="Digite o semestre"
+            label="Semestre"
           />
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
@@ -189,7 +186,6 @@ function RegisterClass() {
             {...register("professor")}
             label={"Professor"}
             options={professores}
-            currentValue={watch("professor")}
             placeholder={"Selecione o professor"}
             error={errors.professor?.message}
           />
@@ -197,24 +193,13 @@ function RegisterClass() {
         </div>
         <div className="grid md:grid-cols-1 md:gap-6">
           <MultiSelectField
-            {...register("diasDeAula")}
+            {...register("dias")}
             label={"Dias de aula"}
-            options={dias}
+            options={diasDeAula}
             placeholder={"Selecione o dia"}
-            error={errors.diasDeAula?.message}
+            error={errors.dias?.message}
           />
         </div>
-
-        {isComponentSelected &&
-          (setValue(
-            "codigoTurma",
-            String(subjectClasses.length + 1).padStart(3, "0"),
-          ),
-          (
-            <div className="mb-1">
-              <CourseClasses courseClasses={subjectClasses} />
-            </div>
-          ))}
 
         {isOptionSelected && (
           <div className="mt-2">
@@ -235,323 +220,51 @@ function RegisterClass() {
                 </p>
               </div>
             </div>
-            <div>
-              {isSegSelected && (
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div>
-                    <InputField
-                      {...register("dia1")}
-                      label={""}
-                      value={"Segunda"}
-                      disabled={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
-                      <div>
-                        <SelectField
-                          {...register("horarioInicio1")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioInicio1")}
-                          placeholder={"Início"}
-                          error={errors.horarioInicio1?.message}
-                        />
-                      </div>
-                      <div>
-                        <SelectField
-                          {...register("horarioFim1")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioFim1")}
-                          placeholder={"Fim"}
-                          error={errors.horarioFim1?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
+            {diasDeAula.map(
+              (dia) =>
+                dias.includes(dia.value) && (
+                  <div className="grid md:grid-cols-3 md:gap-6" key={dia.value}>
                     <div>
                       <InputField
-                        {...register("local1")}
-                        placeholder={"Código da sala de aula"}
-                        error={errors.local1?.message}
+                        {...register(`dia${dia.name}`)}
+                        value={dia.label}
+                        disabled={true}
                       />
                     </div>
-                  </div>
-                </div>
-              )}
-              {isTerSelected && (
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div>
-                    <InputField
-                      {...register("dia2")}
-                      label={""}
-                      value={"Terça"}
-                      disabled={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
-                      <div>
-                        <SelectField
-                          {...register("horarioInicio2")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioInicio2")}
-                          placeholder={"Início"}
-                          error={errors.horarioInicio2?.message}
-                        />
-                      </div>
-                      <div>
-                        <SelectField
-                          {...register("horarioFim2")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioFim2")}
-                          placeholder={"Fim"}
-                          error={errors.horarioFim2?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
                     <div>
-                      <InputField
-                        {...register("local2")}
-                        placeholder={"Código da sala de aula"}
-                        error={errors.local2?.message}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {isQuaSelected && (
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div>
-                    <InputField
-                      {...register("dia3")}
-                      label={""}
-                      value={"Quarta"}
-                      disabled={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
-                      <div>
-                        <SelectField
-                          {...register("horarioInicio3")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioInicio3")}
-                          placeholder={"Início"}
-                          error={errors.horarioInicio3?.message}
-                        />
-                      </div>
-                      <div>
-                        <SelectField
-                          {...register("horarioFim3")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioFim3")}
-                          placeholder={"Fim"}
-                          error={errors.horarioFim3?.message}
-                        />
+                      <div className="grid md:grid-cols-2 md:gap-6">
+                        <div>
+                          <SelectField
+                            {...register(`horarioInicio${dia.name}`)}
+                            label=""
+                            options={horarios}
+                            placeholder="Início"
+                            error={errors[`horarioInicio${dia.name}`]?.message}
+                          />
+                        </div>
+                        <div>
+                          <SelectField
+                            {...register(`horarioFim${dia.name}`)}
+                            label=""
+                            options={horarios}
+                            placeholder="Fim"
+                            error={errors[`horarioFim${dia.name}`]?.message}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div>
                     <div>
-                      <InputField
-                        {...register("local3")}
-                        placeholder={"Código da sala de aula"}
-                        error={errors.local3?.message}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {isQuiSelected && (
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div>
-                    <InputField
-                      {...register("dia4")}
-                      label={""}
-                      value={"Quinta"}
-                      disabled={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
                       <div>
-                        <SelectField
-                          {...register("horarioInicio4")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioInicio4")}
-                          placeholder={"Início"}
-                          error={errors.horarioInicio4?.message}
-                        />
-                      </div>
-                      <div>
-                        <SelectField
-                          {...register("horarioFim4")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioFim4")}
-                          placeholder={"Fim"}
-                          error={errors.horarioFim4?.message}
+                        <InputField
+                          {...register(`local${dia.name}`)}
+                          placeholder="Código da sala de aula"
+                          error={errors[`local${dia.name}`]?.message}
                         />
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <div>
-                      <InputField
-                        {...register("local4")}
-                        placeholder={"Código da sala de aula"}
-                        error={errors.local4?.message}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {isSexSelected && (
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div>
-                    <InputField
-                      {...register("dia5")}
-                      label={""}
-                      value={"Sexta"}
-                      disabled={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
-                      <div>
-                        <SelectField
-                          {...register("horarioInicio5")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioInicio5")}
-                          placeholder={"Início"}
-                          error={errors.horarioInicio5?.message}
-                        />
-                      </div>
-                      <div>
-                        <SelectField
-                          {...register("horarioFim5")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioFim5")}
-                          placeholder={"Fim"}
-                          error={errors.horarioFim5?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div>
-                      <InputField
-                        {...register("local5")}
-                        placeholder={"Código da sala de aula"}
-                        error={errors.local5?.message}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {isSabSelected && (
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div>
-                    <InputField
-                      {...register("dia6")}
-                      label={""}
-                      value={"Sábado"}
-                      disabled={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
-                      <div>
-                        <SelectField
-                          {...register("horarioInicio6")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioInicio6")}
-                          placeholder={"Início"}
-                          error={errors.horarioInicio6?.message}
-                        />
-                      </div>
-                      <div>
-                        <SelectField
-                          {...register("horarioFim6")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioFim6")}
-                          placeholder={"Fim"}
-                          error={errors.horarioFim6?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div>
-                      <InputField
-                        {...register("local6")}
-                        placeholder={"Código da sala de aula"}
-                        error={errors.local6?.message}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {isDomSelected && (
-                <div className="grid md:grid-cols-3 md:gap-6">
-                  <div>
-                    <InputField
-                      {...register("dia7")}
-                      label={""}
-                      value={"Domingo"}
-                      disabled={true}
-                    />
-                  </div>
-                  <div>
-                    <div className="grid md:grid-cols-2 md:gap-6">
-                      <div>
-                        <SelectField
-                          {...register("horarioInicio7")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioInicio7")}
-                          placeholder={"Início"}
-                          error={errors.horarioInicio7?.message}
-                        />
-                      </div>
-                      <div>
-                        <SelectField
-                          {...register("horarioFim7")}
-                          label={""}
-                          options={horarios}
-                          currentValue={watch("horarioFim7")}
-                          placeholder={"Fim"}
-                          error={errors.horarioFim7?.message}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <div>
-                      <InputField
-                        {...register("local7")}
-                        placeholder={"Código da sala de aula"}
-                        error={errors.local7?.message}
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+                ),
+            )}
           </div>
         )}
         <div>
