@@ -44,7 +44,7 @@ function Sidebar() {
             icon={<GraduationCap size={20} />}
           />
           <SidebarItem
-            title={"Ementas"}
+            title={"Cursos"}
             link={"/cursos"}
             icon={<ListDashes size={20} />}
           />
