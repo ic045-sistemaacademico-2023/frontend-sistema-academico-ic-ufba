@@ -34,22 +34,25 @@ function StudentCourses({ studentCourses }) {
           {studentCourses.map((course, index) => (
             <tr
               key={index}
-              className={`${
-                index % 2 == 0 ? "bg-white" : "bg-primary-50"
-              } border border-gray-100 hover:bg-primary-100`}
+              className={`${index % 2 == 0 ? "bg-white" : "bg-primary-50"
+                } border border-gray-100 hover:bg-primary-100`}
             >
               <th
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               >
+                {/* {course.disciplina.codigo} */}
                 {course.codigo}
               </th>
-              <td className="px-6 py-4">{course.componenteCurricular}</td>
+              {/* <td className="px-6 py-4">{course.disciplina.nome}</td> */}
+              <td className="px-6 py-4">{course.nome}</td>
+              {/* <td className="px-6 py-4">{course.disciplina.chTotal}</td> */}
               <td className="px-6 py-4">{course.ch}</td>
               <td className="px-6 py-4">{course.turma}</td>
               <td className="px-6 py-4">{course.dias}</td>
               <td className="px-6 py-4">{course.horario}</td>
               <td className="px-6 py-4">{course.local}</td>
+              {/* <td className="px-6 py-4">{course.professor.nome}</td> */}
               <td className="px-6 py-4">{course.docente}</td>
             </tr>
           ))}
