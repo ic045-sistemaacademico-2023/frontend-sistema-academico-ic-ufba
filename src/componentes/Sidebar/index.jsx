@@ -24,7 +24,7 @@ function Sidebar() {
         <ul className="space-y-2 font-medium">
           <p className="text-white text-base bg-primary-700">Acadêmico</p>
           <SidebarItem
-            title={"Matrícula"}
+            title={"Comprovante de Matrícula"}
             link={"/comprovante-matricula"}
             icon={<IdentificationBadge size={20} />}
           />
@@ -44,7 +44,7 @@ function Sidebar() {
             icon={<GraduationCap size={20} />}
           />
           <SidebarItem
-            title={"Ementas"}
+            title={"Cursos"}
             link={"/cursos"}
             icon={<ListDashes size={20} />}
           />
