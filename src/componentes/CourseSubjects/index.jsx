@@ -54,7 +54,7 @@ function CourseSubjects({ courseData }) {
                     {index + 1}
                   </td>
                   <td className="px-6 py-4 flex gap-5">
-                    {semester.map((subject) => (
+                    {semester && semester.map((subject) => (
                       // TODO: ao clicar no card, possibilitar se inscrever na materia?
                       <CourseCard data={subject} key={subject.id} />
                     ))}
