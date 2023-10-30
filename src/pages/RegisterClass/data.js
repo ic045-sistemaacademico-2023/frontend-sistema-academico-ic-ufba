@@ -10,11 +10,11 @@ export const disciplinas = [
 
 export const diasDeAula = [
   { id: 1, name: "SEG", value: "SEGUNDA", label: "Segunda" },
-  { id: 2, name: "TER", value: "TERÇA", label: "Terça" },
+  { id: 2, name: "TER", value: "TERCA", label: "Terça" },
   { id: 3, name: "QUA", value: "QUARTA", label: "Quarta" },
   { id: 4, name: "QUI", value: "QUINTA", label: "Quinta" },
   { id: 5, name: "SEX", value: "SEXTA", label: "Sexta" },
-  { id: 6, name: "SAB", value: "SÁBADO", label: "Sábado" },
+  { id: 6, name: "SAB", value: "SABADO", label: "Sábado" },
   { id: 7, name: "DOM", value: "DOMINGO", label: "Domingo" },
 ];
 
