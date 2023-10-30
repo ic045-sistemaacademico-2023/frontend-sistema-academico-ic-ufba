@@ -34,8 +34,9 @@ function StudentCourses({ studentCourses }) {
           {studentCourses.map((course, index) => (
             <tr
               key={index}
-              className={`${index % 2 == 0 ? "bg-white" : "bg-primary-50"
-                } border border-gray-100 hover:bg-primary-100`}
+              className={`${
+                index % 2 == 0 ? "bg-white" : "bg-primary-50"
+              } border border-gray-100 hover:bg-primary-100`}
             >
               <th
                 scope="row"
