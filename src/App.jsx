@@ -24,28 +24,40 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Fluxo Inicial */}
         <Route exact path="/" element={<LoginPage />} />
         <Route exact path="/login" element={<LoginPage />} />
-        <Route exact path="/disciplinas" element={<SubjectsPage />} />
-        <Route exact path="/disciplina/:codigo" element={<SubjectSillabus />} />
-        <Route exact path="/turma/:id" element={<CourseClassPage />} />
-        <Route exact path="/turmas" element={<CourseClasses />} />
+        <Route exact path="/password-reset" element={<PasswordReset />} />
+
+        {/* Aluno */}
+        <Route exact path="/historico" element={<HistoryPage />} />
+        <Route exact path="/comprovante-matricula" element={<StudentPage />} />
+
+        {/* Usuários */}
         <Route exact path="/usuario" element={<RegisterUser />} />
         <Route exact path="/usuario/:id" element={<RegisterUser />} />
-        <Route exact path="/comprovante-matricula" element={<StudentPage />} />
-        <Route exact path="/historico" element={<HistoryPage />} />
-        <Route exact path="/password-reset" element={<PasswordReset />} />
+        <Route exact path="/usuarios" element={<UsersPage />} />
+        <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
+
+        {/* Disciplinas */}
+        <Route exact path="/disciplinas" element={<SubjectsPage />} />
+        <Route exact path="/disciplina/:codigo" element={<SubjectSillabus />} />
         <Route exact path="/ementa-disciplina" element={<SubjectSillabus />} />
-        <Route exact path="/cursos" element={<CoursesPage />} />
         <Route
           exact
           path="/cadastro-disciplina"
           element={<RegisterSubject />}
         />
+
+        {/* Turmas */}
+        <Route exact path="/turma/:id" element={<CourseClassPage />} />
+        <Route exact path="/turmas" element={<CourseClasses />} />
         <Route exact path="/cadastro-turma" element={<RegisterClass />} />
-        <Route exact path="/cadastro-curso" element={<RegisterCourse />} />
-        <Route exact path="/usuarios" element={<UsersPage />} />
-        <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
+
+        {/* Cursos */}
+        <Route exact path="/cursos" element={<CoursesPage />} />
+        <Route exact path="/curso" element={<RegisterCourse />} />
+        <Route exact path="/curso/:id" element={<RegisterCourse />} />
       </Routes>
       <ToastContainer
         position="top-right"

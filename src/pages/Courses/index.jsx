@@ -2,22 +2,39 @@ import { useEffect, useState } from "react";
 import Sidebar from "../../componentes/Sidebar";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
+import Button from "../../componentes/Button";
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState([]);
 
+  const fetchCourses = async () => {
+    try {
+      const response = await api.get("/curso/all");
+      setCourses(response.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Error ao carregar dados dos cursos");
+    }
+  };
+
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await api.get("/curso/all");
-        setCourses(response.data);
-      } catch (error) {
-        console.log(error);
-        toast.error("Error ao carregar dados dos cursos");
-      }
-    };
     fetchCourses();
   }, []);
+
+  async function deleteCourse(id) {
+    try {
+      const response = await api.delete(`/curso/${id}`);
+      if (response.status === 204) {
+        toast.success("Curso deletado com sucesso!");
+        fetchCourses();
+      } else {
+        toast.error("Erro ao deletar curso");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao deletar curso");
+    }
+  }
 
   return (
     <div className="w-full pl-64">
@@ -41,6 +58,9 @@ export default function CoursesPage() {
               </th>
               <th scope="col" className="px-6 py-3 text-center">
                 Turno
+              </th>
+              <th scope="col" className="px-6 py-3 text-center">
+                Ações
               </th>
             </tr>
           </thead>
@@ -68,6 +88,14 @@ export default function CoursesPage() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <div className="text-sm text-gray-900">{course.turno}</div>
+                </td>
+                <td className="px-6 py-4 min-w-[64px]">
+                  <Button secondary href={`/curso/${course.id}`}>
+                    Editar
+                  </Button>
+                  <Button onClick={() => deleteCourse(course.id)}>
+                    Deletar
+                  </Button>
                 </td>
               </tr>
             ))}

@@ -13,6 +13,7 @@ import api from "../../utils/api";
 import { useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
 const schema = yup.object().shape({
   nome: yup.string().required("O nome é obrigatório"),
@@ -31,12 +32,39 @@ function RegisterCourse() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: "onSubmit",
     defaultValues: initialValues,
     resolver: yupResolver(schema),
   });
+
+  const { id } = useParams();
+  const isEditing = id !== undefined;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isEditing) {
+      const fetchCourse = async () => {
+        try {
+          const response = await api.get(`/curso/${id}`);
+          if (response.status === 200) {
+            const course = response.data;
+            setValue("nome", course.nome);
+            setValue("semestre", course.semestre);
+            setValue("coordenador", course.coordenadorDeCurso.id);
+            setValue("turno", course.turno);
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Erro ao carregar dados do curso");
+        }
+      };
+      fetchCourse();
+    }
+  }, [isEditing, id, setValue]);
 
   const [coordenadores, setCoordenadores] = useState([]);
 
@@ -64,17 +92,32 @@ function RegisterCourse() {
   }, []);
 
   const onSubmit = async (data) => {
-    console.log(data);
-    try {
-      const response = await api.post("/curso/", data);
-      if (response.status === 201) {
-        toast.success("Turma cadastrado com sucesso!");
-      } else {
-        toast.error("Erro ao cadastrar turma");
+    if (isEditing) {
+      try {
+        const response = await api.put(`/curso/${id}`, data);
+        if (response.status === 200) {
+          toast.success("Curso atualizado com sucesso!");
+          navigate("/cursos");
+        } else {
+          toast.error("Erro ao atualizar curso");
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao atualizar curso");
       }
-    } catch (error) {
-      console.log(error);
-      toast.error("Erro ao cadastrar curso!");
+    } else {
+      try {
+        const response = await api.post("/curso/", data);
+        if (response.status === 201) {
+          toast.success("Turma cadastrado com sucesso!");
+          navigate("/cursos");
+        } else {
+          toast.error("Erro ao cadastrar turma");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Erro ao cadastrar curso!");
+      }
     }
   };
 
@@ -86,7 +129,7 @@ function RegisterCourse() {
         className="bg-primary-100 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"
       >
         <h1 className="text-xl text-gray-700 font-bold mb-6">
-          Cadastrar Curso
+          {isEditing ? "Editar" : "Cadastrar"} Curso
         </h1>
         <div className="grid md:grid-cols-2 md:gap-6">
           <InputField
@@ -120,7 +163,7 @@ function RegisterCourse() {
           />
         </div>
         <div>
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit">{isEditing ? "Editar" : "Cadastrar"}</Button>
         </div>
       </form>
     </div>

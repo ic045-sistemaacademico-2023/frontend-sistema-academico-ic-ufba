@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { toast } from "react-toastify";
 
 import api from "../../utils/api";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const schema = yup.object().shape({
@@ -63,6 +63,8 @@ function RegisterUser() {
   const { id } = useParams();
   const isEditing = id !== undefined;
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (isEditing) {
       const fetchUser = async () => {
@@ -94,6 +96,7 @@ function RegisterUser() {
         });
         if (response.status === 200) {
           toast.success("Usuário atualizado com sucesso!");
+          navigate("/usuarios");
         } else {
           toast.error("Erro ao atualizar usuário");
         }
@@ -112,6 +115,7 @@ function RegisterUser() {
         });
         if (response.status === 201) {
           toast.success("Usuário cadastrado com sucesso!");
+          navigate("/usuarios");
         } else {
           toast.error("Erro ao cadastrar usuário");
         }

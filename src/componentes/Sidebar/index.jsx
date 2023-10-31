@@ -56,7 +56,7 @@ function Sidebar() {
           />
           <SidebarItem
             title={"Cadastrar Curso"}
-            link={"/cadastro-curso"}
+            link={"/curso"}
             icon={<Plus size={20} />}
           />
 
