@@ -17,6 +17,9 @@ import UsersPage from "./pages/Users";
 import ManageUsersPage from "./pages/ManageUsers";
 import CourseClasses from "./componentes/CourseClasses";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,7 +30,8 @@ function App() {
         <Route exact path="/disciplina/:codigo" element={<SubjectSillabus />} />
         <Route exact path="/turma/:id" element={<CourseClassPage />} />
         <Route exact path="/turmas" element={<CourseClasses />} />
-        <Route exact path="/cadastro-usuario" element={<RegisterUser />} />
+        <Route exact path="/usuario" element={<RegisterUser />} />
+        <Route exact path="/usuario/:id" element={<RegisterUser />} />
         <Route exact path="/comprovante-matricula" element={<StudentPage />} />
         <Route exact path="/historico" element={<HistoryPage />} />
         <Route exact path="/password-reset" element={<PasswordReset />} />
@@ -43,6 +47,17 @@ function App() {
         <Route exact path="/usuarios" element={<UsersPage />} />
         <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </BrowserRouter>
   );
 }

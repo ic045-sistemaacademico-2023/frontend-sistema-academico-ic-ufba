@@ -12,8 +12,7 @@ import api from "../../utils/api";
 
 import { useEffect, useState } from "react";
 
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   nome: yup.string().required("O nome é obrigatório"),
@@ -122,7 +121,6 @@ function RegisterCourse() {
         </div>
         <div>
           <Button type="submit">Cadastrar</Button>
-          <ToastContainer position="bottom-right" />
         </div>
       </form>
     </div>

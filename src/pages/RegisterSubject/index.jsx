@@ -11,8 +11,7 @@ import api from "../../utils/api";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   nome: yup.string().required("O nome da disciplina é obrigatório"),
@@ -213,7 +212,6 @@ function RegisterSubject() {
         </div>
         <div>
           <Button type="submit">Cadastrar</Button>
-          <ToastContainer position="bottom-right" />
         </div>
       </form>
     </div>

@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import Sidebar from "../../componentes/Sidebar";
 import SelectField from "../../componentes/Forms/SelectField";
@@ -269,7 +268,6 @@ function RegisterClass() {
         )}
         <div>
           <Button type="submit">Cadastrar</Button>
-          <ToastContainer position="bottom-right" />
         </div>
       </form>
     </div>

@@ -1,32 +1,24 @@
+import { toast } from "react-toastify";
 import Button from "../../componentes/Button";
+import api from "../../utils/api";
 
-function formatRole(role) {
-  switch (role) {
-    case "ADMIN":
-      return "Administrador";
-    case "COORDENADOR_DE_CURSO":
-      return "Coordenador de Curso";
-    case "PROFESSOR":
-      return "Professor";
-    case "ALUNO":
-      return "Aluno";
+import { roles, status } from "./data";
+
+function UserTable({ users, isManager = false, fetchUsers }) {
+  async function deleteUser(id) {
+    try {
+      const response = await api.delete(`/user/${id}`);
+      if (response.status === 204) {
+        toast.success("Usuário deletado com sucesso!");
+        fetchUsers();
+      } else {
+        toast.error("Erro ao deletar usuário");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao deletar usuário");
+    }
   }
-}
-
-function formatStatus(status) {
-  switch (status) {
-    case "APPROVED":
-      return "Aprovado";
-    case "DENIED":
-      return "Negado";
-    case "WAITING_APPROVAL":
-      return "Aguardando Aprovação";
-    case "EMAIL_CHECK":
-      return "Verificação de Email";
-  }
-}
-
-function UserTable({ users, isManager = false }) {
   return (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
       <table className="w-full text-sm text-left text-gray-700">
@@ -65,9 +57,9 @@ function UserTable({ users, isManager = false }) {
               <td className="px-6 py-4">{user.cpf}</td>
               <td className="px-6 py-4">{user.nome}</td>
               <td className="px-6 py-4">{user.email}</td>
-              <td className="px-6 py-4">{formatRole(user.role)}</td>
+              <td className="px-6 py-4">{roles[user.role]}</td>
               {!isManager && (
-                <td className="px-6 py-4">{formatStatus(user.status)}</td>
+                <td className="px-6 py-4">{status[user.status]}</td>
               )}
               {isManager ? (
                 <td className="px-6 py-4">
@@ -77,11 +69,11 @@ function UserTable({ users, isManager = false }) {
                   </Button>
                 </td>
               ) : (
-                <td className="px-6 py-4">
-                  <Button>Editar</Button>
-                  <Button secondary color="">
-                    Deletar
+                <td className="px-6 py-4 min-w-[64px]">
+                  <Button secondary href={`/usuario/${user.id}`}>
+                    Editar
                   </Button>
+                  <Button onClick={() => deleteUser(user.id)}>Deletar</Button>
                 </td>
               )}
             </tr>

@@ -51,7 +51,7 @@ function Sidebar() {
           <p className="text-white text-base bg-primary-700">Administração</p>
           <SidebarItem
             title={"Cadastrar Usuário"}
-            link={"/cadastro-usuario"}
+            link={"/usuario"}
             icon={<UserPlus size={20} />}
           />
           <SidebarItem
