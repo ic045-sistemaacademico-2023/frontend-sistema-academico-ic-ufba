@@ -19,6 +19,7 @@ function UserTable({ users, isManager = false, fetchUsers }) {
       toast.error("Erro ao deletar usuário");
     }
   }
+
   return (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
       <table className="w-full text-sm text-left text-gray-700">

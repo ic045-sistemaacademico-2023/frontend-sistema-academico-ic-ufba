@@ -58,20 +58,46 @@ function SubjectInfos({ subjectData }) {
         <div className="mb-6 pt-4 border-t-2 border-cyan-600 text-left">
           <strong className="text-xl text-primary-600">Ementa:</strong>
           <p className="text-base text-primary-700 mt-2 text-justify">
-            {subjectData.ementa}
+            {subjectData.ementa ? (
+              subjectData.ementa.split("\n").map((item, i) => (
+                <p
+                  className="text-base text-primary-700 mt-2 text-justify"
+                  key={i}
+                >
+                  {item}
+                </p>
+              ))
+            ) : (
+              <p className="text-base text-primary-700 mt-2 text-justify">
+                Dados não disponíveis
+              </p>
+            )}
           </p>
         </div>
         <div className="mb-6 text-left">
-          <strong className="text-xl text-primary-600">Objetivos:</strong>
+          <strong className="text-xl text-primary-600">Observação:</strong>
           <p className="text-base text-primary-700 mt-2 text-justify">
-            {subjectData.observacao}
+            {subjectData.observacao ? (
+              subjectData.observacao.split("\n").map((item, i) => (
+                <p
+                  className="text-base text-primary-700 mt-2 text-justify"
+                  key={i}
+                >
+                  {item}
+                </p>
+              ))
+            ) : (
+              <p className="text-base text-primary-700 mt-2 text-justify">
+                Dados não disponíveis
+              </p>
+            )}
           </p>
         </div>
 
         <div className="mb-6 text-left">
-          <strong className="text-xl text-primary-600">Conteúdo:</strong>
-          {subjectData.observacao ? (
-            subjectData.observacao.split("\n").map((item, i) => (
+          <strong className="text-xl text-primary-600">Pré-requesitos:</strong>
+          {subjectData.preRequisitos ? (
+            subjectData.preRequisitos.split("\n").map((item, i) => (
               <p
                 className="text-base text-primary-700 mt-2 text-justify"
                 key={i}

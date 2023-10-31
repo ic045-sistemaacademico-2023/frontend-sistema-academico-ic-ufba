@@ -24,7 +24,7 @@ function SubjectSillabus() {
       }
     };
 
-    const fetchClass = async () => {
+    const fetchClasses = async () => {
       try {
         const response = await api.get(`/disciplina/${id}/turmas`);
         if (response.status === 200) {
@@ -46,14 +46,35 @@ function SubjectSillabus() {
     };
 
     fetchSubject();
-    fetchClass();
+    fetchClasses();
   }, [id]);
+
+  const fetchClasses = async () => {
+    try {
+      const response = await api.get(`/disciplina/${id}/turmas`);
+      if (response.status === 200) {
+        const classes = response.data.map((classItem) => {
+          return {
+            id: classItem.id,
+            dias: classItem.dias,
+            horario: classItem.horario,
+            local: classItem.local,
+            professor: classItem.professor.nome,
+          };
+        });
+
+        setClasses(classes);
+      }
+    } catch (error) {
+      toast.error("Erro ao carregar dados da disciplina");
+    }
+  };
 
   return (
     <div className="w-full pl-64">
       <Sidebar />
       <SubjectInfos subjectData={subject} />
-      <CourseClasses courseClasses={classes} />
+      <CourseClasses courseClasses={classes} fetchClasses={fetchClasses} />
       <div className="py-4 mb-4">
         <Button href={`/curso/${subject?.curso?.id}`} secondary>
           Voltar

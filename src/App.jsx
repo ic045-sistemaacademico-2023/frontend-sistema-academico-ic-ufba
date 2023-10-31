@@ -47,6 +47,11 @@ function App() {
           path="/cadastrar/disciplina"
           element={<RegisterSubject />}
         />
+        <Route
+          exact
+          path="/atualizar/disciplina/:id"
+          element={<RegisterSubject />}
+        />
 
         {/* Turmas */}
         <Route exact path="/professor/turmas" element={<CourseClasses />} />

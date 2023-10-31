@@ -3,7 +3,7 @@ import api from "../../utils/api";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
 
-function CourseSubjects({ courseData, subjects, fecthSubjects }) {
+function CourseSubjects({ courseData, subjects, fetchSubjects }) {
   const navigate = useNavigate();
 
   async function deleteSubject(id) {
@@ -11,7 +11,7 @@ function CourseSubjects({ courseData, subjects, fecthSubjects }) {
       const response = await api.delete(`/disciplina/${id}`);
       if (response.status === 204) {
         toast.success("Disciplina deletada com sucesso!");
-        fecthSubjects();
+        fetchSubjects();
       } else {
         toast.error("Erro ao deletar disciplina");
       }
@@ -79,16 +79,20 @@ function CourseSubjects({ courseData, subjects, fecthSubjects }) {
                   key={index}
                   className={`${
                     index % 2 == 0 ? "bg-white" : "bg-primary-50"
-                  } border text-center border-gray-100 hover:bg-primary-100 cursor-pointer`}
-                  onClick={() => navigate(`/disciplina/${subject.id}`)}
+                  } border text-center border-gray-100 hover:bg-primary-100`}
                 >
                   <td className="px-6 py-4">{subject.id}</td>
                   <td className="px-6 py-4">{subject.codigo}</td>
                   <td className="px-6 py-4">{subject.nome}</td>
-                  <td className="px-6 py-4 min-w-[64px]">
+                  <td className="px-2 py-2 flex flex-wrap justify-center">
+                    <Button
+                      onClick={() => navigate(`/disciplina/${subject.id}`)}
+                    >
+                      Visualizar
+                    </Button>
                     <Button
                       secondary
-                      href={`atualizar/disciplina/${subject.id}`}
+                      href={`/atualizar/disciplina/${subject.id}`}
                     >
                       Editar
                     </Button>

@@ -1,6 +1,6 @@
 import Sidebar from "../../componentes/Sidebar";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import TextField from "../../componentes/Forms/TextField";
 import Button from "../../componentes/Button";
@@ -12,10 +12,12 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
+import { areas } from "./data";
+import SelectField from "../../componentes/Forms/SelectField";
 
 const schema = yup.object().shape({
   nome: yup.string().required("O nome da disciplina é obrigatório"),
-  codigo: yup.string().required("O código da disciplina é obrigatório"),
   curso: yup.number().required("O curso da disciplina é obrigatório"),
   chTotal: yup
     .number()
@@ -31,27 +33,22 @@ const schema = yup.object().shape({
     .transform((value) => (Number.isNaN(value) ? 0 : value))
     .required("A carga horária prática da disciplina é obrigatória"),
   ementa: yup.string(),
-  objetivos: yup.string(),
-  conteudo: yup.string(),
   bibliografia: yup.string(),
   observacao: yup.string(),
-  semestre: yup.number().required("O semestre da disciplina é obrigatório"),
+  area: yup.string(),
+  preRequisitos: yup.string(),
 });
 
 const initialValues = {
-  codigo: "",
   nome: "",
   chTotal: "",
   chPratica: "",
   chTeorica: "",
-  curso: "",
   ementa: "",
-  objetivos: "",
-  conteudo: "",
   bibliografia: "",
   observacao: "",
-  area: "EDUCACAO",
-  semestre: "",
+  area: "",
+  preRequisitos: "",
 };
 
 function RegisterSubject() {
@@ -67,22 +64,98 @@ function RegisterSubject() {
     resolver: yupResolver(schema),
   });
 
+  const [courses, setCourses] = useState([]);
+  const { id } = useParams();
+  const isEditing = id !== undefined;
+
   useEffect(() => {
-    setValue(
-      "chTotal",
-      parseInt(watch("chTeorica") || 0) + parseInt(watch("chPratica") || 0),
-    );
-  }, [watch("chTeorica"), watch("chPratica")]);
+    const getCourses = async () => {
+      try {
+        const response = await api.get(`curso/all`);
+        if (response.status === 200) {
+          const courses = response.data.map((course) => {
+            return {
+              id: course.id,
+              value: course.id,
+              name: course.nome,
+            };
+          });
+
+          setCourses(courses);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Error ao carregar dados dos cursos");
+      }
+    };
+
+    const getSubject = async () => {
+      try {
+        const response = await api.get(`disciplina/${id}`);
+        if (response.status === 200) {
+          const subject = response.data;
+          setValue("nome", subject.nome);
+          setValue("chTotal", subject.chTotal);
+          setValue("chPratica", subject.chPratica);
+          setValue("chTeorica", subject.chTeorica);
+          setValue("ementa", subject.ementa);
+          setValue("bibliografia", subject.bibliografia);
+          setValue("observacao", subject.observacao);
+          setValue("area", subject.area);
+          setValue("preRequisitos", subject.preRequisitos);
+          setTimeout(() => {
+            setValue("curso", subject.curso.id);
+          }, 10);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Error ao carregar dados da disciplina");
+      }
+    };
+
+    getCourses();
+    if (isEditing) {
+      getSubject();
+    }
+  }, [isEditing, id, setValue, watch]);
+
+  var chTeorica = watch("chTeorica");
+  var chPratica = watch("chPratica");
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setValue("chTotal", parseInt(chTeorica || 0) + parseInt(chPratica || 0));
+  }, [watch, setValue, chTeorica, chPratica]);
 
   const onSubmit = async (data) => {
     console.log(data);
-    try {
-      const response = await api.post(`disciplina/`, data);
-      console.log("response", response);
-      toast.success("Disciplina cadastrada com sucesso!");
-    } catch (error) {
-      console.log(error);
-      toast.error("Error ao carregar dados das disciplinas");
+    if (isEditing) {
+      try {
+        const response = await api.put(`disciplina/${id}`, data);
+        if (response.status === 200) {
+          toast.success("Disciplina editada com sucesso!");
+          navigate(`/curso/${data.curso}`);
+        } else {
+          toast.error("Error ao editar disciplina");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Error ao editar disciplina");
+      }
+    } else {
+      try {
+        const response = await api.post(`disciplina/`, data);
+        if (response.status === 201) {
+          toast.success("Disciplina cadastrada com sucesso!");
+          navigate(`/curso/${data.curso}`);
+        } else {
+          toast.error("Error ao cadastrar disciplina");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Error ao cadastrar disciplina");
+      }
     }
   };
 
@@ -94,9 +167,9 @@ function RegisterSubject() {
         className="bg-primary-100 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"
       >
         <h1 className="text-xl text-gray-700 font-bold mb-6">
-          Cadastrar Disciplina
+          {isEditing ? "Editar" : "Cadastrar"} Disciplina
         </h1>
-        <div className="grid md:grid-cols-3 md:gap-6">
+        <div className="grid md:grid-cols-2 md:gap-6">
           <InputField
             {...register("nome")}
             label={"Nome"}
@@ -104,27 +177,21 @@ function RegisterSubject() {
             placeholder={"Nome da disciplina"}
             error={errors.nome?.message}
           />
-          <InputField
-            {...register("codigo")}
-            label={"Código da Disciplina"}
-            type={"text"}
-            placeholder={"Código da disciplina, ex: MAT123"}
-            error={errors.codigo?.message}
-          />
-          <InputField
-            {...register("semestre")}
-            label={"Semestre da Disciplina"}
-            type={"number"}
-            placeholder={"Semestre da disciplina, ex: 1"}
-            error={errors.semestre?.message}
+          <SelectField
+            {...register("area")}
+            label={"Área"}
+            options={areas}
+            placeholder={"Área da disciplina..."}
+            error={errors.area?.message}
           />
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
-          <InputField
+          <SelectField
             {...register("curso")}
             label={"Curso"}
-            type={"text"}
-            placeholder={"Curso da disciplina"}
+            options={courses}
+            currentValue={watch("curso")}
+            placeholder={"Selecione o curso ou digite para filtrar"}
             error={errors.curso?.message}
           />
           <div>
@@ -175,25 +242,18 @@ function RegisterSubject() {
         </div>
         <div className="grid md:grid-cols-1 md:gap-6">
           <TextField
+            {...register("preRequisitos")}
+            label={"Pré-requisitos"}
+            type={"text"}
+            placeholder={"Pré-requisitos da disciplina..."}
+            error={errors.preRequisitos?.message}
+          />
+          <TextField
             {...register("ementa")}
             label={"Ementa"}
             type={"text"}
             placeholder={"Ementa da disciplina..."}
             error={errors.ementa?.message}
-          />
-          <TextField
-            {...register("objetivos")}
-            label={"Objetivos"}
-            type={"text"}
-            placeholder={"Objetivos da disciplina..."}
-            error={errors.objetivos?.message}
-          />
-          <TextField
-            {...register("conteudo")}
-            label={"Conteúdo"}
-            type={"text"}
-            placeholder={"Conteúdo da disciplina..."}
-            error={errors.conteudo?.message}
           />
           <TextField
             {...register("bibliografia")}
@@ -211,7 +271,7 @@ function RegisterSubject() {
           />
         </div>
         <div>
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit">{isEditing ? "Editar" : "Cadastrar"}</Button>
         </div>
       </form>
     </div>

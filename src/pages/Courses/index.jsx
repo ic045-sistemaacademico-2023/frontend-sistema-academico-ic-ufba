@@ -73,8 +73,7 @@ export default function CoursesPage() {
                 key={course.id}
                 className={`${
                   courseIndex % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
-                } border border-gray-100 hover:bg-primary-100 cursor-pointer`}
-                onClick={() => navigate(`/curso/${course.id}`)}
+                } border border-gray-100 hover:bg-primary-100 `}
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{course.id}</div>
@@ -93,13 +92,22 @@ export default function CoursesPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-center">
                   <div className="text-sm text-gray-900">{course.turno}</div>
                 </td>
-                <td className="px-6 py-4 min-w-[64px]">
-                  <Button secondary href={`atualizar/curso/${course.id}`}>
-                    Editar
-                  </Button>
-                  <Button onClick={() => deleteCourse(course.id)}>
-                    Deletar
-                  </Button>
+                <td className="px-2 py-2 flex flex-wrap justify-center">
+                  <div className="flex">
+                    <Button onClick={() => navigate(`/curso/${course.id}`)}>
+                      Visualizar
+                    </Button>
+                  </div>
+                  <div className="flex">
+                    <Button secondary href={`/atualizar/curso/${course.id}`}>
+                      Editar
+                    </Button>
+                  </div>
+                  <div className="flex">
+                    <Button onClick={() => deleteCourse(course.id)}>
+                      Deletar
+                    </Button>
+                  </div>
                 </td>
               </tr>
             ))}
