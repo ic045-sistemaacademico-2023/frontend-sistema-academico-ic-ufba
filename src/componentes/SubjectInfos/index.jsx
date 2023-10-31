@@ -1,6 +1,6 @@
-function SubjectInfos({ course }) {
+function SubjectInfos({ subjectData }) {
   return (
-    <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
+    <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
       <h1 className="text-2xl text-primary-700 font-bold mb-6 pb-2">
         Ementa da Disciplina
       </h1>
@@ -10,12 +10,14 @@ function SubjectInfos({ course }) {
           <strong className="text-sm text-primary-600 block">
             Disciplina:
           </strong>
-          <p className="text-lg font-medium text-primary-800">{course.nome}</p>
+          <p className="text-lg font-medium text-primary-800">
+            {subjectData.nome}
+          </p>
         </div>
         <div className>
           <strong className="text-sm text-primary-600 block">Código:</strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.codigo}
+            {subjectData.codigo}
           </p>
         </div>
         <div className>
@@ -23,7 +25,7 @@ function SubjectInfos({ course }) {
             Departamento:
           </strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.departamento}
+            {subjectData.area}
           </p>
         </div>
         <div>
@@ -31,7 +33,7 @@ function SubjectInfos({ course }) {
             Carga Horária Total(CH):
           </strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.ch} hrs
+            {subjectData.chTotal} hrs
           </p>
         </div>
         <div>
@@ -39,7 +41,7 @@ function SubjectInfos({ course }) {
             Carga Horária Prática:
           </strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.chPratica} hrs
+            {subjectData.chPratica} hrs
           </p>
         </div>
         <div>
@@ -47,50 +49,59 @@ function SubjectInfos({ course }) {
             Carga Horária Teórica:
           </strong>
           <p className="text-lg font-medium text-primary-800">
-            {course.chTeorica} hrs
+            {subjectData.chTeorica} hrs
           </p>
         </div>
       </div>
 
       <div className="px-6">
-        <div className="mb-6 pt-4 border-t-2 text-left">
+        <div className="mb-6 pt-4 border-t-2 border-cyan-600 text-left">
           <strong className="text-xl text-primary-600">Ementa:</strong>
           <p className="text-base text-primary-700 mt-2 text-justify">
-            {course.ementa}
+            {subjectData.ementa}
           </p>
         </div>
-
         <div className="mb-6 text-left">
           <strong className="text-xl text-primary-600">Objetivos:</strong>
           <p className="text-base text-primary-700 mt-2 text-justify">
-            {course.objetivos}
+            {subjectData.observacao}
           </p>
         </div>
 
         <div className="mb-6 text-left">
           <strong className="text-xl text-primary-600">Conteúdo:</strong>
-          {course.conteudo &&
-            course.conteudo.split("\n").map((item, i) => (
+          {subjectData.observacao ? (
+            subjectData.observacao.split("\n").map((item, i) => (
               <p
                 className="text-base text-primary-700 mt-2 text-justify"
                 key={i}
               >
                 {item}
               </p>
-            ))}
+            ))
+          ) : (
+            <p className="text-base text-primary-700 mt-2 text-justify">
+              Dados não disponíveis
+            </p>
+          )}
         </div>
 
         <div className="mb-2 text-left pb-2">
           <strong className="text-xl text-primary-600">Bibliografia:</strong>
-          {course.bibliografia &&
-            course.bibliografia.split("\n").map((item, i) => (
+          {subjectData.bibliografia ? (
+            subjectData.bibliografia.split("\n").map((item, i) => (
               <p
                 className="text-base text-primary-700 mt-2 text-justify"
                 key={i}
               >
                 {item}
               </p>
-            ))}
+            ))
+          ) : (
+            <p className="text-base text-primary-700 mt-2 text-justify">
+              Dados não disponíveis
+            </p>
+          )}
         </div>
       </div>
     </div>
