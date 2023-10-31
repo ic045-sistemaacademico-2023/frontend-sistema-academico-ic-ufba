@@ -16,6 +16,7 @@ function CourseClassPage() {
     const fetchUsers = async () => {
       try {
         const response = await api.get(`/turma/${id}`);
+        console.log(response.data);
         setData(response.data);
       } catch (error) {
         console.log(error);
@@ -32,7 +33,7 @@ function CourseClassPage() {
       <ClassStudents classStudents={data?.alunos} />
 
       <div className="py-4 mb-4">
-        <Button href="/comprovante-matricula" secondary>
+        <Button href={`/disciplina/${data?.disciplina?.id}`} secondary>
           Voltar
         </Button>
       </div>

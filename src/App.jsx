@@ -40,9 +40,8 @@ function App() {
         <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
 
         {/* Disciplinas */}
-        <Route exact path="/disciplinas" element={<SubjectsPage />} />
-        <Route exact path="/disciplina/:codigo" element={<SubjectSillabus />} />
-        <Route exact path="/ementa-disciplina" element={<SubjectSillabus />} />
+        <Route exact path="/curso/:id" element={<SubjectsPage />} />
+        <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
         <Route
           exact
           path="/cadastrar/disciplina"
@@ -50,7 +49,7 @@ function App() {
         />
 
         {/* Turmas */}
-        <Route exact path="professor/turmas" element={<CourseClasses />} />
+        <Route exact path="/professor/turmas" element={<CourseClasses />} />
         <Route exact path="/turmas" element={<CourseClasses />} />
         <Route exact path="/turma/:id" element={<CourseClassPage />} />
         <Route exact path="/cadastrar/turma" element={<RegisterClass />} />

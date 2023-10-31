@@ -3,9 +3,12 @@ import Sidebar from "../../componentes/Sidebar";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
+import { useNavigate } from "react-router-dom";
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState([]);
+
+  const navigate = useNavigate();
 
   const fetchCourses = async () => {
     try {
@@ -70,7 +73,8 @@ export default function CoursesPage() {
                 key={course.id}
                 className={`${
                   courseIndex % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
-                } border border-gray-100 hover:bg-primary-100`}
+                } border border-gray-100 hover:bg-primary-100 cursor-pointer`}
+                onClick={() => navigate(`/curso/${course.id}`)}
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm text-gray-900">{course.id}</div>

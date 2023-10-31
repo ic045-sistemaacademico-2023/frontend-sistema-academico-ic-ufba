@@ -1,19 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 function CourseClasses({ courseClasses }) {
-  console.log(courseClasses);
   const currentYear = new Date().getFullYear();
   const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 
-  // Verifica se courseClasses é um array válido antes de mapeá-lo
-  if (!Array.isArray(courseClasses)) {
-    console.log("courseClasses não é um array válido");
-    return (
-      <strong className="text-sm text-primary-600 block p-4">
-        Disciplina sem turmas cadastradas para o período
-      </strong>
-    );
-  }
+  const navigate = useNavigate();
 
-  return (
+  return courseClasses?.length === 0 ? (
+    <strong className="text-sm text-primary-600 block p-4">
+      Disciplina sem turmas cadastradas para o período
+    </strong>
+  ) : (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
       <strong className="text-xl text-primary-600">
         Lista de turmas - Semestre {currentYear}.{currentPeriod}
@@ -39,23 +36,24 @@ function CourseClasses({ courseClasses }) {
           </tr>
         </thead>
         <tbody>
-          {courseClasses.map((classes, index) => (
+          {courseClasses.map((classItem, index) => (
             <tr
               key={index}
               className={`${
-                index % 2 == 0 ? "bg-primary-50" : "bg-primary-100"
-              } border border-gray-200 hover:bg-primary-200`}
+                index % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
+              } border border-gray-100 hover:bg-primary-100 cursor-pointer`}
+              onClick={() => navigate(`/turma/${classItem.id}`)}
             >
               <th
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               >
-                {classes.id}
+                {classItem.id}
               </th>
-              <td className="px-6 py-4">{classes.dias}</td>
-              <td className="px-6 py-4">{classes.horario}</td>
-              <td className="px-6 py-4">{classes.local}</td>
-              <td className="px-6 py-4">{classes.professor}</td>
+              <td className="px-6 py-4">{classItem.dias}</td>
+              <td className="px-6 py-4">{classItem.horario}</td>
+              <td className="px-6 py-4">{classItem.local}</td>
+              <td className="px-6 py-4">{classItem.professor}</td>
             </tr>
           ))}
         </tbody>

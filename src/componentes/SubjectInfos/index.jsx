@@ -6,7 +6,7 @@ function SubjectInfos({ subjectData }) {
       </h1>
 
       <div className="grid grid-cols-3 gap-6 mb-6 bg-primary-100 py-5 rounded-lg">
-        <div className>
+        <div>
           <strong className="text-sm text-primary-600 block">
             Disciplina:
           </strong>
@@ -14,13 +14,13 @@ function SubjectInfos({ subjectData }) {
             {subjectData.nome}
           </p>
         </div>
-        <div className>
+        <div>
           <strong className="text-sm text-primary-600 block">Código:</strong>
           <p className="text-lg font-medium text-primary-800">
             {subjectData.codigo}
           </p>
         </div>
-        <div className>
+        <div>
           <strong className="text-sm text-primary-600 block">
             Departamento:
           </strong>

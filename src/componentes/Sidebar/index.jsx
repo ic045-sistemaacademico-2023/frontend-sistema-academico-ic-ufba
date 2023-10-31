@@ -1,6 +1,5 @@
 import {
   CirclesThreePlus,
-  GraduationCap,
   IdentificationBadge,
   ListChecks,
   ListDashes,
@@ -34,19 +33,14 @@ function Sidebar() {
             icon={<ListChecks size={20} />}
           />
           <SidebarItem
-            title={"Disciplinas"}
-            link={"/disciplinas"}
-            icon={<SquaresFour size={20} />}
-          />
-          <SidebarItem
-            title={"Turma"}
-            link={"/turma/1"}
-            icon={<GraduationCap size={20} />}
-          />
-          <SidebarItem
             title={"Cursos"}
             link={"/cursos"}
             icon={<ListDashes size={20} />}
+          />
+          <SidebarItem
+            title={"Disciplinas"}
+            link={"/curso/1"}
+            icon={<SquaresFour size={20} />}
           />
           <p className="text-white text-base bg-primary-700">Administração</p>
           <SidebarItem
