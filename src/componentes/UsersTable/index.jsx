@@ -70,7 +70,7 @@ function UserTable({ users, isManager = false, fetchUsers }) {
                 </td>
               ) : (
                 <td className="px-6 py-4 min-w-[64px]">
-                  <Button secondary href={`/usuario/${user.id}`}>
+                  <Button secondary href={`atualizar/usuario/${user.id}`}>
                     Editar
                   </Button>
                   <Button onClick={() => deleteUser(user.id)}>Deletar</Button>

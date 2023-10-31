@@ -90,7 +90,7 @@ export default function CoursesPage() {
                   <div className="text-sm text-gray-900">{course.turno}</div>
                 </td>
                 <td className="px-6 py-4 min-w-[64px]">
-                  <Button secondary href={`/curso/${course.id}`}>
+                  <Button secondary href={`atualizar/curso/${course.id}`}>
                     Editar
                   </Button>
                   <Button onClick={() => deleteCourse(course.id)}>

@@ -51,24 +51,29 @@ function Sidebar() {
           <p className="text-white text-base bg-primary-700">Administração</p>
           <SidebarItem
             title={"Cadastrar Usuário"}
-            link={"/usuario"}
+            link={"/cadastrar/usuario"}
             icon={<UserPlus size={20} />}
           />
           <SidebarItem
             title={"Cadastrar Curso"}
-            link={"/curso"}
+            link={"/cadastrar/curso"}
             icon={<Plus size={20} />}
           />
 
           <SidebarItem
             title={"Cadastrar Disciplina"}
-            link={"/cadastro-disciplina"}
+            link={"/cadastrar/disciplina"}
             icon={<CirclesThreePlus size={20} />}
           />
           <SidebarItem
             title={"Cadastrar Turma"}
-            link={"/cadastro-turma"}
+            link={"/cadastrar/turma"}
             icon={<PlusCircle size={20} />}
+          />
+          <SidebarItem
+            title={"Minhas turmas"}
+            link={"/professor/turmas"}
+            icon={<Users size={20} />}
           />
           <SidebarItem
             title={"Usuarios"}

@@ -34,9 +34,9 @@ function App() {
         <Route exact path="/comprovante-matricula" element={<StudentPage />} />
 
         {/* Usuários */}
-        <Route exact path="/usuario" element={<RegisterUser />} />
-        <Route exact path="/usuario/:id" element={<RegisterUser />} />
         <Route exact path="/usuarios" element={<UsersPage />} />
+        <Route exact path="/cadastrar/usuario" element={<RegisterUser />} />
+        <Route exact path="/atualizar/usuario/:id" element={<RegisterUser />} />
         <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
 
         {/* Disciplinas */}
@@ -45,19 +45,20 @@ function App() {
         <Route exact path="/ementa-disciplina" element={<SubjectSillabus />} />
         <Route
           exact
-          path="/cadastro-disciplina"
+          path="/cadastrar/disciplina"
           element={<RegisterSubject />}
         />
 
         {/* Turmas */}
-        <Route exact path="/turma/:id" element={<CourseClassPage />} />
+        <Route exact path="professor/turmas" element={<CourseClasses />} />
         <Route exact path="/turmas" element={<CourseClasses />} />
-        <Route exact path="/cadastro-turma" element={<RegisterClass />} />
+        <Route exact path="/turma/:id" element={<CourseClassPage />} />
+        <Route exact path="/cadastrar/turma" element={<RegisterClass />} />
 
         {/* Cursos */}
         <Route exact path="/cursos" element={<CoursesPage />} />
-        <Route exact path="/curso" element={<RegisterCourse />} />
-        <Route exact path="/curso/:id" element={<RegisterCourse />} />
+        <Route exact path="/cadastrar/curso" element={<RegisterCourse />} />
+        <Route exact path="/atualizar/curso/:id" element={<RegisterCourse />} />
       </Routes>
       <ToastContainer
         position="top-right"
