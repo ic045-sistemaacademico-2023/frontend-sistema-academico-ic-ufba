@@ -8,14 +8,14 @@ import Sidebar from "../../componentes/Sidebar";
 import SelectField from "../../componentes/Forms/SelectField";
 import InputField from "../../componentes/Forms/InputField";
 import MultiSelectField from "../../componentes/Forms/MultiSelectField";
-import SearchableSelectField from "../../componentes/Forms/SearchableSelectField";
 import Button from "../../componentes/Button";
 import api from "../../utils/api";
 
-import { diasDeAula, horarios } from "./data";
+import { diasDeAula, formatDia, horarios, inverseFormatDia } from "./data";
+import { useParams } from "react-router-dom";
 
 const schema = yup.object().shape({
-  disciplina: yup.number().required("O nome da disciplina é obrigatório"),
+  disciplina: yup.number().required("A disciplina é obrigatória"),
   semestre: yup.number().required("O semestre é obrigatório"),
   professor: yup.string().required("O nome do professor é obrigatório"),
   dias: yup
@@ -36,12 +36,16 @@ function RegisterClass() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     watch,
   } = useForm({
     mode: "onSubmit",
     defaultValues: initialValues,
     resolver: yupResolver(schema),
   });
+
+  const { id } = useParams();
+  const isEditing = id !== undefined;
 
   const [professores, setProfessores] = useState([]);
   const [disciplinas, setDisciplinas] = useState([]);
@@ -93,9 +97,12 @@ function RegisterClass() {
   }, []);
 
   const validateHorarios = (horarios) => {
-    for (const dia of diasDeAula) {
-      const inicio = horarios[`horarioInicio${dia.name}`];
-      const fim = horarios[`horarioFim${dia.name}`];
+    const dias = watch("dias");
+
+    for (const dia of dias) {
+      const formattedDia = formatDia[dia];
+      const inicio = horarios[`horarioInicio${formattedDia}`];
+      const fim = horarios[`horarioFim${formattedDia}`];
 
       if (inicio && fim && inicio >= fim) {
         return false;
@@ -104,6 +111,53 @@ function RegisterClass() {
 
     return true;
   };
+
+  useEffect(() => {
+    if (isEditing) {
+      const fetchTurmaData = async () => {
+        try {
+          const response = await api.get(`/turma/${id}`);
+          if (response.status === 200) {
+            const turmaData = response.data;
+
+            const disciplina = disciplinas.find(
+              (disciplina) => disciplina.id === turmaData.disciplina.id,
+            );
+
+            setValue("disciplina", disciplina?.id);
+            setValue("semestre", turmaData.semestre);
+            setValue("professor", turmaData.professor.id);
+
+            const dias = turmaData.dias.split(",").map((dia) => {
+              return inverseFormatDia[dia];
+            });
+
+            setValue("dias", dias);
+
+            const locais = turmaData.local.split("/");
+            dias.forEach((dia, index) => {
+              const formattedDia = formatDia[dia];
+              setValue(`local${formattedDia}`, locais[index]);
+            });
+
+            const horarios = turmaData.horario.split("/");
+            dias.forEach((dia, index) => {
+              const formattedDia = formatDia[dia];
+              const [inicio, fim] = horarios[index].split("-");
+              setValue(`horarioInicio${formattedDia}`, inicio);
+              setValue(`horarioFim${formattedDia}`, fim);
+            });
+          } else {
+            toast.error("Erro ao carregar dados da turma");
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error("Erro ao carregar dados da turma");
+        }
+      };
+      fetchTurmaData();
+    }
+  }, [isEditing, id, setValue, disciplinas]);
 
   const onSubmit = async (data) => {
     if (!validateHorarios(data)) {
@@ -164,10 +218,10 @@ function RegisterClass() {
         className="bg-primary-100 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"
       >
         <h1 className="text-xl text-gray-700 font-bold mb-6">
-          Cadastrar Turma
+          {isEditing ? "Editar" : "Cadastrar"} Turma {isEditing && `#${id}`}
         </h1>
         <div className="grid md:grid-cols-2 md:gap-6">
-          <SearchableSelectField
+          <SelectField
             {...register("disciplina")}
             label={"Disciplina"}
             options={disciplinas}
@@ -235,7 +289,6 @@ function RegisterClass() {
                         <div>
                           <SelectField
                             {...register(`horarioInicio${dia.name}`)}
-                            label=""
                             options={horarios}
                             placeholder="Início"
                             error={errors[`horarioInicio${dia.name}`]?.message}
@@ -244,7 +297,6 @@ function RegisterClass() {
                         <div>
                           <SelectField
                             {...register(`horarioFim${dia.name}`)}
-                            label=""
                             options={horarios}
                             placeholder="Fim"
                             error={errors[`horarioFim${dia.name}`]?.message}
@@ -267,7 +319,7 @@ function RegisterClass() {
           </div>
         )}
         <div>
-          <Button type="submit">Cadastrar</Button>
+          <Button type="submit">{isEditing ? "Editar" : "Cadastrar"}</Button>
         </div>
       </form>
     </div>

@@ -1,3 +1,5 @@
+import { areasObject } from "./data";
+
 function SubjectInfos({ subjectData }) {
   return (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
@@ -25,7 +27,7 @@ function SubjectInfos({ subjectData }) {
             Departamento:
           </strong>
           <p className="text-lg font-medium text-primary-800">
-            {subjectData.area}
+            {areasObject[subjectData.area]}
           </p>
         </div>
         <div>

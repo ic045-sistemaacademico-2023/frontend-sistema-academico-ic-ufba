@@ -1,32 +1,38 @@
-import Sidebar from "../../componentes/Sidebar";
-
-import SubjectInfos from "../../componentes/SubjectInfos";
-import CourseClasses from "../../componentes/CourseClasses";
-import Button from "../../componentes/Button";
-import api from "../../utils/api.js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
+import api from "../../utils/api";
 import { toast } from "react-toastify";
+import CourseClasses from "../../componentes/CourseClasses";
+import Button from "../../componentes/Button";
+import Sidebar from "../../componentes/Sidebar";
 
-function SubjectSillabus() {
-  const [subject, setSubject] = useState({});
-  const [classes, setClasses] = useState([]);
+function ProfessorClasses() {
   const { id } = useParams();
 
+  const [classes, setClasses] = useState([]);
+  const [professor, setProfessor] = useState({});
+
   useEffect(() => {
-    const fetchSubject = async () => {
+    const fetchProfessor = async () => {
       try {
-        const response = await api.get(`/disciplina/${id}`);
-        if (response.status === 200) setSubject(response.data);
+        const response = await api.get(`/professor/${id}`);
+        if (response.status === 200) {
+          setProfessor(response.data);
+        } else {
+          toast.error("Erro ao carregar professor");
+        }
       } catch (error) {
-        toast.error("Error ao carregar dados da disciplina");
+        console.log(error);
+        toast.error("Erro ao carregar professor");
       }
     };
+    fetchProfessor();
+  }, [id]);
 
+  useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await api.get(`/disciplina/${id}/turmas`);
+        const response = await api.get(`/professor/${id}/turmas`);
         if (response.status === 200) {
           const classes = response.data.map((classItem) => {
             return {
@@ -37,21 +43,22 @@ function SubjectSillabus() {
               professor: classItem.professor.nome,
             };
           });
-
           setClasses(classes);
+        } else {
+          toast.error("Erro ao carregar turmas");
         }
       } catch (error) {
-        toast.error("Erro ao carregar dados da disciplina");
+        console.log(error);
+        toast.error("Erro ao carregar turmas");
       }
     };
 
-    fetchSubject();
     fetchClasses();
   }, [id]);
 
   const fetchClasses = async () => {
     try {
-      const response = await api.get(`/disciplina/${id}/turmas`);
+      const response = await api.get(`/professor/${id}/turmas`);
       if (response.status === 200) {
         const classes = response.data.map((classItem) => {
           return {
@@ -62,25 +69,31 @@ function SubjectSillabus() {
             professor: classItem.professor.nome,
           };
         });
-
         setClasses(classes);
+      } else {
+        toast.error("Erro ao carregar turmas");
       }
     } catch (error) {
-      toast.error("Erro ao carregar dados da disciplina");
+      console.log(error);
+      toast.error("Erro ao carregar turmas");
     }
   };
 
   return (
     <div className="w-full pl-64">
       <Sidebar />
-      <SubjectInfos subjectData={subject} />
+      <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
+        <h1 className="text-2xl text-primary-800 font-bold pb-2">
+          Professor {professor.nome}
+        </h1>
+      </div>
       <CourseClasses
         courseClasses={classes}
         fetchClasses={fetchClasses}
-        entity="Disciplina"
+        entity="Professor"
       />
       <div className="py-4 mb-4">
-        <Button href={`/curso/${subject?.curso?.id}`} secondary>
+        <Button href="/cursos" secondary>
           Voltar
         </Button>
       </div>
@@ -88,4 +101,4 @@ function SubjectSillabus() {
   );
 }
 
-export default SubjectSillabus;
+export default ProfessorClasses;

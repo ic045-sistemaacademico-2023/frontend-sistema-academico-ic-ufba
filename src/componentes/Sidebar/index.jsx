@@ -66,7 +66,7 @@ function Sidebar() {
           />
           <SidebarItem
             title={"Minhas turmas"}
-            link={"/professor/turmas"}
+            link={"/professor/1/turmas"}
             icon={<Users size={20} />}
           />
           <SidebarItem

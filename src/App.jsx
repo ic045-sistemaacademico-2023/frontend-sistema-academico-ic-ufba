@@ -15,10 +15,10 @@ import CoursesPage from "./pages/Courses";
 import RegisterCourse from "./pages/RegisterCourse";
 import UsersPage from "./pages/Users";
 import ManageUsersPage from "./pages/ManageUsers";
-import CourseClasses from "./componentes/CourseClasses";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProfessorClasses from "./pages/ProfessorClasses";
 
 function App() {
   return (
@@ -54,10 +54,14 @@ function App() {
         />
 
         {/* Turmas */}
-        <Route exact path="/professor/turmas" element={<CourseClasses />} />
-        <Route exact path="/turmas" element={<CourseClasses />} />
+        <Route
+          exact
+          path="/professor/:id/turmas"
+          element={<ProfessorClasses />}
+        />
         <Route exact path="/turma/:id" element={<CourseClassPage />} />
         <Route exact path="/cadastrar/turma" element={<RegisterClass />} />
+        <Route exact path="/atualizar/turma/:id" element={<RegisterClass />} />
 
         {/* Cursos */}
         <Route exact path="/cursos" element={<CoursesPage />} />

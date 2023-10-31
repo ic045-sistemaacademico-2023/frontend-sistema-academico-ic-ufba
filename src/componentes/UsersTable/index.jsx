@@ -63,14 +63,14 @@ function UserTable({ users, isManager = false, fetchUsers }) {
                 <td className="px-6 py-4">{status[user.status]}</td>
               )}
               {isManager ? (
-                <td className="px-6 py-4">
+                <td className="px-2 py-2 flex flex-wrap justify-center">
                   <Button>Aprovar</Button>
                   <Button secondary color="">
                     Recusar
                   </Button>
                 </td>
               ) : (
-                <td className="px-6 py-4 min-w-[64px]">
+                <td className="px-2 py-2 flex flex-wrap justify-center">
                   <Button secondary href={`atualizar/usuario/${user.id}`}>
                     Editar
                   </Button>

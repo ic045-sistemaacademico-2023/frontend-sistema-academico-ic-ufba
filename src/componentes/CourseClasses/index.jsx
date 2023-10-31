@@ -3,7 +3,7 @@ import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 
-function CourseClasses({ courseClasses, fetchClasses }) {
+function CourseClasses({ courseClasses, fetchClasses, entity }) {
   const currentYear = new Date().getFullYear();
   const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 
@@ -26,14 +26,14 @@ function CourseClasses({ courseClasses, fetchClasses }) {
 
   return courseClasses?.length === 0 ? (
     <strong className="text-sm text-primary-600 block p-4">
-      Disciplina sem turmas cadastradas para o período
+      {entity} sem turmas cadastradas para o período atual
     </strong>
   ) : (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
-      <strong className="text-xl text-primary-600">
+      <h2 className="text-xl font-bold text-primary-700">
         Lista de turmas - Semestre {currentYear}.{currentPeriod}
-      </strong>
-      <table className="w-full text-sm text-center text-gray-700 mt-4">
+      </h2>
+      <table className="w-full text-sm text-center text-gray-700 mt-10">
         <thead className="text-xs text-gray-900 uppercase bg-gray-5">
           <tr>
             <th scope="col" className="px-6 py-3">
@@ -70,9 +70,21 @@ function CourseClasses({ courseClasses, fetchClasses }) {
               >
                 {classItem.id}
               </th>
-              <td className="px-6 py-4">{classItem.dias}</td>
-              <td className="px-6 py-4">{classItem.horario}</td>
-              <td className="px-6 py-4">{classItem.local}</td>
+              <td className="px-6 py-4">
+                {classItem.dias.split(",").map((dia, index) => (
+                  <div key={index}>{dia}</div>
+                ))}
+              </td>
+              <td className="px-6 py-4">
+                {classItem.horario.split("/").map((horario, index) => (
+                  <div key={index}>{horario}</div>
+                ))}
+              </td>
+              <td className="px-6 py-4">
+                {classItem.local.split("/").map((local, index) => (
+                  <div key={index}>{local}</div>
+                ))}
+              </td>
               <td className="px-6 py-4">{classItem.professor}</td>
               <td className="px-2 py-2 flex flex-wrap justify-center">
                 <Button onClick={() => navigate(`/turma/${classItem.id}`)}>
