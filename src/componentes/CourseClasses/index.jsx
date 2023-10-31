@@ -10,7 +10,7 @@ function CourseClasses({ courseClasses }) {
       <strong className="text-sm text-primary-600 block p-4">
         Disciplina sem turmas cadastradas para o período
       </strong>
-    )
+    );
   }
 
   return (
@@ -42,8 +42,9 @@ function CourseClasses({ courseClasses }) {
           {courseClasses.map((classes, index) => (
             <tr
               key={index}
-              className={`${index % 2 == 0 ? "bg-primary-50" : "bg-primary-100"
-                } border border-gray-200 hover:bg-primary-200`}
+              className={`${
+                index % 2 == 0 ? "bg-primary-50" : "bg-primary-100"
+              } border border-gray-200 hover:bg-primary-200`}
             >
               <th
                 scope="row"
