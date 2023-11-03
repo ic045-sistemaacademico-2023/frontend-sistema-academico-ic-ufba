@@ -60,7 +60,7 @@ function ProfessorClasses() {
     try {
       const response = await api.get(`/professor/${id}/turmas`);
       if (response.status === 200) {
-        const classes = response.data.map((classItem) => {
+        const classes = response.data?.map((classItem) => {
           return {
             id: classItem.id,
             dias: classItem.dias,
@@ -84,7 +84,7 @@ function ProfessorClasses() {
       <Sidebar />
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
         <h1 className="text-2xl text-primary-800 font-bold pb-2">
-          Professor {professor.nome}
+          Professor {professor?.nome}
         </h1>
       </div>
       <CourseClasses

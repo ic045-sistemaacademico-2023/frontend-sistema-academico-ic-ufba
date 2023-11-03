@@ -79,26 +79,28 @@ function CourseSubjects({ courseData, subjects, fetchSubjects }) {
                   key={index}
                   className={`${
                     index % 2 == 0 ? "bg-white" : "bg-primary-50"
-                  } border text-center border-gray-100 hover:bg-primary-100`}
+                  } border text-center border-gray-100 hover:bg-primary-100 h-full`}
                 >
-                  <td className="px-6 py-4">{subject.id}</td>
-                  <td className="px-6 py-4">{subject.codigo}</td>
-                  <td className="px-6 py-4">{subject.nome}</td>
-                  <td className="px-2 py-2 flex flex-wrap justify-center">
-                    <Button
-                      onClick={() => navigate(`/disciplina/${subject.id}`)}
-                    >
-                      Visualizar
-                    </Button>
-                    <Button
-                      secondary
-                      href={`/atualizar/disciplina/${subject.id}`}
-                    >
-                      Editar
-                    </Button>
-                    <Button onClick={() => deleteSubject(subject.id)}>
-                      Deletar
-                    </Button>
+                  <td className="px-6 py-4 h-full">{subject.id}</td>
+                  <td className="px-6 py-4 h-full">{subject.codigo}</td>
+                  <td className="px-6 py-4 h-full">{subject.nome}</td>
+                  <td className="px-6 py-4 h-full">
+                    <div className="flex flex-wrap justify-center items-center gap-2">
+                      <Button
+                        onClick={() => navigate(`/disciplina/${subject.id}`)}
+                      >
+                        Visualizar
+                      </Button>
+                      <Button
+                        secondary
+                        href={`/atualizar/disciplina/${subject.id}`}
+                      >
+                        Editar
+                      </Button>
+                      <Button onClick={() => deleteSubject(subject.id)}>
+                        Deletar
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}

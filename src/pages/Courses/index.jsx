@@ -44,7 +44,7 @@ export default function CoursesPage() {
       <Sidebar />
       <h2 className="text-xl text-gray-700 font-bold mt-4">Cursos</h2>
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
-        <table className="w-full text-sm text-left text-gray-700">
+        <table className="w-full text-sm text-center text-gray-700">
           <thead className="text-xs text-gray-900 uppercase bg-gray-5">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -73,37 +73,23 @@ export default function CoursesPage() {
                 key={course.id}
                 className={`${
                   courseIndex % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
-                } border border-gray-100 hover:bg-primary-100 `}
+                } border border-gray-100 hover:bg-primary-100 whitespace-nowrap text-sm text-gray-900`}
               >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{course.id}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{course.nome}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">
-                    {course.coordenadorDeCurso?.nome}
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <div className="text-sm text-gray-900">{course.semestre}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-center">
-                  <div className="text-sm text-gray-900">{course.turno}</div>
-                </td>
-                <td className="px-2 py-2 flex flex-wrap justify-center">
-                  <div className="flex">
+                <td className="px-6 py-4">{course.id}</td>
+                <td className="px-6 py-4">{course.nome}</td>
+                <td className="px-6 py-4">{course.coordenadorDeCurso?.nome}</td>
+                <td className="px-6 py-4 text-center">{course.semestre}</td>
+                <td className="px-6 py-4 text-center">{course.turno}</td>
+                <td className="px-6 py-4">
+                  <div className="flex flex-wrap justify-center items-center gap-2">
                     <Button onClick={() => navigate(`/curso/${course.id}`)}>
                       Visualizar
                     </Button>
-                  </div>
-                  <div className="flex">
+
                     <Button secondary href={`/atualizar/curso/${course.id}`}>
                       Editar
                     </Button>
-                  </div>
-                  <div className="flex">
+
                     <Button onClick={() => deleteCourse(course.id)}>
                       Deletar
                     </Button>

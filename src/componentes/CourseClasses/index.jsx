@@ -62,40 +62,42 @@ function CourseClasses({ courseClasses, fetchClasses, entity }) {
               key={index}
               className={`${
                 index % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
-              } border border-gray-100 hover:bg-primary-100`}
+              } border border-gray-100 hover:bg-primary-100 h-full`}
             >
               <th
                 scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                className="px-6 py-4 h-full font-medium text-gray-900 whitespace-nowrap"
               >
                 {classItem.id}
               </th>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 h-full">
                 {classItem.dias.split(",").map((dia, index) => (
                   <div key={index}>{dia}</div>
                 ))}
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 h-full">
                 {classItem.horario.split("/").map((horario, index) => (
                   <div key={index}>{horario}</div>
                 ))}
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 h-full">
                 {classItem.local.split("/").map((local, index) => (
                   <div key={index}>{local}</div>
                 ))}
               </td>
-              <td className="px-6 py-4">{classItem.professor}</td>
-              <td className="px-2 py-2 flex flex-wrap justify-center">
-                <Button onClick={() => navigate(`/turma/${classItem.id}`)}>
-                  Visualizar
-                </Button>
-                <Button secondary href={`/atualizar/turma/${classItem.id}`}>
-                  Editar
-                </Button>
-                <Button onClick={() => deleteClass(classItem.id)}>
-                  Deletar
-                </Button>
+              <td className="px-6 py-4 h-full">{classItem.professor}</td>
+              <td className="px-2 py-2 h-full">
+                <div className="flex flex-wrap gap-2 justify-center items-center">
+                  <Button onClick={() => navigate(`/turma/${classItem.id}`)}>
+                    Visualizar
+                  </Button>
+                  <Button secondary href={`/atualizar/turma/${classItem.id}`}>
+                    Editar
+                  </Button>
+                  <Button onClick={() => deleteClass(classItem.id)}>
+                    Deletar
+                  </Button>
+                </div>
               </td>
             </tr>
           ))}
