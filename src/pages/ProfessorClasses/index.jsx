@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
@@ -12,51 +12,7 @@ function ProfessorClasses() {
   const [classes, setClasses] = useState([]);
   const [professor, setProfessor] = useState({});
 
-  useEffect(() => {
-    const fetchProfessor = async () => {
-      try {
-        const response = await api.get(`/professor/${id}`);
-        if (response.status === 200) {
-          setProfessor(response.data);
-        } else {
-          toast.error("Erro ao carregar professor");
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Erro ao carregar professor");
-      }
-    };
-    fetchProfessor();
-  }, [id]);
-
-  useEffect(() => {
-    const fetchClasses = async () => {
-      try {
-        const response = await api.get(`/professor/${id}/turmas`);
-        if (response.status === 200) {
-          const classes = response.data.map((classItem) => {
-            return {
-              id: classItem.id,
-              dias: classItem.dias,
-              horario: classItem.horario,
-              local: classItem.local,
-              professor: classItem.professor.nome,
-            };
-          });
-          setClasses(classes);
-        } else {
-          toast.error("Erro ao carregar turmas");
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Erro ao carregar turmas");
-      }
-    };
-
-    fetchClasses();
-  }, [id]);
-
-  const fetchClasses = async () => {
+  const fetchClasses = useCallback(async () => {
     try {
       const response = await api.get(`/professor/${id}/turmas`);
       if (response.status === 200) {
@@ -77,7 +33,28 @@ function ProfessorClasses() {
       console.log(error);
       toast.error("Erro ao carregar turmas");
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    const fetchProfessor = async () => {
+      try {
+        const response = await api.get(`/professor/${id}`);
+        if (response.status === 200) {
+          setProfessor(response.data);
+        } else {
+          toast.error("Erro ao carregar professor");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Erro ao carregar professor");
+      }
+    };
+    fetchProfessor();
+  }, [id]);
+
+  useEffect(() => {
+    fetchClasses();
+  }, [id, fetchClasses]);
 
   return (
     <div className="w-full pl-64">
