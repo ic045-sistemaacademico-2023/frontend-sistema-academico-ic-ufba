@@ -109,7 +109,7 @@ function RegisterCourse() {
       try {
         const response = await api.post("/curso/", data);
         if (response.status === 201) {
-          toast.success("Turma cadastrado com sucesso!");
+          toast.success("Turma cadastrada com sucesso!");
           navigate("/cursos");
         } else {
           toast.error("Erro ao cadastrar turma");

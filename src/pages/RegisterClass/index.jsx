@@ -135,14 +135,12 @@ function RegisterClass() {
             setValue("dias", dias);
 
             const locais = turmaData.local.split("/");
+            const horarios = turmaData.horario.split("/");
+
             dias.forEach((dia, index) => {
               const formattedDia = formatDia[dia];
               setValue(`local${formattedDia}`, locais[index]);
-            });
 
-            const horarios = turmaData.horario.split("/");
-            dias.forEach((dia, index) => {
-              const formattedDia = formatDia[dia];
               const [inicio, fim] = horarios[index].split("-");
               setValue(`horarioInicio${formattedDia}`, inicio);
               setValue(`horarioFim${formattedDia}`, fim);
@@ -192,7 +190,7 @@ function RegisterClass() {
     try {
       const response = await api.post("/turma/", data);
       if (response.status === 201) {
-        toast.success("Turma cadastrado com sucesso!");
+        toast.success("Turma cadastrada com sucesso!");
       } else {
         toast.error("Erro ao cadastrar turma");
       }

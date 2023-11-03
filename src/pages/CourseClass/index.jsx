@@ -16,7 +16,6 @@ function CourseClassPage() {
     const fetchUsers = async () => {
       try {
         const response = await api.get(`/turma/${id}`);
-        console.log(response.data);
         setData(response.data);
       } catch (error) {
         console.log(error);
