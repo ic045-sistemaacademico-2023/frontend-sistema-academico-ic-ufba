@@ -3,7 +3,7 @@ import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import { useForm } from "react-hook-form";
 
 import Button from "../../componentes/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import Link from "../../componentes/Link";
 
@@ -83,7 +83,7 @@ function LoginPage() {
             </form>
 
             <Link href="/password-reset">Recuperar senha</Link>
-            <Link href="/comprovante-matricula">Primeira página</Link>
+            <Link href="/">Primeira página</Link>
           </div>
         </div>
       </div>
