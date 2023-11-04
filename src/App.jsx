@@ -19,8 +19,12 @@ import ManageUsersPage from "./pages/ManageUsers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfessorClasses from "./pages/ProfessorClasses";
+import ProtectedRoute from "./componentes/Sidebar/ProtectedRoute";
 
 function App() {
+  // ALUNO ADMIN PROFESSOR COORDENADOR_DE_CURSO
+  const USER_ROLE = "ALUNO";
+
   return (
     <BrowserRouter>
       <Routes>
@@ -30,44 +34,55 @@ function App() {
         <Route exact path="/password-reset" element={<PasswordReset />} />
 
         {/* Aluno */}
-        <Route exact path="/historico" element={<HistoryPage />} />
-        <Route exact path="/comprovante-matricula" element={<StudentPage />} />
+        <Route element={<ProtectedRoute isAllowed={USER_ROLE == 'ALUNO'}/>}>
+          <Route exact path="/historico" element={<HistoryPage />} />
+          <Route exact path="/comprovante-matricula" element={<StudentPage />} />
+        </Route>
 
         {/* Usuários */}
-        <Route exact path="/usuarios" element={<UsersPage />} />
-        <Route exact path="/cadastrar/usuario" element={<RegisterUser />} />
-        <Route exact path="/atualizar/usuario/:id" element={<RegisterUser />} />
-        <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
+        <Route element={<ProtectedRoute isAllowed={USER_ROLE == 'ADMIN'}/>}>
+          <Route exact path="/usuarios" element={<UsersPage />} />
+          <Route exact path="/cadastrar/usuario" element={<RegisterUser />} />
+          <Route exact path="/atualizar/usuario/:id" element={<RegisterUser />} />
+          <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
+        </Route>
 
         {/* Disciplinas */}
-        <Route exact path="/curso/:id" element={<SubjectsPage />} />
-        <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
-        <Route
-          exact
-          path="/cadastrar/disciplina"
-          element={<RegisterSubject />}
-        />
-        <Route
-          exact
-          path="/atualizar/disciplina/:id"
-          element={<RegisterSubject />}
-        />
+        <Route element={<ProtectedRoute isAllowed={['ADMIN', 'COORDENADOR_DE_CURSO'].includes(USER_ROLE)}/>}>
+          <Route exact path="/curso/:id" element={<SubjectsPage />} />
+          <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
+          <Route
+            exact
+            path="/cadastrar/disciplina"
+            element={<RegisterSubject />}
+          />
+          <Route
+            exact
+            path="/atualizar/disciplina/:id"
+            element={<RegisterSubject />}
+          />
+        </Route>
 
         {/* Turmas */}
-        <Route
-          exact
-          path="/professor/:id/turmas"
-          element={<ProfessorClasses />}
-        />
-        <Route exact path="/turma/:id" element={<CourseClassPage />} />
-        <Route exact path="/cadastrar/turma" element={<RegisterClass />} />
-        <Route exact path="/atualizar/turma/:id" element={<RegisterClass />} />
+        <Route element={<ProtectedRoute isAllowed={['ADMIN', 'COORDENADOR_DE_CURSO', 'PROFESSOR'].includes(USER_ROLE)}/>}>
+          <Route
+            exact
+            path="/professor/:id/turmas"
+            element={<ProfessorClasses />}
+          />
+          <Route exact path="/turma/:id" element={<CourseClassPage />} />
+          <Route exact path="/cadastrar/turma" element={<RegisterClass />} />
+          <Route exact path="/atualizar/turma/:id" element={<RegisterClass />} />
+        </Route>
 
         {/* Cursos */}
-        <Route exact path="/cursos" element={<CoursesPage />} />
-        <Route exact path="/cadastrar/curso" element={<RegisterCourse />} />
-        <Route exact path="/atualizar/curso/:id" element={<RegisterCourse />} />
+        <Route element={<ProtectedRoute isAllowed={['ADMIN', 'COORDENADOR_DE_CURSO'].includes(USER_ROLE)}/>}>
+          <Route exact path="/cursos" element={<CoursesPage />} />
+          <Route exact path="/cadastrar/curso" element={<RegisterCourse />} />
+          <Route exact path="/atualizar/curso/:id" element={<RegisterCourse />} />
+        </Route>
       </Routes>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}

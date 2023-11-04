@@ -3,7 +3,7 @@ import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import { useForm } from "react-hook-form";
 
 import Button from "../../componentes/Button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import Link from "../../componentes/Link";
 
