@@ -20,6 +20,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfessorClasses from "./pages/ProfessorClasses";
 import ProtectedRoute from "./componentes/Sidebar/ProtectedRoute";
+import WelcomePage from "./pages/Welcolme";
 
 function App() {
   // ALUNO ADMIN PROFESSOR COORDENADOR_DE_CURSO
@@ -29,7 +30,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Fluxo Inicial */}
-        <Route exact path="/" element={<LoginPage />} />
+        <Route exact path="/" element={<WelcomePage />} />
         <Route exact path="/login" element={<LoginPage />} />
         <Route exact path="/password-reset" element={<PasswordReset />} />
 
@@ -37,6 +38,8 @@ function App() {
         <Route element={<ProtectedRoute isAllowed={USER_ROLE == 'ALUNO'}/>}>
           <Route exact path="/historico" element={<HistoryPage />} />
           <Route exact path="/comprovante-matricula" element={<StudentPage />} />
+          <Route exact path="/curso/:id" element={<SubjectsPage />} />
+          <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
         </Route>
 
         {/* Usuários */}
@@ -49,8 +52,6 @@ function App() {
 
         {/* Disciplinas */}
         <Route element={<ProtectedRoute isAllowed={['ADMIN', 'COORDENADOR_DE_CURSO'].includes(USER_ROLE)}/>}>
-          <Route exact path="/curso/:id" element={<SubjectsPage />} />
-          <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
           <Route
             exact
             path="/cadastrar/disciplina"

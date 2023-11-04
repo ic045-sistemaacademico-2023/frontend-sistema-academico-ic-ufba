@@ -83,7 +83,7 @@ function LoginPage() {
             </form>
 
             <Link href="/password-reset">Recuperar senha</Link>
-            <Link href="/comprovante-matricula">Primeira página</Link>
+            <Link href="/">Primeira página</Link>
           </div>
         </div>
       </div>
