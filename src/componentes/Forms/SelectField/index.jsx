@@ -57,4 +57,6 @@ const SelectField = forwardRef(
   },
 );
 
+SelectField.displayName = "SelectField";
+
 export default SelectField;

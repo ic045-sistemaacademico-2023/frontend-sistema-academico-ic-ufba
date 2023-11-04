@@ -1,24 +1,39 @@
-function CourseClasses({ courseClasses }) {
-  console.log(courseClasses);
+import { useNavigate } from "react-router-dom";
+import Button from "../Button";
+import api from "../../utils/api";
+import { toast } from "react-toastify";
+
+function CourseClasses({ courseClasses, fetchClasses, entity }) {
   const currentYear = new Date().getFullYear();
   const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 
-  // Verifica se courseClasses é um array válido antes de mapeá-lo
-  if (!Array.isArray(courseClasses)) {
-    console.log("courseClasses não é um array válido");
-    return (
-      <strong className="text-sm text-primary-600 block p-4">
-        Disciplina sem turmas cadastradas para o período
-      </strong>
-    );
+  const navigate = useNavigate();
+
+  async function deleteClass(id) {
+    try {
+      const response = await api.delete(`/turma/${id}`);
+      if (response.status === 204) {
+        toast.success("Turma deletado com sucesso!");
+        fetchClasses();
+      } else {
+        toast.error("Erro ao deletar turma");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao deletar turma");
+    }
   }
 
-  return (
+  return courseClasses?.length === 0 ? (
+    <strong className="text-sm text-primary-600 block p-4">
+      {entity} sem turmas cadastradas para o período atual
+    </strong>
+  ) : (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
-      <strong className="text-xl text-primary-600">
+      <h2 className="text-xl font-bold text-primary-700">
         Lista de turmas - Semestre {currentYear}.{currentPeriod}
-      </strong>
-      <table className="w-full text-sm text-left text-gray-700 mt-4">
+      </h2>
+      <table className="w-full text-sm text-center text-gray-700 mt-10">
         <thead className="text-xs text-gray-900 uppercase bg-gray-5">
           <tr>
             <th scope="col" className="px-6 py-3">
@@ -36,26 +51,54 @@ function CourseClasses({ courseClasses }) {
             <th scope="col" className="px-6 py-3">
               Docente
             </th>
+            <th scope="col" className="px-6 py-3">
+              Ações
+            </th>
           </tr>
         </thead>
         <tbody>
-          {courseClasses.map((classes, index) => (
+          {courseClasses.map((classItem, index) => (
             <tr
               key={index}
               className={`${
-                index % 2 == 0 ? "bg-primary-50" : "bg-primary-100"
-              } border border-gray-200 hover:bg-primary-200`}
+                index % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
+              } border border-gray-100 hover:bg-primary-100 h-full`}
             >
               <th
                 scope="row"
-                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+                className="px-6 py-4 h-full font-medium text-gray-900 whitespace-nowrap"
               >
-                {classes.id}
+                {classItem.id}
               </th>
-              <td className="px-6 py-4">{classes.dias}</td>
-              <td className="px-6 py-4">{classes.horario}</td>
-              <td className="px-6 py-4">{classes.local}</td>
-              <td className="px-6 py-4">{classes.professor}</td>
+              <td className="px-6 py-4 h-full">
+                {classItem.dias.split(",").map((dia, index) => (
+                  <div key={index}>{dia}</div>
+                ))}
+              </td>
+              <td className="px-6 py-4 h-full">
+                {classItem.horario.split("/").map((horario, index) => (
+                  <div key={index}>{horario}</div>
+                ))}
+              </td>
+              <td className="px-6 py-4 h-full">
+                {classItem.local.split("/").map((local, index) => (
+                  <div key={index}>{local}</div>
+                ))}
+              </td>
+              <td className="px-6 py-4 h-full">{classItem.professor}</td>
+              <td className="px-2 py-2 h-full">
+                <div className="flex flex-wrap gap-2 justify-center items-center">
+                  <Button onClick={() => navigate(`/turma/${classItem.id}`)}>
+                    Visualizar
+                  </Button>
+                  <Button secondary href={`/atualizar/turma/${classItem.id}`}>
+                    Editar
+                  </Button>
+                  <Button onClick={() => deleteClass(classItem.id)}>
+                    Deletar
+                  </Button>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -1,6 +1,5 @@
 import {
   CirclesThreePlus,
-  GraduationCap,
   IdentificationBadge,
   ListChecks,
   ListDashes,
@@ -34,41 +33,41 @@ function Sidebar() {
             icon={<ListChecks size={20} />}
           />
           <SidebarItem
-            title={"Disciplinas"}
-            link={"/disciplinas"}
-            icon={<SquaresFour size={20} />}
-          />
-          <SidebarItem
-            title={"Turma"}
-            link={"/turma/1"}
-            icon={<GraduationCap size={20} />}
-          />
-          <SidebarItem
             title={"Cursos"}
             link={"/cursos"}
             icon={<ListDashes size={20} />}
           />
+          <SidebarItem
+            title={"Disciplinas"}
+            link={"/curso/1"}
+            icon={<SquaresFour size={20} />}
+          />
           <p className="text-white text-base bg-primary-700">Administração</p>
           <SidebarItem
             title={"Cadastrar Usuário"}
-            link={"/cadastro-usuario"}
+            link={"/cadastrar/usuario"}
             icon={<UserPlus size={20} />}
           />
           <SidebarItem
             title={"Cadastrar Curso"}
-            link={"/cadastro-curso"}
+            link={"/cadastrar/curso"}
             icon={<Plus size={20} />}
           />
 
           <SidebarItem
             title={"Cadastrar Disciplina"}
-            link={"/cadastro-disciplina"}
+            link={"/cadastrar/disciplina"}
             icon={<CirclesThreePlus size={20} />}
           />
           <SidebarItem
             title={"Cadastrar Turma"}
-            link={"/cadastro-turma"}
+            link={"/cadastrar/turma"}
             icon={<PlusCircle size={20} />}
+          />
+          <SidebarItem
+            title={"Minhas turmas"}
+            link={"/professor/1/turmas"}
+            icon={<Users size={20} />}
           />
           <SidebarItem
             title={"Usuarios"}

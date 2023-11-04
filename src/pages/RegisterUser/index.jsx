@@ -11,10 +11,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import api from "../../utils/api";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const schema = yup.object().shape({
   name: yup.string().required("O nome é obrigatório"),
@@ -50,6 +51,7 @@ function RegisterUser() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     watch,
   } = useForm({
@@ -58,24 +60,69 @@ function RegisterUser() {
     resolver: yupResolver(schema),
   });
 
+  const { id } = useParams();
+  const isEditing = id !== undefined;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isEditing) {
+      const fetchUser = async () => {
+        try {
+          const response = await api.get(`/user/${id}`);
+          const { nome, cpf, email, role } = response.data;
+          setValue("name", nome);
+          setValue("cpf", cpf);
+          setValue("email", email);
+          setValue("role", role);
+        } catch (error) {
+          console.log(error);
+          toast.error("Erro ao carregar usuário");
+        }
+      };
+      fetchUser();
+    }
+  }, [isEditing, id, setValue]);
+
   const onSubmit = async (data) => {
-    console.log(data);
-    try {
-      const response = await api.post("/user/", {
-        nome: data.name,
-        cpf: data.cpf,
-        email: data.email,
-        senha: data.password,
-        role: data.role,
-      });
-      if (response.status === 201) {
-        toast.success("Usuário cadastrado com sucesso!");
-      } else {
+    if (isEditing) {
+      try {
+        const response = await api.put(`/user/${id}`, {
+          nome: data.name,
+          cpf: data.cpf,
+          email: data.email,
+          senha: data.password,
+          role: data.role,
+        });
+        if (response.status === 200) {
+          toast.success("Usuário atualizado com sucesso!");
+          navigate("/usuarios");
+        } else {
+          toast.error("Erro ao atualizar usuário");
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao atualizar usuário");
+      }
+    } else {
+      try {
+        const response = await api.post("/user/", {
+          nome: data.name,
+          cpf: data.cpf,
+          email: data.email,
+          senha: data.password,
+          role: data.role,
+        });
+        if (response.status === 201) {
+          toast.success("Usuário cadastrado com sucesso!");
+          navigate("/usuarios");
+        } else {
+          toast.error("Erro ao cadastrar usuário");
+        }
+      } catch (error) {
+        console.error(error);
         toast.error("Erro ao cadastrar usuário");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao cadastrar usuário");
     }
   };
 
@@ -87,7 +134,7 @@ function RegisterUser() {
         className="bg-primary-100 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"
       >
         <h1 className="text-xl text-gray-700 font-bold mb-6">
-          Cadastrar Usuário
+          {isEditing ? "Editar" : "Cadastrar"} Usuário
         </h1>
         <div className="grid md:grid-cols-2 md:gap-6">
           <InputField
@@ -140,8 +187,7 @@ function RegisterUser() {
           />
         </div>
         <div>
-          <Button type="submit">Cadastrar</Button>
-          <ToastContainer position="bottom-right" />
+          <Button type="submit">{isEditing ? "Editar" : "Cadastrar"}</Button>
         </div>
       </form>
     </div>
