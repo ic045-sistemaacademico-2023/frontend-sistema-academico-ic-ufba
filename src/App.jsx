@@ -35,23 +35,41 @@ function App() {
         <Route exact path="/password-reset" element={<PasswordReset />} />
 
         {/* Aluno */}
-        <Route element={<ProtectedRoute isAllowed={USER_ROLE == 'ALUNO'}/>}>
+        <Route element={<ProtectedRoute isAllowed={USER_ROLE == "ALUNO"} />}>
           <Route exact path="/historico" element={<HistoryPage />} />
-          <Route exact path="/comprovante-matricula" element={<StudentPage />} />
+          <Route
+            exact
+            path="/comprovante-matricula"
+            element={<StudentPage />}
+          />
           <Route exact path="/curso/:id" element={<SubjectsPage />} />
           <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
         </Route>
 
         {/* Usuários */}
-        <Route element={<ProtectedRoute isAllowed={USER_ROLE == 'ADMIN'}/>}>
+        <Route element={<ProtectedRoute isAllowed={USER_ROLE == "ADMIN"} />}>
           <Route exact path="/usuarios" element={<UsersPage />} />
           <Route exact path="/cadastrar/usuario" element={<RegisterUser />} />
-          <Route exact path="/atualizar/usuario/:id" element={<RegisterUser />} />
-          <Route exact path="/gerenciar-usuarios" element={<ManageUsersPage />} />
+          <Route
+            exact
+            path="/atualizar/usuario/:id"
+            element={<RegisterUser />}
+          />
+          <Route
+            exact
+            path="/gerenciar-usuarios"
+            element={<ManageUsersPage />}
+          />
         </Route>
 
         {/* Disciplinas */}
-        <Route element={<ProtectedRoute isAllowed={['ADMIN', 'COORDENADOR_DE_CURSO'].includes(USER_ROLE)}/>}>
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE)}
+            />
+          }
+        >
           <Route
             exact
             path="/cadastrar/disciplina"
@@ -65,7 +83,17 @@ function App() {
         </Route>
 
         {/* Turmas */}
-        <Route element={<ProtectedRoute isAllowed={['ADMIN', 'COORDENADOR_DE_CURSO', 'PROFESSOR'].includes(USER_ROLE)}/>}>
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={[
+                "ADMIN",
+                "COORDENADOR_DE_CURSO",
+                "PROFESSOR",
+              ].includes(USER_ROLE)}
+            />
+          }
+        >
           <Route
             exact
             path="/professor/:id/turmas"
@@ -73,14 +101,28 @@ function App() {
           />
           <Route exact path="/turma/:id" element={<CourseClassPage />} />
           <Route exact path="/cadastrar/turma" element={<RegisterClass />} />
-          <Route exact path="/atualizar/turma/:id" element={<RegisterClass />} />
+          <Route
+            exact
+            path="/atualizar/turma/:id"
+            element={<RegisterClass />}
+          />
         </Route>
 
         {/* Cursos */}
-        <Route element={<ProtectedRoute isAllowed={['ADMIN', 'COORDENADOR_DE_CURSO'].includes(USER_ROLE)}/>}>
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE)}
+            />
+          }
+        >
           <Route exact path="/cursos" element={<CoursesPage />} />
           <Route exact path="/cadastrar/curso" element={<RegisterCourse />} />
-          <Route exact path="/atualizar/curso/:id" element={<RegisterCourse />} />
+          <Route
+            exact
+            path="/atualizar/curso/:id"
+            element={<RegisterCourse />}
+          />
         </Route>
       </Routes>
 
