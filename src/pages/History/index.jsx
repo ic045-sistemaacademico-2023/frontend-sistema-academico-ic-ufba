@@ -63,7 +63,7 @@ function HistoryPage() {
   }, []);
 
   return (
-    studentData != null && (
+    studentData && (
       <div className="w-full pl-64">
         <Sidebar />
         <div className="printable">
