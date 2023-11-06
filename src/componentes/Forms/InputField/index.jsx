@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import ReactInputMask from "react-input-mask";
 
 const InputField = forwardRef(
@@ -47,5 +47,7 @@ const InputField = forwardRef(
     );
   },
 );
+
+InputField.displayName = "InputField";
 
 export default InputField;

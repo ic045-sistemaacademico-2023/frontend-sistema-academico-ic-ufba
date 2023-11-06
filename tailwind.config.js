@@ -1,4 +1,9 @@
-export const content = ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"];
+export const content = [
+  "./index.html",
+  "./src/**/*.{js,ts,jsx,tsx}",
+  "./node_modules/react-tailwindcss-select/dist/index.esm.js",
+  "./node_modules/react-tailwindcss-select/dist/index.js",
+];
 export const theme = {
   extend: {
     colors: {

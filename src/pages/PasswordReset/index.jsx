@@ -2,8 +2,7 @@ import Button from "../../componentes/Button";
 import { useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import Link from "../../componentes/Link";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 function PasswordReset() {
   const [email, setEmail] = useState("");
@@ -55,11 +54,10 @@ function PasswordReset() {
               <Button onClick={onSubmitLogin} type="submit">
                 Recuperar
               </Button>
-              <ToastContainer position="bottom-right" />
             </form>
 
             <Link href="/login">Login</Link>
-            <Link href="/comprovante-matricula">Primeira página</Link>
+            <Link href="/">Primeira página</Link>
           </div>
         </div>
       </div>

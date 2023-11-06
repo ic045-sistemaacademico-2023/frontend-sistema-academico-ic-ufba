@@ -18,6 +18,26 @@ export const diasDeAula = [
   { id: 7, name: "DOM", value: "DOMINGO", label: "Domingo" },
 ];
 
+export const formatDia = {
+  SEGUNDA: "SEG",
+  TERCA: "TER",
+  QUARTA: "QUA",
+  QUINTA: "QUI",
+  SEXTA: "SEX",
+  SABADO: "SAB",
+  DOMINGO: "DOM",
+};
+
+export const inverseFormatDia = {
+  SEG: "SEGUNDA",
+  TER: "TERCA",
+  QUA: "QUARTA",
+  QUI: "QUINTA",
+  SEX: "SEXTA",
+  SAB: "SABADO",
+  DOM: "DOMINGO",
+};
+
 export const horarios = [
   { id: 1, name: "07:00", value: "07:00" },
   { id: 2, name: "08:00", value: "08:00" },

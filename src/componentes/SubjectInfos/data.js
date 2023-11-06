@@ -1,0 +1,15 @@
+export const areasObject = {
+  CIENCIAS_SOCIAIS_HUMANAS: "Ciências Sociais Humanas",
+  CIENCIAS_EXATAS_TECNOLOGIA: "Ciências Exatas e Tecnologia",
+  CIENCIAS_DA_SAUDE: "Ciências da Saúde",
+  ARTES_E_HUMANIDADES: "Artes e Humanidades",
+  NEGOCIOS_E_ECONOMIA: "Negócios e Economia",
+  EDUCACAO: "Educação",
+  CIENCIAS_DA_NATUREZA: "Ciências da Natureza",
+  DIREITO: "Direito",
+  CIENCIAS_DA_SAUDE_E_BEM_ESTAR: "Ciências da Saúde e Bem-Estar",
+  CIENCIAS_SOCIAIS_APLICADAS: "Ciências Sociais Aplicadas",
+  CIENCIAS_AMBIENTAIS: "Ciências Ambientais",
+  CIENCIAS_AGRICOLAS_E_VETERINARIAS: "Ciências Agrícolas e Veterinárias",
+  LETRAS: "Letras",
+};

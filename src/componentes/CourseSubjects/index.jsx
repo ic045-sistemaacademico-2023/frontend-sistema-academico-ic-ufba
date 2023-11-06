@@ -1,69 +1,116 @@
-import { useEffect, useState } from "react";
-import CourseCard from "./CourseCard";
-import api from "../../utils/api";
 import { toast } from "react-toastify";
+import api from "../../utils/api";
+import Button from "../Button";
+import { useNavigate } from "react-router-dom";
 
-function CourseSubjects({ courseData }) {
-  const [data, setData] = useState();
+function CourseSubjects({ courseData, subjects, fetchSubjects }) {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCourseSubjects = async () => {
-      try {
-        const response = await api.get(`disciplina/curso/1`);
-        setData(response.data);
-      } catch (error) {
-        console.log(error);
-        toast.error("Error ao carregar dados das disciplinas");
+  async function deleteSubject(id) {
+    try {
+      const response = await api.delete(`/disciplina/${id}`);
+      if (response.status === 204) {
+        toast.success("Disciplina deletada com sucesso!");
+        fetchSubjects();
+      } else {
+        toast.error("Erro ao deletar disciplina");
       }
-    };
-    fetchCourseSubjects();
-  }, []);
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao deletar disciplina");
+    }
+  }
 
   return (
     <div className="pt-10">
-      <h1 className="text-xl text-gray-700 font-bold">{courseData.nome}</h1>
-      {/* <div>
-        <Button>Obrigatórias</Button>
-        <Button>Optativas</Button>
-      </div> */}
       <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg overflow-auto">
-        <table className="w-full text-sm text-left text-gray-700">
-          <thead className="text-xs text-gray-900 uppercase bg-gray-5">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-center">
-                Semestre
-              </th>
-              <th scope="col" className="px-6 py-3 text-center">
-                Disciplinas
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              Object.values(data).map((semester, index) => (
+        {courseData.nome && (
+          <>
+            <h1 className="text-xl text-gray-700 font-bold">
+              {courseData.nome}
+            </h1>
+            <dl className="grid grid-cols-3 gap-4 mt-5">
+              <div className="flex flex-col">
+                <dt className="text-sm text-gray-500">Coordenador:</dt>
+                <dd className="text-lg font-medium text-primary-800">
+                  {courseData.coordenadorDeCurso.nome}
+                </dd>
+              </div>
+
+              <div className="flex flex-col">
+                <dt className="text-sm text-gray-500">Turno:</dt>
+                <dd className="text-lg font-medium text-primary-800">
+                  {courseData.turno}
+                </dd>
+              </div>
+
+              <div className="flex flex-col">
+                <dt className="text-sm text-gray-500">Período do Currículo:</dt>
+                <dd className="text-lg font-medium text-primary-800">
+                  {courseData.periodo_curriculo}
+                </dd>
+              </div>
+            </dl>
+            <h3 className="text-lg font-medium mt-16 mb-2">Disciplinas:</h3>
+            <hr />
+          </>
+        )}
+        {subjects && subjects.length > 0 ? (
+          <table className="w-full text-sm text-left text-gray-700">
+            <thead className="text-xs text-gray-900 uppercase bg-gray-5">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-center">
+                  ID
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Código
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Nome
+                </th>
+                <th scope="col" className="px-6 py-3 text-center">
+                  Ações
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {subjects.map((subject, index) => (
                 <tr
                   key={index}
                   className={`${
                     index % 2 == 0 ? "bg-white" : "bg-primary-50"
-                  } border border-gray-100 hover:bg-primary-100`}
+                  } border text-center border-gray-100 hover:bg-primary-100 h-full`}
                 >
-                  <td
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center"
-                  >
-                    {index + 1}
-                  </td>
-                  <td className="px-6 py-4 flex gap-5">
-                    {semester &&
-                      semester.map((subject) => (
-                        // TODO: ao clicar no card, possibilitar se inscrever na materia?
-                        <CourseCard data={subject} key={subject.id} />
-                      ))}
+                  <td className="px-6 py-4 h-full">{subject.id}</td>
+                  <td className="px-6 py-4 h-full">{subject.codigo}</td>
+                  <td className="px-6 py-4 h-full">{subject.nome}</td>
+                  <td className="px-6 py-4 h-full">
+                    <div className="flex flex-wrap justify-center items-center gap-2">
+                      <Button
+                        onClick={() => navigate(`/disciplina/${subject.id}`)}
+                      >
+                        Visualizar
+                      </Button>
+                      <Button
+                        secondary
+                        href={`/atualizar/disciplina/${subject.id}`}
+                      >
+                        Editar
+                      </Button>
+                      <Button onClick={() => deleteSubject(subject.id)}>
+                        Deletar
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        ) : (
+          <strong className="text-sm text-primary-600 block p-4">
+            Não há disciplinas para este curso ainda.
+          </strong>
+        )}
       </div>
     </div>
   );

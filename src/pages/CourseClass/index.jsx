@@ -32,7 +32,7 @@ function CourseClassPage() {
       <ClassStudents classStudents={data?.alunos} />
 
       <div className="py-4 mb-4">
-        <Button href="/comprovante-matricula" secondary>
+        <Button href={`/disciplina/${data?.disciplina?.id}`} secondary>
           Voltar
         </Button>
       </div>
