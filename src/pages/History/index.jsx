@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
+import { toast } from "react-toastify";
 
 import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
 import StudentHistory from "../../componentes/StudentHistory";
+import Button from "../../componentes/Button";
 
 import { studentHistory } from "./history";
 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import Button from "../../componentes/Button";
 
 function handlePrint() {
   window.print();
