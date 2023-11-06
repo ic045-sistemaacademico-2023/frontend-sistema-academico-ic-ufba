@@ -16,28 +16,31 @@ function StudentInfos({ studentData, pageTitle }) {
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Matrícula:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {studentData.matricula}
+            {/* {studentData.matricula} */}
+            {"123456789"}
           </dd>
         </div>
 
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Curso:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {studentData.curso}
+            {studentData.curso.nome}
           </dd>
         </div>
 
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Período de Ingresso:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {studentData.periodoDeIngresso}
+            {/* {studentData.curso.periodoDeIngresso} */}
+            {"2019.1"}
           </dd>
         </div>
 
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Ano do Currículo:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {studentData.curriculo}
+            {/* {studentData.curriculo} */}
+            {"2013.1"}
           </dd>
         </div>
 
