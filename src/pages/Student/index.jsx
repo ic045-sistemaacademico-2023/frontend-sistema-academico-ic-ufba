@@ -4,7 +4,7 @@ import StudentCourses from "../../componentes/StudentCourses";
 import { useEffect, useState } from "react";
 
 import { studentData } from "./data";
-import { studentCourses } from "./courses";
+// import { studentCourses } from "./courses";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 
@@ -50,33 +50,33 @@ const currentYear = new Date().getFullYear();
 const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 
 function StudentPage() {
-  // var studentId = 1;
+  var studentId = 1;
 
-  // const [student, setStudent] = useState();
-  // const [studentCourses, setStudentCourses] = useState();
+  // const [studentData, setStudent] = useState();
+  const [studentCourses, setStudentCourses] = useState();
 
-  // useEffect(() => {
-  //   const fetchStudent = async () => {
-  //     try {
-  //       const response = await api.get(`/aluno/${studentId}`);
-  //       setStudent(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //       toast.error(`Error ao carregar o aluno ${studentId}`);
-  //     }
-  //   };
-  //   const fetchStudentCourses = async () => {
-  //     try {
-  //       const response = await api.get(`/turma/aluno?id=${studentId}`);
-  //       setStudentCourses(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //       toast.error(`Error ao carregar o turma aluno ${studentId}`);
-  //     }
-  //   };
-  //   fetchStudent();
-  //   fetchStudentCourses();
-  // }, [studentId]);
+  useEffect(() => {
+    // const fetchStudent = async () => {
+    //   try {
+    //     const response = await api.get(`/aluno/${studentId}`);
+    //     setStudent(response.data);
+    //   } catch (error) {
+    //     console.log(error);
+    //     toast.error(`Error ao carregar o aluno ${studentId}`);
+    //   }
+    // };
+    const fetchStudentCourses = async () => {
+      try {
+        const response = await api.get(`/turma/aluno?id=${studentId}`);
+        setStudentCourses(response.data);
+      } catch (error) {
+        console.log(error);
+        toast.error(`Error ao carregar o turma aluno ${studentId}`);
+      }
+    };
+    // fetchStudent();
+    fetchStudentCourses();
+  }, [studentId]);
 
   return (
     <div className="w-full pl-64">
@@ -93,7 +93,7 @@ function StudentPage() {
         />
         <StudentCourses studentCourses={studentCourses} />
         <div className="mt-6">
-          <Button onClick={exportToPDF}>Download</Button>
+          <Button onClick={() => exportToPDF(studentData)}>Download</Button>
           <Button onClick={handlePrint}>Imprimir</Button>
         </div>
       </div>
