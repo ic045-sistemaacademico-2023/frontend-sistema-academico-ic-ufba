@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
+import { USER_ROLE } from "../../utils/user";
 
 function CourseClasses({ courseClasses, fetchClasses, entity }) {
   const currentYear = new Date().getFullYear();
@@ -91,12 +92,19 @@ function CourseClasses({ courseClasses, fetchClasses, entity }) {
                   <Button onClick={() => navigate(`/turma/${classItem.id}`)}>
                     Visualizar
                   </Button>
-                  <Button secondary href={`/atualizar/turma/${classItem.id}`}>
-                    Editar
-                  </Button>
-                  <Button onClick={() => deleteClass(classItem.id)}>
-                    Deletar
-                  </Button>
+                  {["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+                    <>
+                      <Button
+                        secondary
+                        href={`/atualizar/turma/${classItem.id}`}
+                      >
+                        Editar
+                      </Button>
+                      <Button onClick={() => deleteClass(classItem.id)}>
+                        Deletar
+                      </Button>
+                    </>
+                  )}
                 </div>
               </td>
             </tr>

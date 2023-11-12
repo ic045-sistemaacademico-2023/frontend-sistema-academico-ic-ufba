@@ -11,11 +11,9 @@ import {
   Users,
 } from "@phosphor-icons/react";
 import SidebarItem from "./SidebarItem";
+import { USER_ROLE } from "../../utils/user";
 
 function Sidebar() {
-  // ALUNO ADMIN PROFESSOR COORDENADOR_DE_CURSO
-  const USER_ROLE = "ALUNO";
-
   return (
     <aside
       id="sidebar"
@@ -27,21 +25,19 @@ function Sidebar() {
           {USER_ROLE == "ALUNO" && (
             <>
               <p className="text-white text-base bg-primary-700">Acadêmico</p>
+
               <SidebarItem
                 title={"Comprovante de Matrícula"}
                 link={"/comprovante-matricula"}
                 icon={<IdentificationBadge size={20} />}
               />
+
               <SidebarItem
                 title={"Histórico"}
                 link={"/historico"}
                 icon={<ListChecks size={20} />}
               />
-              <SidebarItem
-                title={"Cursos"}
-                link={"/cursos"}
-                icon={<ListDashes size={20} />}
-              />
+
               <SidebarItem
                 title={"Disciplinas"}
                 link={"/curso/1"}
@@ -54,11 +50,19 @@ function Sidebar() {
               <p className="text-white text-base bg-primary-700">
                 Administração
               </p>
+
+              <SidebarItem
+                title={"Cursos"}
+                link={"/cursos"}
+                icon={<ListDashes size={20} />}
+              />
+
               <SidebarItem
                 title={"Cadastrar Usuário"}
                 link={"/cadastrar/usuario"}
                 icon={<UserPlus size={20} />}
               />
+
               <SidebarItem
                 title={"Cadastrar Curso"}
                 link={"/cadastrar/curso"}
@@ -88,11 +92,13 @@ function Sidebar() {
                   Administração
                 </p>
               )}
+
               <SidebarItem
                 title={"Cadastrar Turma"}
                 link={"/cadastrar/turma"}
                 icon={<PlusCircle size={20} />}
               />
+              
               <SidebarItem
                 title={"Minhas turmas"}
                 link={"/professor/1/turmas"}

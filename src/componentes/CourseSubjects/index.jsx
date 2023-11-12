@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
+import { USER_ROLE } from "../../utils/user";
 
 function CourseSubjects({ courseData, subjects, fetchSubjects }) {
   const navigate = useNavigate();
@@ -91,15 +92,21 @@ function CourseSubjects({ courseData, subjects, fetchSubjects }) {
                       >
                         Visualizar
                       </Button>
-                      <Button
-                        secondary
-                        href={`/atualizar/disciplina/${subject.id}`}
-                      >
-                        Editar
-                      </Button>
-                      <Button onClick={() => deleteSubject(subject.id)}>
-                        Deletar
-                      </Button>
+                      {["ADMIN", "COORDENADOR_DE_CURSO"].includes(
+                        USER_ROLE,
+                      ) && (
+                        <>
+                          <Button
+                            secondary
+                            href={`/atualizar/disciplina/${subject.id}`}
+                          >
+                            Editar
+                          </Button>
+                          <Button onClick={() => deleteSubject(subject.id)}>
+                            Deletar
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

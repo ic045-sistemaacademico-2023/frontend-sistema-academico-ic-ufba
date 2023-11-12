@@ -21,11 +21,9 @@ import "react-toastify/dist/ReactToastify.css";
 import ProfessorClasses from "./pages/ProfessorClasses";
 import ProtectedRoute from "./componentes/Sidebar/ProtectedRoute";
 import WelcomePage from "./pages/Welcolme";
+import { USER_ROLE } from "./utils/user";
 
 function App() {
-  // ALUNO ADMIN PROFESSOR COORDENADOR_DE_CURSO
-  const USER_ROLE = "ALUNO";
-
   return (
     <BrowserRouter>
       <Routes>
@@ -47,7 +45,13 @@ function App() {
         </Route>
 
         {/* Usuários */}
-        <Route element={<ProtectedRoute isAllowed={USER_ROLE == "ADMIN"} />}>
+        <Route
+          element={
+            <ProtectedRoute
+              isAllowed={["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE)}
+            />
+          }
+        >
           <Route exact path="/usuarios" element={<UsersPage />} />
           <Route exact path="/cadastrar/usuario" element={<RegisterUser />} />
           <Route
