@@ -50,7 +50,7 @@ function Sidebar() {
               />
               <SidebarItem
                 title={"Turmas"}
-                link={"/turma/1"}
+                link={"/turmas"}
                 icon={<DiamondsFour size={20} />}
               />
             </>

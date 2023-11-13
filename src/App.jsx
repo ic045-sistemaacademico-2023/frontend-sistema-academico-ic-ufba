@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ProfessorClasses from "./pages/ProfessorClasses";
 import ProtectedRoute from "./componentes/Sidebar/ProtectedRoute";
 import WelcomePage from "./pages/Welcolme";
+import ClassesPage from "./pages/ClassesPage";
 
 function App() {
   // ALUNO ADMIN PROFESSOR COORDENADOR_DE_CURSO
@@ -47,7 +48,9 @@ function App() {
         </Route>
 
         {/* Usuários */}
-        <Route element={<ProtectedRoute isAllowed={USER_ROLE == "ADMIN"} />}>
+        <Route element={<ProtectedRoute isAllowed={USER_ROLE == "ADMIN"} 
+          />
+          }>
           <Route exact path="/usuarios" element={<UsersPage />} />
           <Route exact path="/cadastrar/usuario" element={<RegisterUser />} />
           <Route
@@ -64,11 +67,11 @@ function App() {
 
         {/* Disciplinas */}
         <Route
-          element={
-            <ProtectedRoute
-              isAllowed={["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE)}
-            />
-          }
+          // element={
+          //   <ProtectedRoute
+          //     isAllowed={["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE)}
+          //   />
+          // }
         >
           <Route
             exact
@@ -99,6 +102,7 @@ function App() {
             path="/professor/:id/turmas"
             element={<ProfessorClasses />}
           />
+          <Route exact path="/turmas" element={<ClassesPage />} />
           <Route exact path="/turma/:id" element={<CourseClassPage />} />
           <Route exact path="/cadastrar/turma" element={<RegisterClass />} />
           <Route
@@ -110,11 +114,11 @@ function App() {
 
         {/* Cursos */}
         <Route
-          element={
-            <ProtectedRoute
-              isAllowed={["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE)}
-            />
-          }
+          // element={
+          //   <ProtectedRoute
+          //     isAllowed={["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE)}
+          //   />
+          // }
         >
           <Route exact path="/cursos" element={<CoursesPage />} />
           <Route exact path="/cadastrar/curso" element={<RegisterCourse />} />
