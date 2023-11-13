@@ -84,15 +84,15 @@ function App() {
 
         {/* Turmas */}
         <Route
-          element={
-            <ProtectedRoute
-              isAllowed={[
-                "ADMIN",
-                "COORDENADOR_DE_CURSO",
-                "PROFESSOR",
-              ].includes(USER_ROLE)}
-            />
-          }
+          // element={
+          //   <ProtectedRoute
+          //     isAllowed={[
+          //       "ADMIN",
+          //       "COORDENADOR_DE_CURSO",
+          //       "PROFESSOR",
+          //     ].includes(USER_ROLE)}
+          //   />
+          // }
         >
           <Route
             exact
