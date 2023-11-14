@@ -11,10 +11,30 @@ import {
   Users,
 } from "@phosphor-icons/react";
 import SidebarItem from "./SidebarItem";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../../contexts/userContext";
+import UserPopup from "../UserPopup";
+import api from "../../utils/api";
 
 function Sidebar() {
-  // ALUNO ADMIN PROFESSOR COORDENADOR_DE_CURSO
-  const USER_ROLE = "ALUNO";
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+        }
+      }
+    };
+
+    fetchUser();
+  }, [setUser]);
+
+  const USER_ROLE = user?.role;
 
   return (
     <aside
@@ -72,16 +92,31 @@ function Sidebar() {
               />
 
               <SidebarItem
+                title={"Cadastrar Turma"}
+                link={"/cadastrar/turma"}
+                icon={<PlusCircle size={20} />}
+              />
+
+              <SidebarItem
                 title={"Usuarios"}
                 link={"/usuarios"}
                 icon={<Users size={20} />}
               />
+
+              <SidebarItem
+                title={"Cursos"}
+                link={"/cursos"}
+                icon={<ListDashes size={20} />}
+              />
+              <SidebarItem
+                title={"Disciplinas"}
+                link={"/curso/1"}
+                icon={<SquaresFour size={20} />}
+              />
             </>
           )}
 
-          {["ADMIN", "COORDENADOR_DE_CURSO", "PROFESSOR"].includes(
-            USER_ROLE,
-          ) && (
+          {["COORDENADOR_DE_CURSO", "PROFESSOR"].includes(USER_ROLE) && (
             <>
               {USER_ROLE == "PROFESSOR" && (
                 <p className="text-white text-base bg-primary-700">
@@ -103,11 +138,7 @@ function Sidebar() {
         </ul>
 
         <ul className="space-y-2 font-medium">
-          <SidebarItem
-            title={"Login"}
-            link={"/login"}
-            icon={<User size={20} />}
-          />
+          <UserPopup user={user} icon={<User />} />
         </ul>
       </div>
     </aside>

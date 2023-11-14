@@ -187,16 +187,30 @@ function RegisterClass() {
     data.horario = horarios.join("/");
     data.local = locais.join("/");
 
-    try {
-      const response = await api.post("/turma/", data);
-      if (response.status === 201) {
-        toast.success("Turma cadastrada com sucesso!");
-      } else {
+    if (isEditing) {
+      try {
+        const response = await api.put(`/turma/${id}`, data);
+        if (response.status === 200) {
+          toast.success("Turma atualizada com sucesso!");
+        } else {
+          toast.error("Erro ao atualizar turma");
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao atualizar turma");
+      }
+    } else {
+      try {
+        const response = await api.post("/turma/", data);
+        if (response.status === 201) {
+          toast.success("Turma cadastrada com sucesso!");
+        } else {
+          toast.error("Erro ao cadastrar turma");
+        }
+      } catch (error) {
+        console.error(error);
         toast.error("Erro ao cadastrar turma");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao cadastrar turma");
     }
   };
 
