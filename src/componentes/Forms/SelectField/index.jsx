@@ -9,6 +9,7 @@ const SelectField = forwardRef(
       placeholder,
       label,
       options,
+      disabled = false,
       error,
       currentValue,
       ...rest
@@ -34,6 +35,7 @@ const SelectField = forwardRef(
           type={type}
           id={id}
           name={name}
+          disabled={disabled}
           placeholder={placeholder}
           {...rest}
           ref={ref}
