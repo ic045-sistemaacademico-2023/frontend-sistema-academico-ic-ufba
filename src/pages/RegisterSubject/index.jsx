@@ -180,6 +180,7 @@ function RegisterSubject() {
           <SelectField
             {...register("area")}
             label={"Área"}
+            disabled={isEditing}
             options={areas}
             placeholder={"Área da disciplina..."}
             error={errors.area?.message}
