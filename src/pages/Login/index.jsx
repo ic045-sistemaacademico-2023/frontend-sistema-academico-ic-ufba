@@ -3,12 +3,16 @@ import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import { useForm } from "react-hook-form";
 
 import Button from "../../componentes/Button";
-import { useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import Link from "../../componentes/Link";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import api from "../../utils/api";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/userContext";
 
 const schema = yup.object().shape({
   cpf: yup
@@ -37,11 +41,35 @@ function LoginPage() {
     resolver: yupResolver(schema),
   });
 
-  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    setSuccess(true);
+  const onSubmit = async (data) => {
+    try {
+      const response = await api.post("/auth/", {
+        cpf: data.cpf,
+        senha: data.password,
+      });
+
+      if (response.status === 200) {
+        const { token } = response.data;
+        localStorage.setItem("token", token);
+
+        const userResponse = await api.get("/user/me");
+
+        if (userResponse.status === 200) {
+          setUser(userResponse.data);
+        }
+
+        toast.success(`Usuário ${userResponse.data.nome} logado com sucesso!`);
+        navigate("/");
+      } else {
+        toast.error("Usuário ou senha incorretos!");
+      }
+    } catch (error) {
+      toast.error("Erro ao fazer login!");
+      console.error(error);
+    }
   };
 
   return (
@@ -73,17 +101,9 @@ function LoginPage() {
                 error={errors.password?.message}
               />
               <Button type="submit">Login</Button>
-              {success && (
-                <p className="mt-5 text-sm text-center ml-1 text-green-500">
-                  <span className="font-medium">
-                    Usuário logado com sucesso!
-                  </span>
-                </p>
-              )}
             </form>
 
             <Link href="/password-reset">Recuperar senha</Link>
-            <Link href="/">Primeira página</Link>
           </div>
         </div>
       </div>
