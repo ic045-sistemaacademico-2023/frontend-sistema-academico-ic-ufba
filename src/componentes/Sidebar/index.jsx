@@ -74,12 +74,6 @@ function Sidebar() {
               </p>
 
               <SidebarItem
-                title={"Cursos"}
-                link={"/cursos"}
-                icon={<ListDashes size={20} />}
-              />
-
-              <SidebarItem
                 title={"Cadastrar Usuário"}
                 link={"/cadastrar/usuario"}
                 icon={<UserPlus size={20} />}

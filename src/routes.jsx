@@ -31,7 +31,7 @@ export default function AppRoutes() {
           <Route exact path="/" element={<WelcomePage />} />
 
           {/* Aluno */}
-          <Route element={<ProtectedRoute roles={["ALUNO", "ADMIN"]} />}>
+          <Route element={<ProtectedRoute roles={["ALUNO"]} />}>
             <Route exact path="/historico" element={<HistoryPage />} />
             <Route
               exact
