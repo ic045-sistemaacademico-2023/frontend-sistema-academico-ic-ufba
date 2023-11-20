@@ -2,10 +2,17 @@ import { toast } from "react-toastify";
 import Button from "../../componentes/Button";
 import api from "../../utils/api";
 
-import { roles, status } from "./data";
+import { roles } from "./data";
 
 function UserTable({ users, isManager = false, fetchUsers }) {
-  async function deleteUser(id) {
+  const truncateString = (str, num) => {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + "...";
+  };
+
+  const deleteUser = async (id) => {
     try {
       const response = await api.delete(`/user/${id}`);
       if (response.status === 204) {
@@ -18,7 +25,37 @@ function UserTable({ users, isManager = false, fetchUsers }) {
       console.error(error);
       toast.error("Erro ao deletar usuário");
     }
-  }
+  };
+
+  const approveUser = async (id) => {
+    try {
+      const response = await api.put(`/user/approve/${id}`);
+      if (response.status === 200) {
+        toast.success("Usuário aprovado com sucesso!");
+        fetchUsers();
+      } else {
+        toast.error("Erro ao aprovar usuário");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao aprovar usuário");
+    }
+  };
+
+  const denyUser = async (id) => {
+    try {
+      const response = await api.put(`/user/reprove/${id}`);
+      if (response.status === 200) {
+        toast.success("Usuário recusado com sucesso!");
+        fetchUsers();
+      } else {
+        toast.error("Erro ao recusar usuário");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao recusar usuário");
+    }
+  };
 
   return (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
@@ -37,16 +74,23 @@ function UserTable({ users, isManager = false, fetchUsers }) {
             <th scope="col" className="px-6 py-3">
               Cargo
             </th>
-            {!isManager && (
-              <th scope="col" className="px-6 py-3">
-                Status
-              </th>
-            )}
             <th scope="col" className="px-6 py-3">
               Ações
             </th>
           </tr>
         </thead>
+        {users?.length === 0 && (
+          <tbody>
+            <tr className="bg-white border border-gray-100 hover:bg-primary-100">
+              <td
+                colSpan="5"
+                className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap"
+              >
+                Nenhum usuário encontrado
+              </td>
+            </tr>
+          </tbody>
+        )}
         <tbody>
           {users.map((user, index) => (
             <tr
@@ -56,17 +100,22 @@ function UserTable({ users, isManager = false, fetchUsers }) {
               } border border-gray-100 hover:bg-primary-100`}
             >
               <td className="px-6 py-4 h-full">{user.cpf}</td>
-              <td className="px-6 py-4 h-full">{user.nome}</td>
-              <td className="px-6 py-4 h-full">{user.email}</td>
-              <td className="px-6 py-4 h-full">{roles[user.role]}</td>
-              {!isManager && (
-                <td className="px-6 py-4 h-full">{status[user.status]}</td>
-              )}
+              <td className="px-6 py-4 h-full">
+                {truncateString(user.nome, 20)}
+              </td>
+              <td className="px-6 py-4 h-full">
+                {truncateString(user.email, 25)}
+              </td>
+              <td className="px-6 py-4 h-full">
+                {truncateString(roles[user.role], 20)}
+              </td>
               {isManager ? (
                 <td className="px-6 py-4 h-full">
                   <div className="flex flex-wrap justify-center items-center gap-2">
-                    <Button>Aprovar</Button>
-                    <Button secondary color="">
+                    <Button onClick={() => approveUser(user.id)}>
+                      Aprovar
+                    </Button>
+                    <Button secondary onClick={() => denyUser(user.id)}>
                       Recusar
                     </Button>
                   </div>

@@ -30,6 +30,18 @@ function StudentCourses({ studentCourses }) {
             </th>
           </tr>
         </thead>
+        {studentCourses?.length === 0 && (
+          <tbody>
+            <tr className="bg-white border border-gray-100 hover:bg-primary-100">
+              <td
+                colSpan="8"
+                className="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap"
+              >
+                Nenhuma disciplina matriculada
+              </td>
+            </tr>
+          </tbody>
+        )}
         <tbody>
           {studentCourses?.map((course, index) => (
             <tr

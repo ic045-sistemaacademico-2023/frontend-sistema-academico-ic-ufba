@@ -55,11 +55,11 @@ function Sidebar({ setToken }) {
                 icon={<IdentificationBadge size={20} />}
               />
 
-              <SidebarItem
+              {/* <SidebarItem
                 title={"Histórico"}
                 link={"/historico"}
                 icon={<ListChecks size={20} />}
-              />
+              /> */}
 
               <SidebarItem
                 title={"Disciplinas"}
@@ -107,6 +107,12 @@ function Sidebar({ setToken }) {
                 title={"Usuarios"}
                 link={"/usuarios"}
                 icon={<Users size={20} />}
+              />
+
+              <SidebarItem
+                title={"Gerenciar Usuários"}
+                link={"/gerenciar/usuarios"}
+                icon={<UserPlus size={20} />}
               />
 
               <SidebarItem

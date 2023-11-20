@@ -25,6 +25,7 @@ import { useEffect, useState } from "react";
 import api from "./utils/api";
 import useAuth from "./hooks/useAuth";
 import PageLoyout from "./pages/PageLoyout";
+import SelfRegister from "./pages/SelfRegister";
 
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
@@ -58,7 +59,9 @@ export default function AppRoutes() {
           path="/login"
           element={<LoginPage setToken={setToken} />}
         />
-        <Route exact path="/password-reset" element={<PasswordReset />} />
+        <Route exact path="/" element={<WelcomePage />} />
+        <Route exact path="/cadastro" element={<SelfRegister />} />
+        <Route exact path="/recuperar-senha" element={<PasswordReset />} />
 
         <Route element={<PageLoyout />}>
           <Route element={<ProtectedRoute user={user} redirectPath="/login" />}>
@@ -92,7 +95,7 @@ export default function AppRoutes() {
               />
               <Route
                 exact
-                path="/gerenciar-usuarios"
+                path="/gerenciar/usuarios"
                 element={<ManageUsersPage />}
               />
             </Route>
