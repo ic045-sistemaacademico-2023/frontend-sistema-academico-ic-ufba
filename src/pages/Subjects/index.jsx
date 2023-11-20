@@ -60,7 +60,6 @@ function SubjectsPage() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <CourseSubjects
         courseData={courseData}
         subjects={courseSubjects}

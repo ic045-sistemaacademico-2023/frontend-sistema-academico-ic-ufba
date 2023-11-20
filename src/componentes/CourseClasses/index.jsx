@@ -2,11 +2,32 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/userContext";
+import useAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 function CourseClasses({ courseClasses, fetchClasses, entity }) {
-  const { user } = useContext(UserContext);
+  const { token } = useAuth();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) return;
+
+      try {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.log("Erro ao obter usuário");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
 
   const USER_ROLE = user?.role;
 

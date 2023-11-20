@@ -1,15 +1,15 @@
-import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { UserContext } from "../../contexts/userContext";
+import useAuth from "../../hooks/useAuth";
 
 export default function ProtectedRoute({
+  user,
   roles = [],
   redirectPath = "/",
   children,
 }) {
-  const { user } = useContext(UserContext);
+  const { token } = useAuth();
 
-  if (!user) {
+  if (!token) {
     return <Navigate to={redirectPath} replace />;
   }
 

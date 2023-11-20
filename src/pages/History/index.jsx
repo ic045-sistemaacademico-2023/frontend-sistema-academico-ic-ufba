@@ -66,7 +66,6 @@ function HistoryPage() {
   return (
     studentData && (
       <div className="w-full pl-64">
-        <Sidebar />
         <div className="printable">
           <StudentInfos
             studentData={studentData}
