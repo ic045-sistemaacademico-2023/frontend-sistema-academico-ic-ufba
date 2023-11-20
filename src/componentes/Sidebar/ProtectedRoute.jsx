@@ -1,41 +1,15 @@
 import { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { UserContext } from "../../contexts/userContext";
-import api from "../../utils/api";
 
 export default function ProtectedRoute({
   roles = [],
   redirectPath = "/",
   children,
 }) {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  const fetchUser = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return null;
-    }
-
-    try {
-      const response = await api.get("/user/me");
-
-      if (response.status === 200) {
-        setUser(response.data);
-        return response.data;
-      } else {
-        return null;
-      }
-    } catch (error) {
-      return null;
-    }
-  };
-
-  const checkUser = async () => {
-    const user = await fetchUser();
-    return user;
-  };
-
-  if (!user || !checkUser()) {
+  if (!user) {
     return <Navigate to={redirectPath} replace />;
   }
 
