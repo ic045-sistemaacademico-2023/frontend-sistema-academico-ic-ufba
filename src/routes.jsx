@@ -20,6 +20,7 @@ import ManageUsersPage from "./pages/ManageUsers";
 import ProfessorClasses from "./pages/ProfessorClasses";
 import ProtectedRoute from "./componentes/Sidebar/ProtectedRoute";
 import WelcomePage from "./pages/Welcolme";
+import RegisterEnrollment from "./pages/RegisterEnrollment";
 
 export default function AppRoutes() {
   return (
@@ -116,6 +117,17 @@ export default function AppRoutes() {
               element={<RegisterCourse />}
             />
           </Route>
+
+           {/* Oportunidade Matricula */}
+        <Route
+            element={
+              <ProtectedRoute roles={["ADMIN", "COORDENADOR_DE_CURSO"]} />
+            }
+          >
+            <Route exact path="/cadastrar/oportunidade" element={<RegisterEnrollment />} />
+            <Route exact path="/oportunidades" element={<CourseClassPage />} />
+          </Route>
+
         </Route>
       </Routes>
     </BrowserRouter>
