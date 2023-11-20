@@ -76,6 +76,7 @@ function HistoryPage() {
         </div>
         <div className="mt-6 mb-5">
           <Button onClick={() => exportToPDF(studentData)}>Download</Button>
+          <span style={{ margin: "0 8px" }}></span>
           <Button onClick={handlePrint}>Imprimir</Button>
         </div>
       </div>

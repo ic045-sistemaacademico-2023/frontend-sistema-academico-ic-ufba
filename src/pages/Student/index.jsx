@@ -96,6 +96,7 @@ function StudentPage() {
         <StudentCourses studentCourses={studentCoursesApi} />
         <div className="mt-6">
           <Button onClick={() => exportToPDF(studentDataApi)}>Download</Button>
+          <span style={{ margin: "0 8px" }}></span>
           <Button onClick={handlePrint}>Imprimir</Button>
         </div>
       </div>
