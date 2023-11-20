@@ -1,12 +1,12 @@
 import AppRoutes from "./routes";
-import { UserProvider } from "./contexts/userContext";
+import { AuthProvider } from "./providers/authProvider";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <UserProvider>
+    <AuthProvider>
       <AppRoutes />
       <ToastContainer
         position="top-right"
@@ -19,7 +19,7 @@ function App() {
         draggable
         pauseOnHover
       />
-    </UserProvider>
+    </AuthProvider>
   );
 }
 

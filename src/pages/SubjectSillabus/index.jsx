@@ -51,7 +51,6 @@ function SubjectSillabus() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <SubjectInfos subjectData={subject} />
       <CourseClasses
         courseClasses={classes}

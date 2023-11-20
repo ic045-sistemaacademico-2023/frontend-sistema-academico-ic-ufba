@@ -1,17 +1,13 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { formatRoles } from "../../pages/RegisterUser/roles";
-import { UserContext } from "../../contexts/userContext";
 import { useNavigate } from "react-router-dom";
 
 export default function UserPopup({ user, icon }) {
-  const { setUser } = useContext(UserContext);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setUser(null);
-
     navigate("/login");
   };
 
