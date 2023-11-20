@@ -32,6 +32,7 @@ export default function AppRoutes() {
           <Route exact path="/" element={<WelcomePage />} />
           <Route exact path="/curso/:id" element={<SubjectsPage />} />
           <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
+          <Route exact path="/turmas" element={<ClassesPage />} />
 
           {/* Aluno */}
           <Route element={<ProtectedRoute roles={["ALUNO"]} />}>
@@ -41,7 +42,6 @@ export default function AppRoutes() {
               path="/comprovante-matricula"
               element={<StudentPage />}
             />
-            <Route exact path="/turmas" element={<ClassesPage />} />
           </Route>
 
           {/* Usuários */}
