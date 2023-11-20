@@ -27,7 +27,6 @@ function UsersPage() {
 
   return (
     <div className="w-full pl-64 pt-10 mb-6">
-      <Sidebar />
       <h1 className="text-xl text-gray-700 font-bold">Usuários</h1>
       <UserTable users={users} fetchUsers={fetchUsers} />
       <Button secondary href={"/gerenciar-usuarios"}>

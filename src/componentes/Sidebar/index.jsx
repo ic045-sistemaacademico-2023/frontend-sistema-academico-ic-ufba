@@ -12,17 +12,17 @@ import {
   Users,
 } from "@phosphor-icons/react";
 import SidebarItem from "./SidebarItem";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../../contexts/userContext";
 import UserPopup from "../UserPopup";
 import api from "../../utils/api";
+import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
-function Sidebar() {
-  const { user, setUser } = useContext(UserContext);
+function Sidebar({ setToken }) {
+  const { token } = useAuth();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem("token");
       if (token) {
         const response = await api.get("/user/me");
 
@@ -33,7 +33,7 @@ function Sidebar() {
     };
 
     fetchUser();
-  }, [setUser]);
+  }, [token]);
 
   const USER_ROLE = user?.role;
 
@@ -146,7 +146,7 @@ function Sidebar() {
         </ul>
 
         <ul className="space-y-2 font-medium">
-          <UserPopup user={user} icon={<User />} />
+          <UserPopup user={user} setToken={setToken} icon={<User />} />
         </ul>
       </div>
     </aside>

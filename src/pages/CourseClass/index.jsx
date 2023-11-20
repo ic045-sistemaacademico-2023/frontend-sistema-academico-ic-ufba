@@ -27,7 +27,6 @@ function CourseClassPage() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <CourseClassInfos course={data} />
       <ClassStudents classStudents={data?.alunos} />
 

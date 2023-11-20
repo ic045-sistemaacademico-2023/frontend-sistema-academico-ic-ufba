@@ -58,7 +58,6 @@ function ProfessorClasses() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
         <h1 className="text-2xl text-primary-800 font-bold pb-2">
           Professor {professor?.nome}
