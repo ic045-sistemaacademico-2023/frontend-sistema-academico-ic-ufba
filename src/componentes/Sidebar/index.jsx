@@ -1,5 +1,6 @@
 import {
   CirclesThreePlus,
+  DiamondsFour,
   IdentificationBadge,
   ListChecks,
   ListDashes,
@@ -64,6 +65,11 @@ function Sidebar() {
                 title={"Disciplinas"}
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
+              />
+              <SidebarItem
+                title={"Turmas"}
+                link={"/turmas"}
+                icon={<DiamondsFour size={20} />}
               />
             </>
           )}
