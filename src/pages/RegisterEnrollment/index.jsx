@@ -9,16 +9,16 @@ import { toast } from "react-toastify";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import api from "../../utils/api";
 import { status } from "./data";
+import SubjectsSelectForm from "./subjectsSelect";
 
 
 const schema = yup.object().shape({
     nome: yup.string().required("O nome da oportunidade é obrigatório"),
-    // status: yup.string().required("O status da oportunidade é obrigatório").resolve(),
-    status: yup.boolean().required("O status da oportunidade é obrigatório"),
+    aberta: yup.string().required("O status da oportunidade é obrigatório"),
     descricao: yup.string().required("A descrição da oportunidade é obrigatório"),
     dataInicial: yup.date().required("A data inicial da oportunidade é obrigatório"),
     dataFinal: yup.date().required("A data final da oportunidade é obrigatório"),
@@ -26,7 +26,7 @@ const schema = yup.object().shape({
 
 const initialValues = {
     nome: "",
-    status: "Fechada",
+    aberta: "",
     descricao: "",
     dataInicial: "",
     dataFinal: "",
@@ -37,6 +37,9 @@ function RegisterEnrollment() {
     const { id } = useParams();
     const isEditing = id !== undefined;
     const navigate = useNavigate();
+
+    const [disciplinas, setDisciplinas] = useState([]);
+    const [disciplinasTurmas, setDisciplinasTurmas] = useState([]);
 
     const {
         register,
@@ -52,13 +55,33 @@ function RegisterEnrollment() {
 
     useEffect(() => {
 
+        async function getDisciplinas() {
+            try {
+              const response = await api.get("/disciplina/all");
+              if (response.status === 200) {
+                const disciplinas = response.data.map((disciplina) => {
+                  return {
+                    id: disciplina.id,
+                    value: disciplina.id,
+                    name: disciplina.nome,
+                  };
+                });
+      
+                setDisciplinas(disciplinas);
+              }
+            } catch (error) {
+              console.error(error);
+              toast.error("Erro ao carregar disciplinas");
+            }
+          }
+
         const getEnrollmentOportunity = async () => {
             try {
                 const response = await api.get(`disciplina/${id}`);
                 if (response.status === 200) {
                     const subject = response.data;
                     setValue("nome", subject.nome);
-                    setValue("status", subject.status);
+                    setValue("aberta", subject.aberta);
                     setValue("descricao", subject.descricao);
                     setValue("dataInicial", subject.dataInicial);
                     setValue("dataFinal", subject.dataFinal);
@@ -72,9 +95,13 @@ function RegisterEnrollment() {
         if (isEditing) {
             getEnrollmentOportunity();
         }
+
+        getDisciplinas();
+
     }, [isEditing, id, setValue, watch])
 
     const onSubmit = async (data) => {
+        data.aberta === "ABERTA"? data.aberta = true : data.aberta = false;
         console.log(data);
         if (isEditing) {
           try {
@@ -125,7 +152,7 @@ function RegisterEnrollment() {
                         error={errors.nome?.message}
                     />
                     <SelectField
-                        {...register("status")}
+                        {...register("aberta")}
                         label={"Status"}
                         options={status}
                         placeholder={"Selecione o status"}
@@ -148,6 +175,12 @@ function RegisterEnrollment() {
                         error={errors.nome?.message}
                     />
                 </div>
+
+                <div className="grid md:grid-cols-1 md:gap-6">
+                <h2 className="text-base font-bold  text-left">Disciplinas</h2>
+                    <SubjectsSelectForm disciplinasTurmas={disciplinasTurmas} setDisciplinasTurmas={setDisciplinasTurmas}/>
+                </div>
+
                 <div className="grid md:grid-cols-1 md:gap-6">
                     <TextField
                         {...register("descricao")}
@@ -157,8 +190,6 @@ function RegisterEnrollment() {
                         error={errors.ementa?.message}
                     />
                 </div>
-
-
                 <div>
                     <Button type="submit">{isEditing ? "Editar" : "Cadastrar"}</Button>
                 </div>

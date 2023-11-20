@@ -129,7 +129,7 @@ function Sidebar() {
               />
 
               <SidebarItem
-                title={"Matrículas"}
+                title={"Oportunidades de Matrícula"}
                 link={"/oportunidades"}
                 icon={<Article size={20} />}
               />
