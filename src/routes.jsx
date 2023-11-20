@@ -11,6 +11,7 @@ import StudentPage from "./pages/Student";
 import SubjectSillabus from "./pages/SubjectSillabus";
 import SubjectsPage from "./pages/Subjects";
 import CourseClassPage from "./pages/CourseClass";
+import ClassesPage from "./pages/ClassesPage";
 import CoursesPage from "./pages/Courses";
 import RegisterCourse from "./pages/RegisterCourse";
 import UsersPage from "./pages/Users";
