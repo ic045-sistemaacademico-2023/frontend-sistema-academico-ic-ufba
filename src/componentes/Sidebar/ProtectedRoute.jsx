@@ -16,20 +16,27 @@ export default function ProtectedRoute({
       return null;
     }
 
-    const response = await api.get("/user/me");
+    try {
+      const response = await api.get("/user/me");
 
-    if (response.status === 200) {
-      setUser(response.data);
-      return response.data;
-    } else {
+      if (response.status === 200) {
+        setUser(response.data);
+        return response.data;
+      } else {
+        return null;
+      }
+    } catch (error) {
       return null;
     }
   };
 
-  if (!user) {
-    if (!fetchUser()) {
-      return <Navigate to={redirectPath} replace />;
-    }
+  const checkUser = async () => {
+    const user = await fetchUser();
+    return user;
+  };
+
+  if (!user || !checkUser()) {
+    return <Navigate to={redirectPath} replace />;
   }
 
   if (roles.length > 0 && user) {

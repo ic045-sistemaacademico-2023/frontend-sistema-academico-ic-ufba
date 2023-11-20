@@ -2,9 +2,14 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
-import { USER_ROLE } from "../../utils/user";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/userContext";
 
 function CourseClasses({ courseClasses, fetchClasses, entity }) {
+  const { user } = useContext(UserContext);
+
+  const USER_ROLE = user?.role;
+
   const currentYear = new Date().getFullYear();
   const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 

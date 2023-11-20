@@ -2,9 +2,14 @@ import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../Button";
 import { useNavigate } from "react-router-dom";
-import { USER_ROLE } from "../../utils/user";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/userContext";
 
 function CourseSubjects({ courseData, subjects, fetchSubjects }) {
+  const { user } = useContext(UserContext);
+
+  const USER_ROLE = user?.role;
+
   const navigate = useNavigate();
 
   async function deleteSubject(id) {
