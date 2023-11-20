@@ -31,7 +31,7 @@ function StudentCourses({ studentCourses }) {
           </tr>
         </thead>
         <tbody>
-          {studentCourses.map((course, index) => (
+          {studentCourses?.map((course, index) => (
             <tr
               key={index}
               className={`${
@@ -42,19 +42,15 @@ function StudentCourses({ studentCourses }) {
                 scope="row"
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
               >
-                {/* {course.disciplina.codigo} */}
-                {course.codigo}
+                {course.disciplina.codigo}
               </th>
-              {/* <td className="px-6 py-4">{course.disciplina.nome}</td> */}
-              <td className="px-6 py-4">{course.nome}</td>
-              {/* <td className="px-6 py-4">{course.disciplina.chTotal}</td> */}
-              <td className="px-6 py-4">{course.ch}</td>
-              <td className="px-6 py-4">{course.turma}</td>
+              <td className="px-6 py-4">{course.disciplina.nome}</td>
+              <td className="px-6 py-4">{course.disciplina.chTotal}</td>
+              <td className="px-6 py-4">{course.code}</td>
               <td className="px-6 py-4">{course.dias}</td>
               <td className="px-6 py-4">{course.horario}</td>
               <td className="px-6 py-4">{course.local}</td>
-              {/* <td className="px-6 py-4">{course.professor.nome}</td> */}
-              <td className="px-6 py-4">{course.docente}</td>
+              <td className="px-6 py-4">{course.professor.nome}</td>
             </tr>
           ))}
         </tbody>

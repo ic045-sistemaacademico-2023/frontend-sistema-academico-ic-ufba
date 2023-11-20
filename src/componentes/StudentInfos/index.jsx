@@ -9,38 +9,37 @@ function StudentInfos({ studentData, pageTitle }) {
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Nome:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {studentData.nome}
+            {studentData?.nome}
           </dd>
         </div>
 
         <div className="flex flex-col">
-          <dt className="text-sm text-gray-500">Matrícula:</dt>
+          <dt className="text-sm text-gray-500">CPF:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {/* {studentData.matricula} */}
-            {"123456789"}
+            {studentData?.usuario.cpf}
           </dd>
         </div>
 
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Curso:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {studentData.curso.nome}
+            {studentData?.curso.nome}
           </dd>
         </div>
 
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Período de Ingresso:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {/* {studentData.curso.periodoDeIngresso} */}
-            {"2019.1"}
+            {studentData?.periodo_ingresso}
+            {/* {"2019.1"} */}
           </dd>
         </div>
 
         <div className="flex flex-col">
           <dt className="text-sm text-gray-500">Ano do Currículo:</dt>
           <dd className="text-lg font-medium text-primary-800">
-            {/* {studentData.curriculo} */}
-            {"2013.1"}
+            {studentData?.curso.periodo_curriculo}
+            {/* {"2013.1"} */}
           </dd>
         </div>
 
@@ -49,7 +48,7 @@ function StudentInfos({ studentData, pageTitle }) {
             Coeficiente de Rendimento (CR):
           </dt>
           <dd className="text-lg font-medium text-primary-800">
-            {studentData.cr}
+            {studentData?.cr}
           </dd>
         </div>
       </dl>

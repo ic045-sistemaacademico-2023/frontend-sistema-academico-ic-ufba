@@ -16,7 +16,7 @@ function handlePrint() {
   window.print();
 }
 
-function exportToPDF() {
+function exportToPDF(studentData) {
   const doc = new jsPDF();
   const table = document.querySelector("table");
 
@@ -75,7 +75,7 @@ function HistoryPage() {
           <StudentHistory studentHistory={studentHistory} />
         </div>
         <div className="mt-6 mb-5">
-          <Button onClick={exportToPDF}>Download</Button>
+          <Button onClick={() => exportToPDF(studentData)}>Download</Button>
           <Button onClick={handlePrint}>Imprimir</Button>
         </div>
       </div>
