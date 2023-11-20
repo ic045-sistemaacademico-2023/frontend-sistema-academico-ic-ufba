@@ -4,16 +4,42 @@ import api from "../../utils/api";
 import { toast } from "react-toastify";
 import CourseClasses from "../../componentes/CourseClasses";
 import Button from "../../componentes/Button";
+import useAuth from "../../hooks/useAuth";
 
 function ProfessorClasses() {
   const { id } = useParams();
 
   const [classes, setClasses] = useState([]);
-  const [professor, setProfessor] = useState({});
+
+  const { token } = useAuth();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) return;
+
+      try {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.log("Erro ao obter usuário");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
 
   const fetchClasses = useCallback(async () => {
     try {
-      const response = await api.get(`/professor/${id}/turmas`);
+      if (!user) return;
+
+      const userId = user?.id;
+      const response = await api.get(`/professor/${userId}/turmas`);
       if (response.status === 200) {
         const classes = response.data?.map((classItem) => {
           return {
@@ -32,24 +58,7 @@ function ProfessorClasses() {
       console.log(error);
       toast.error("Erro ao carregar turmas");
     }
-  }, [id]);
-
-  useEffect(() => {
-    const fetchProfessor = async () => {
-      try {
-        const response = await api.get(`/professor/${id}`);
-        if (response.status === 200) {
-          setProfessor(response.data);
-        } else {
-          toast.error("Erro ao carregar professor");
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Erro ao carregar professor");
-      }
-    };
-    fetchProfessor();
-  }, [id]);
+  }, [user]);
 
   useEffect(() => {
     fetchClasses();
@@ -59,7 +68,7 @@ function ProfessorClasses() {
     <div className="w-full pl-64">
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
         <h1 className="text-2xl text-primary-800 font-bold pb-2">
-          Professor {professor?.nome}
+          Professor {user?.nome}
         </h1>
       </div>
       <CourseClasses

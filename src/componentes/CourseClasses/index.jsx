@@ -118,7 +118,9 @@ function CourseClasses({ courseClasses, fetchClasses, entity }) {
                   <Button onClick={() => navigate(`/turma/${classItem.id}`)}>
                     Visualizar
                   </Button>
-                  {["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+                  {["ADMIN", "COORDENADOR_DE_CURSO", "PROFESSOR"].includes(
+                    USER_ROLE,
+                  ) && (
                     <>
                       <Button
                         secondary

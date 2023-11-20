@@ -132,7 +132,7 @@ export default function AppRoutes() {
             >
               <Route
                 exact
-                path="/professor/:id/turmas"
+                path="/professor/turmas"
                 element={<ProfessorClasses />}
               />
               <Route exact path="/turma/:id" element={<CourseClassPage />} />

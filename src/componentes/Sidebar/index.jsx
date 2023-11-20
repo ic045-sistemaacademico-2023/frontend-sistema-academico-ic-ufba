@@ -2,7 +2,7 @@ import {
   CirclesThreePlus,
   DiamondsFour,
   IdentificationBadge,
-  ListChecks,
+  // ListChecks,
   ListDashes,
   Plus,
   PlusCircle,
@@ -73,7 +73,7 @@ function Sidebar({ setToken }) {
               />
             </>
           )}
-          {["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+          {["ADMIN"].includes(USER_ROLE) && (
             <>
               <p className="text-white text-base bg-primary-700">
                 Administração
@@ -128,7 +128,38 @@ function Sidebar({ setToken }) {
             </>
           )}
 
-          {["COORDENADOR_DE_CURSO", "PROFESSOR"].includes(USER_ROLE) && (
+          {["COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+            <>
+              <p className="text-white text-base bg-primary-700">
+                Administração
+              </p>
+
+              <SidebarItem
+                title={"Cadastrar Disciplina"}
+                link={"/cadastrar/disciplina"}
+                icon={<PlusCircle size={20} />}
+              />
+
+              <SidebarItem
+                title={"Cadastrar Turma"}
+                link={"/cadastrar/turma"}
+                icon={<PlusCircle size={20} />}
+              />
+
+              <SidebarItem
+                title={"Cursos"}
+                link={"/cursos"}
+                icon={<ListDashes size={20} />}
+              />
+              <SidebarItem
+                title={"Disciplinas"}
+                link={"/curso/1"}
+                icon={<SquaresFour size={20} />}
+              />
+            </>
+          )}
+
+          {["PROFESSOR"].includes(USER_ROLE) && (
             <>
               {USER_ROLE == "PROFESSOR" && (
                 <p className="text-white text-base bg-primary-700">
@@ -144,7 +175,7 @@ function Sidebar({ setToken }) {
 
               <SidebarItem
                 title={"Minhas turmas"}
-                link={"/professor/1/turmas"}
+                link={"/professor/turmas"}
                 icon={<Users size={20} />}
               />
             </>
