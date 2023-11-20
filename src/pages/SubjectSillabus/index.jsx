@@ -1,5 +1,3 @@
-import Sidebar from "../../componentes/Sidebar";
-
 import SubjectInfos from "../../componentes/SubjectInfos";
 import CourseClasses from "../../componentes/CourseClasses";
 import Button from "../../componentes/Button";

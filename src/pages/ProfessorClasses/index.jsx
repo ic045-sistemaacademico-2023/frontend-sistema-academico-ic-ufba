@@ -4,7 +4,6 @@ import api from "../../utils/api";
 import { toast } from "react-toastify";
 import CourseClasses from "../../componentes/CourseClasses";
 import Button from "../../componentes/Button";
-import Sidebar from "../../componentes/Sidebar";
 
 function ProfessorClasses() {
   const { id } = useParams();

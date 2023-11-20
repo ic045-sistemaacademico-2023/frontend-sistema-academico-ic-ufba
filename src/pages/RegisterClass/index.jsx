@@ -4,7 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 
-import Sidebar from "../../componentes/Sidebar";
 import SelectField from "../../componentes/Forms/SelectField";
 import InputField from "../../componentes/Forms/InputField";
 import MultiSelectField from "../../componentes/Forms/MultiSelectField";

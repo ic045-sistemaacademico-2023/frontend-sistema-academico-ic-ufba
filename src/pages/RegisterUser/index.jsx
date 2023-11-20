@@ -3,7 +3,7 @@ import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import Button from "../../componentes/Button";
 import InputField from "../../componentes/Forms/InputField";
 import SelectField from "../../componentes/Forms/SelectField";
-import Sidebar from "../../componentes/Sidebar";
+
 import { roles } from "./roles";
 
 import { useForm } from "react-hook-form";
