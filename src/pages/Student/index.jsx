@@ -79,6 +79,7 @@ function StudentPage() {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
+        if (!userId) return;
         const response = await api.get(`/aluno/${userId}`);
         setStudent(response.data);
       } catch (error) {
@@ -89,6 +90,7 @@ function StudentPage() {
 
     const fetchStudentCourses = async () => {
       try {
+        if (!userId) return;
         const response = await api.get(`/turma/aluno/${userId}`);
         setStudentCourses(response.data);
       } catch (error) {

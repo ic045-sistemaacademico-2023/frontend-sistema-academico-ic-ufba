@@ -92,7 +92,8 @@ function LoginPage({ setToken }) {
               <Button type="submit">Login</Button>
             </form>
 
-            <Link href="/password-reset">Recuperar senha</Link>
+            <Link href="/recuperar-senha">Recuperar senha</Link>
+            <Link href="/cadastro">Cadastrar no Sistema</Link>
           </div>
         </div>
       </div>

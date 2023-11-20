@@ -1,13 +1,15 @@
 import { Link as RouterLink } from "react-router-dom";
 
-function Link({ children, href }) {
+function Link({ children, href, className }) {
   return (
-    <RouterLink
-      className="font-medium text-primary-600 hover:text-primary-800 hover:underline"
-      href={href}
-    >
-      {children}
-    </RouterLink>
+    <div className={className}>
+      <RouterLink
+        className="font-medium text-primary-600 hover:text-primary-800 hover:underline"
+        to={href}
+      >
+        {children}
+      </RouterLink>
+    </div>
   );
 }
 
