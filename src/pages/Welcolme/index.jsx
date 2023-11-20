@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../../componentes/Sidebar";
+
 import useAuth from "../../hooks/useAuth";
 import api from "../../utils/api";
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../../componentes/Sidebar";
+
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";

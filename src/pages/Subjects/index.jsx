@@ -1,4 +1,3 @@
-import Sidebar from "../../componentes/Sidebar";
 import CourseSubjects from "../../componentes/CourseSubjects";
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";

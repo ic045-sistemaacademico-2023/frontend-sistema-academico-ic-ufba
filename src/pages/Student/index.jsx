@@ -1,7 +1,6 @@
-import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
 import StudentCourses from "../../componentes/StudentCourses";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 import api from "../../utils/api";
 import { toast } from "react-toastify";
@@ -9,7 +8,7 @@ import { toast } from "react-toastify";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Button from "../../componentes/Button";
-import { UserContext } from "../../contexts/userContext";
+import useAuth from "../../hooks/useAuth";
 
 function handlePrint() {
   window.print();
@@ -49,7 +48,28 @@ const currentYear = new Date().getFullYear();
 const currentPeriod = new Date().getMonth() < 6 ? 1 : 2;
 
 function StudentPage() {
-  const { user } = useContext(UserContext);
+  const { token } = useAuth();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) return;
+
+      try {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.log("Erro ao obter usuário");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
 
   const userId = user?.id;
 
@@ -78,7 +98,7 @@ function StudentPage() {
     };
     fetchStudent();
     fetchStudentCourses();
-  }, []);
+  }, [userId]);
 
   return (
     <div className="w-full pl-64">

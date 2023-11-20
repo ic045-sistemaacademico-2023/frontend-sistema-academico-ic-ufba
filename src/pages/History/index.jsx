@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 
-import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
 import StudentHistory from "../../componentes/StudentHistory";
 import Button from "../../componentes/Button";
