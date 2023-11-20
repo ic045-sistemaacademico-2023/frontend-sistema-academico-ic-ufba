@@ -77,9 +77,15 @@ export default function ClassesPage() {
               >
                 <td className="px-6 py-4">{classObj.id}</td>
                 <td className="px-6 py-4">{classObj.disciplina?.nome}</td>
-                <td className="px-6 py-4">{classObj.disciplina?.curso?.coordenadorDeCurso?.nome}</td>
-                <td className="px-6 py-4 text-center">{classObj.disciplina?.curso?.semestre}</td>
-                <td className="px-6 py-4 text-center">{classObj.disciplina?.curso?.turno}</td>
+                <td className="px-6 py-4">
+                  {classObj.disciplina?.curso?.coordenadorDeCurso?.nome}
+                </td>
+                <td className="px-6 py-4 text-center">
+                  {classObj.disciplina?.curso?.semestre}
+                </td>
+                <td className="px-6 py-4 text-center">
+                  {classObj.disciplina?.curso?.turno}
+                </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-wrap justify-center items-center gap-2">
                     <Button onClick={() => navigate(`/turma/${classObj.id}`)}>
