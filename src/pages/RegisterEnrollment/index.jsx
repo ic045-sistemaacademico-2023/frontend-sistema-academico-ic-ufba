@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import api from "../../utils/api";
 import { status } from "./data";
 import SubjectsSelectForm from "./subjectsSelect";
+import { Backspace } from "@phosphor-icons/react";
 
 
 const schema = yup.object().shape({
@@ -39,7 +40,7 @@ function RegisterEnrollment() {
     const navigate = useNavigate();
 
     const [disciplinas, setDisciplinas] = useState([]);
-    const [disciplinasTurmas, setDisciplinasTurmas] = useState([]);
+    const [disciplinasSelecionadas, setDisciplinasSelecionadas] = useState([]);
 
     const {
         register,
@@ -54,27 +55,30 @@ function RegisterEnrollment() {
     });
 
     useEffect(() => {
-
-        async function getDisciplinas() {
-            try {
-              const response = await api.get("/disciplina/all");
-              if (response.status === 200) {
-                const disciplinas = response.data.map((disciplina) => {
-                  return {
-                    id: disciplina.id,
-                    value: disciplina.id,
-                    name: disciplina.nome,
-                  };
-                });
-      
-                setDisciplinas(disciplinas);
-              }
-            } catch (error) {
-              console.error(error);
-              toast.error("Erro ao carregar disciplinas");
-            }
+      async function getDisciplinas() {
+        try {
+          const response = await api.get("/disciplina/all");
+          if (response.status === 200) {
+            const disciplinas = response.data.map((disciplina) => {
+              return {
+                id: disciplina.id,
+                value: disciplina.id,
+                name: disciplina.nome,
+              };
+            });
+  
+            setDisciplinas(disciplinas);
           }
+        } catch (error) {
+          console.error(error);
+          toast.error("Erro ao carregar disciplinas");
+        }
+      }
 
+      getDisciplinas();
+    }, []);
+
+    useEffect(() => {
         const getEnrollmentOportunity = async () => {
             try {
                 const response = await api.get(`disciplina/${id}`);
@@ -95,20 +99,29 @@ function RegisterEnrollment() {
         if (isEditing) {
             getEnrollmentOportunity();
         }
-
-        getDisciplinas();
-
     }, [isEditing, id, setValue, watch])
+
+    const parseDateToTimeStamp = (date) => {
+      const globalTime = new Date(date);
+      return `${globalTime.getFullYear()}-${String(globalTime.getMonth() + 1).padStart(2, '0')}-${String(globalTime.getDate()).padStart(2, '0')} ${String(globalTime.getHours()).padStart(2, '0')}:${String(globalTime.getMinutes()).padStart(2, '0')}:${String(globalTime.getSeconds()).padStart(2, '0')}`;
+    }
 
     const onSubmit = async (data) => {
         data.aberta === "ABERTA"? data.aberta = true : data.aberta = false;
-        console.log(data);
+        data.dataInicial = parseDateToTimeStamp(data.dataInicial);
+        data.dataFinal = parseDateToTimeStamp(data.dataFinal);
+        let disciplinaTurmas = disciplinasSelecionadas.map(item => ({
+          disciplina: item.disciplina.id,
+          turmas: item.turmas.map(turma => turma.id)
+        }));
+        data.disciplinaTurmas = disciplinaTurmas;
         if (isEditing) {
           try {
             const response = await api.put(`oportunidade/${id}`, data);
             if (response.status === 200) {
+              console.log(response.data);
               toast.success("Oportunidade editada com sucesso!");
-              navigate(`/oportunidades/${data.id}`);
+              navigate(`/oportunidades/${response.data.id}`);
             } else {
               toast.error("Error ao editar oportunidade");
             }
@@ -130,8 +143,18 @@ function RegisterEnrollment() {
             toast.error("Error ao cadastrar Oportunidade");
           }
         }
-      };
-    
+    };
+
+    const removeTurma = (idDisciplina, idTurma) => {
+      let i = disciplinasSelecionadas.findIndex((d) => d.disciplina.id == idDisciplina);
+      let turmas = disciplinasSelecionadas[i].turmas.filter((t) => t.id != idTurma);
+      let selecionados = [...disciplinasSelecionadas];
+      selecionados[i].turmas = turmas;
+      if(turmas.length == 0)
+        selecionados.splice(i,1);
+      setDisciplinasSelecionadas(selecionados);
+      setDisciplinas([...disciplinas]);
+    };
 
     return (
         <div className="w-full pl-64">
@@ -177,11 +200,6 @@ function RegisterEnrollment() {
                 </div>
 
                 <div className="grid md:grid-cols-1 md:gap-6">
-                <h2 className="text-base font-bold  text-left">Disciplinas</h2>
-                    <SubjectsSelectForm disciplinasTurmas={disciplinasTurmas} setDisciplinasTurmas={setDisciplinasTurmas}/>
-                </div>
-
-                <div className="grid md:grid-cols-1 md:gap-6">
                     <TextField
                         {...register("descricao")}
                         label={"Descrição"}
@@ -190,6 +208,46 @@ function RegisterEnrollment() {
                         error={errors.ementa?.message}
                     />
                 </div>
+
+                <div className="grid md:grid-cols-1 md:gap-6">
+                  <h2 className="text-lg font-bold  text-left">Disciplinas</h2>
+                  <SubjectsSelectForm disciplinas={disciplinas} disciplinasSelecionadas={disciplinasSelecionadas} setDisciplinasSelecionadas={setDisciplinasSelecionadas} />
+            {
+              disciplinasSelecionadas.length > 0 ?
+                <div className=" flex self-start justify-self-start">
+                  {disciplinasSelecionadas.map((sel) =>
+                    <span key={sel.disciplina.id}>
+                      <p className="font-semibold">
+                        {sel.disciplina.name}
+                      </p>
+                      <div className="flex justify-around">
+                        {sel.turmas.map((turma) =>
+                          <div key={turma.id} style={
+                            {
+                              border: '1px solid #ccc',
+                              borderRadius: '8px',
+                              padding: '10px',
+                              margin: '10px',
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center'
+                          }}>
+                            <p>{turma.name}</p>
+                            <button type="button" onClick={() => removeTurma(sel.disciplina.id, turma.id)}>
+                              <Backspace color="red" size={20} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </span>
+                  )}
+                </div>
+                :
+                <></>
+            }
+
+                </div>
+
                 <div>
                     <Button type="submit">{isEditing ? "Editar" : "Cadastrar"}</Button>
                 </div>
