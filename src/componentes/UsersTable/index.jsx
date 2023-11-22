@@ -1,10 +1,18 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../../componentes/Button";
 import api from "../../utils/api";
 
-import { roles } from "./data";
+import { roleFilterOptions, roles } from "./data";
+import SelectField from "../Forms/SelectField";
+import InputField from "../Forms/InputField";
+import { ArrowDown, ArrowUp, ArrowsDownUp } from "@phosphor-icons/react";
 
-function UserTable({ users, isManager = false, fetchUsers }) {
+function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
+  const [searchString, setSearchString] = useState("");
+  const [searchRole, setSearchRole] = useState("ALL");
+  const [sortByName, setSortByName] = useState(null);
+
   const truncateString = (str, num) => {
     if (str.length <= num) {
       return str;
@@ -57,16 +65,86 @@ function UserTable({ users, isManager = false, fetchUsers }) {
     }
   };
 
+  function normalizeString(value = "") {
+    return value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "");
+  }
+
+  function filterListSelectUser() {
+    return users.filter((userInfo) => {
+      const searchLowerCase = normalizeString(searchString);
+      const nameLowerCase = normalizeString(userInfo.nome);
+      return (
+        nameLowerCase.includes(searchLowerCase) ||
+        userInfo.cpf.includes(searchLowerCase)
+      );
+    });
+  }
+  let filteredUsersList =
+    searchString.length > 0 ? filterListSelectUser() : users;
+
+  function filterListSelectRole() {
+    return filteredUsersList.filter((userInfo) => {
+      return searchRole == "ALL" || userInfo.role == searchRole;
+    });
+  }
+
+  filteredUsersList = filterListSelectRole();
+
+  function sortUserByName() {
+    if (sortByName == null) return;
+    filteredUsersList.sort((user1, user2) => {
+      if (sortByName) return user1.nome.localeCompare(user2.nome);
+      return user1.nome.localeCompare(user2.nome) * -1;
+    });
+  }
+
+  sortUserByName();
+
   return (
     <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
+      <div className="flex justify-between items-center">
+        <h1 className="text-xl text-gray-700 font-bold ml-5">{pageTitle}</h1>
+        <div className="pr-5 flex justify-end space-x-4">
+          <SelectField
+            id={"searchInputRoleUserScreen"}
+            placeholder={"Selecionar cargo"}
+            label={"Selecionar cargo"}
+            options={roleFilterOptions}
+            onChange={(e) => setSearchRole(e.target.value)}
+          />
+          <InputField
+            type="text"
+            label="Filtrar usuário"
+            value={searchString}
+            onChange={(e) => setSearchString(e.target.value)}
+            placeholder={"Nome ou CPF"}
+            id={"searchInputUsersScreen"}
+          />
+        </div>
+      </div>
       <table className="w-full text-sm text-center text-gray-700">
         <thead className="text-xs text-gray-900 uppercase bg-gray-5">
           <tr>
             <th scope="col" className="px-6 py-3">
               CPF
             </th>
-            <th scope="col" className="px-6 py-3">
-              Nome
+            <th
+              scope="col"
+              className="px-6 py-3 cursor-pointer"
+              onClick={() =>
+                sortByName == null
+                  ? setSortByName(true)
+                  : setSortByName((state) => !state)
+              }
+            >
+              <span className="flex justify-center items-center gap-2">
+                Nome {sortByName == null && <ArrowsDownUp />}
+                {sortByName && <ArrowUp />}
+                {sortByName == false && <ArrowDown />}
+              </span>
             </th>
             <th scope="col" className="px-6 py-3">
               Email
@@ -79,7 +157,7 @@ function UserTable({ users, isManager = false, fetchUsers }) {
             </th>
           </tr>
         </thead>
-        {users?.length === 0 && (
+        {filteredUsersList?.length === 0 && (
           <tbody>
             <tr className="bg-white border border-gray-100 hover:bg-primary-100">
               <td
@@ -92,7 +170,7 @@ function UserTable({ users, isManager = false, fetchUsers }) {
           </tbody>
         )}
         <tbody>
-          {users.map((user, index) => (
+          {filteredUsersList.map((user, index) => (
             <tr
               key={index}
               className={`${

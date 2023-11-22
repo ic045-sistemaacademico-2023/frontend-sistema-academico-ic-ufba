@@ -24,8 +24,7 @@ function UsersPage() {
 
   return (
     <div className="w-full pl-64 pt-10 mb-6">
-      <h1 className="text-xl text-gray-700 font-bold">Usuários</h1>
-      <UserTable users={users} fetchUsers={fetchUsers} />
+      <UserTable users={users} fetchUsers={fetchUsers} pageTitle="Usuários" />
     </div>
   );
 }

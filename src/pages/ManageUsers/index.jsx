@@ -28,10 +28,12 @@ function ManageUsersPage() {
 
   return (
     <div className="w-full pl-64 pt-10">
-      <h1 className="text-xl text-gray-700 font-bold">
-        Gerenciar novos usuários
-      </h1>
-      <UserTable users={users} isManager fetchUsers={fetchUsers} />
+      <UserTable
+        users={users}
+        isManager
+        fetchUsers={fetchUsers}
+        pageTitle={"Gerenciar novos usuários"}
+      />
     </div>
   );
 }
