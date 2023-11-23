@@ -28,6 +28,8 @@ import PageLoyout from "./pages/PageLoyout";
 import SelfRegister from "./pages/SelfRegister";
 import RequestEnrollment from "./pages/RequestEnrollment";
 
+import RoomsPage from "./pages/RoomsPage";
+
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
   const [user, setUser] = useState();
@@ -175,6 +177,9 @@ export default function AppRoutes() {
                 element={<RegisterCourse />}
               />
             </Route>
+
+            {/*Salas*/}
+            <Route exact path="/salas" element={<RoomsPage />} />
           </Route>
         </Route>
       </Routes>
