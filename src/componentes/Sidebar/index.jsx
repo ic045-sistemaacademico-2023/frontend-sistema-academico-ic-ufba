@@ -111,12 +111,6 @@ function Sidebar({ setToken }) {
               />
 
               <SidebarItem
-                title={"Cadastrar Oportunidade"}
-                link={"/cadastrar/oportunidade"}
-                icon={<ListPlus  size={20} />}
-              />
-
-              <SidebarItem
                 title={"Usuarios"}
                 link={"/usuarios"}
                 icon={<Users size={20} />}
@@ -139,12 +133,6 @@ function Sidebar({ setToken }) {
                 icon={<SquaresFour size={20} />}
               />
 
-              <SidebarItem
-                title={"Oportunidades Matrícula"}
-                link={"/oportunidades"}
-                icon={<Article size={21} />}
-              />
-              
             </>
           )}
 
@@ -165,6 +153,19 @@ function Sidebar({ setToken }) {
                 link={"/cadastrar/turma"}
                 icon={<PlusCircle size={20} />}
               />
+
+              <SidebarItem
+                title={"Cadastrar Oportunidade"}
+                link={"/cadastrar/oportunidade"}
+                icon={<ListPlus size={20} />}
+              />
+
+              <SidebarItem
+                title={"Oportunidades Matrícula"}
+                link={"/oportunidades"}
+                icon={<Article size={21} />}
+              />
+
 
               <SidebarItem
                 title={"Cursos"}
