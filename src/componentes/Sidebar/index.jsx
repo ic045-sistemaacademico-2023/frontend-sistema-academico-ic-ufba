@@ -66,9 +66,14 @@ function Sidebar({ setToken }) {
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
               />
-              <SidebarItem
+              {/* <SidebarItem
                 title={"Turmas"}
                 link={"/turmas"}
+                icon={<DiamondsFour size={20} />}
+              /> */}
+              <SidebarItem
+                title={"Solicitar Matrícula"}
+                link={"/solicitacao-de-matricula"}
                 icon={<DiamondsFour size={20} />}
               />
             </>

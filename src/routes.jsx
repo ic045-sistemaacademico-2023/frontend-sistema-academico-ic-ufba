@@ -26,6 +26,7 @@ import api from "./utils/api";
 import useAuth from "./hooks/useAuth";
 import PageLoyout from "./pages/PageLoyout";
 import SelfRegister from "./pages/SelfRegister";
+import RequestEnrollment from "./pages/RequestEnrollment";
 
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
@@ -77,6 +78,11 @@ export default function AppRoutes() {
                 exact
                 path="/comprovante-matricula"
                 element={<StudentPage />}
+              />
+              <Route
+                exact
+                path="/solicitacao-de-matricula"
+                element={<RequestEnrollment />}
               />
             </Route>
 
