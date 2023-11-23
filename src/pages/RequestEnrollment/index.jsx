@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import Button from "../../componentes/Button";
-import { dias, turmas } from "./data";
+import { dias } from "./data";
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
 
 const schema = yup.object().shape({
   classes: yup.array(),
@@ -20,6 +22,29 @@ export default function RequestEnrollment() {
     resolver: yupResolver(schema),
   });
 
+  const [turmas, setTurmas] = useState([]);
+
+  useEffect(() => {
+    const fetchTurmas = async () => {
+      try {
+        const response = await api.get("/turma/disponiveismatricula");
+        if (response.status === 200) {
+          response.data.map((turma) => {
+            turma.dias = turma.dias.split(",");
+            turma.horario = turma.horario.split("/");
+          });
+          setTurmas(response.data);
+        } else {
+          toast.error("Erro ao obter turmas");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Erro ao obter turmas");
+      }
+    };
+    fetchTurmas();
+  }, []);
+
   const onSubmit = (data) => {
     const turmasSelectionadas = [];
 
@@ -30,13 +55,13 @@ export default function RequestEnrollment() {
         turmasSelectionadas.push(turma.id);
 
         turma.dias.map((dia, index) => {
-          const horario = turma.horarios[index];
+          const horario = turma.horario[index];
           const horarioInicio = parseInt(horario.split("-")[0].split(":")[0]);
           const horarioFim = parseInt(horario.split("-")[1].split(":")[0]);
 
           for (let i = horarioInicio; i < horarioFim; i++) {
             if (dias[dia][i]) {
-              toast.error(`Conflito de horário na turma ${turma.codigo}`);
+              toast.error(`Conflito de horário na turma ${turma.code}`);
               error = true;
               return;
             }
@@ -103,7 +128,7 @@ export default function RequestEnrollment() {
                 Horários
               </th>
               <th scope="col" className="px-6 py-3">
-                Locais
+                Sala
               </th>
             </tr>
           </thead>
@@ -129,7 +154,7 @@ export default function RequestEnrollment() {
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <label
-                    className="relative flex items-center p-3 rounded-md cursor-pointer"
+                    className="relative flex items-centerrounded-md cursor-pointer"
                     htmlFor={`checkbox${turma.id}`}
                     data-ripple-dark="true"
                   >
@@ -140,7 +165,7 @@ export default function RequestEnrollment() {
                       id={`checkbox${turma.id}`}
                       {...register(`turma${turma.id}`)}
                     />
-                    <div className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                    <div className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-[0.65rem]  -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-3.5 w-3.5"
@@ -158,10 +183,12 @@ export default function RequestEnrollment() {
                     </div>
                   </label>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{turma.codigo}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{turma.nome}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{turma.code}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {turma.professor}
+                  {turma.disciplina.nome}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {turma.professor.nome}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {turma.dias.map((dia, index) => (
@@ -169,15 +196,11 @@ export default function RequestEnrollment() {
                   ))}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {turma.horarios.map((horario, index) => (
+                  {turma.horario.map((horario, index) => (
                     <div key={index}>{horario}</div>
                   ))}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {turma.locais.map((local, index) => (
-                    <div key={index}>{local}</div>
-                  ))}
-                </td>
+                <td className="px-6 py-4 whitespace-nowrap">{turma.sala}</td>
               </tr>
             ))}
           </tbody>

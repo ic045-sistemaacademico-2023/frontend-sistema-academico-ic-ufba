@@ -21,6 +21,7 @@ const schema = yup.object().shape({
     .array()
     .min(1, "Selecione pelo menos um dia de aula")
     .required("Selecione pelo menos um dia de aula"),
+  sala: yup.string().required("A sala é obrigatória"),
 });
 
 const initialValues = {
@@ -28,6 +29,7 @@ const initialValues = {
   semestre: "",
   professor: "",
   dias: [],
+  sala: "",
 };
 
 function RegisterClass() {
@@ -48,6 +50,31 @@ function RegisterClass() {
 
   const [professores, setProfessores] = useState([]);
   const [disciplinas, setDisciplinas] = useState([]);
+  const [salas, setSalas] = useState([]);
+
+  useEffect(() => {
+    async function getSalas() {
+      try {
+        const response = await api.get("/turma/salas");
+        if (response.status === 200) {
+          const salas = response.data.map((sala) => {
+            return {
+              id: sala,
+              value: sala,
+              name: sala,
+            };
+          });
+          setSalas(salas);
+        } else {
+          toast.error("Erro ao carregar salas");
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Erro ao carregar salas");
+      }
+    }
+    getSalas();
+  }, []);
 
   useEffect(() => {
     async function getProfessores() {
@@ -133,12 +160,10 @@ function RegisterClass() {
 
             setValue("dias", dias);
 
-            const locais = turmaData.local.split("/");
             const horarios = turmaData.horario.split("/");
 
             dias.forEach((dia, index) => {
               const formattedDia = formatDia[dia];
-              setValue(`local${formattedDia}`, locais[index]);
 
               const [inicio, fim] = horarios[index].split("-");
               setValue(`horarioInicio${formattedDia}`, inicio);
@@ -163,16 +188,13 @@ function RegisterClass() {
     }
 
     const horarios = [];
-    const locais = [];
 
     diasDeAula.map((dia) => {
       const inicio = data[`horarioInicio${dia.name}`];
       const fim = data[`horarioFim${dia.name}`];
-      const local = data[`local${dia.name}`];
 
-      if (inicio && fim && local) {
+      if (inicio && fim) {
         horarios.push(`${inicio}-${fim}`);
-        locais.push(local);
       }
     });
 
@@ -180,11 +202,9 @@ function RegisterClass() {
       delete data[`horarioInicio${dia.name}`];
       delete data[`horarioFim${dia.name}`];
       delete data[`dia${dia.name}`];
-      delete data[`local${dia.name}`];
     });
 
     data.horario = horarios.join("/");
-    data.local = locais.join("/");
 
     if (isEditing) {
       try {
@@ -252,7 +272,13 @@ function RegisterClass() {
             placeholder={"Selecione o professor"}
             error={errors.professor?.message}
           />
-          <div></div>
+          <SelectField
+            {...register("sala")}
+            label={"Sala"}
+            options={salas}
+            placeholder={"Selecione a sala"}
+            error={errors.sala?.message}
+          />
         </div>
         <div className="grid md:grid-cols-1 md:gap-6">
           <MultiSelectField
@@ -275,11 +301,6 @@ function RegisterClass() {
               <div>
                 <p className="block mb-2 text-sm font-medium text-gray-900 ml-2 text-left">
                   Horários de início e final da aula:
-                </p>
-              </div>
-              <div>
-                <p className="block mb-2 text-sm font-medium text-gray-900 ml-2 text-left">
-                  Local de aula:
                 </p>
               </div>
             </div>
@@ -312,15 +333,6 @@ function RegisterClass() {
                             error={errors[`horarioFim${dia.name}`]?.message}
                           />
                         </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div>
-                        <InputField
-                          {...register(`local${dia.name}`)}
-                          placeholder="Código da sala de aula"
-                          error={errors[`local${dia.name}`]?.message}
-                        />
                       </div>
                     </div>
                   </div>

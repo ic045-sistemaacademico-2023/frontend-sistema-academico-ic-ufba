@@ -95,7 +95,7 @@ function StudentPage() {
         setStudentCourses(response.data);
       } catch (error) {
         console.log(error);
-        toast.error(`Error ao carregar o turma aluno`);
+        toast.error(`Error ao carregar as turmas do aluno`);
       }
     };
     fetchStudent();

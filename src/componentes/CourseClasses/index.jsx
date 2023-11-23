@@ -73,7 +73,7 @@ function CourseClasses({ courseClasses, fetchClasses, entity }) {
               Horários
             </th>
             <th scope="col" className="px-6 py-3">
-              Local
+              Sala
             </th>
             <th scope="col" className="px-6 py-3">
               Docente
@@ -107,11 +107,7 @@ function CourseClasses({ courseClasses, fetchClasses, entity }) {
                   <div key={index}>{horario}</div>
                 ))}
               </td>
-              <td className="px-6 py-4 h-full">
-                {classItem.local.split("/").map((local, index) => (
-                  <div key={index}>{local}</div>
-                ))}
-              </td>
+              <td className="px-6 py-4 h-full">{classItem.sala}</td>
               <td className="px-6 py-4 h-full">{classItem.professor}</td>
               <td className="px-2 py-2 h-full">
                 <div className="flex flex-wrap gap-2 justify-center items-center">

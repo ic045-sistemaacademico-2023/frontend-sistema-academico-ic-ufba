@@ -1,7 +1,7 @@
 function StudentCourses({ studentCourses }) {
   return (
     <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
-      <table className="w-full text-sm text-left text-gray-700">
+      <table className="w-full text-sm text-left text-gray-800 ">
         <thead className="text-xs text-gray-900 uppercase bg-gray-5">
           <tr>
             <th scope="col" className="px-6 py-3">
@@ -23,7 +23,7 @@ function StudentCourses({ studentCourses }) {
               Horários
             </th>
             <th scope="col" className="px-6 py-3">
-              Local
+              Sala
             </th>
             <th scope="col" className="px-6 py-3">
               Docente
@@ -61,7 +61,7 @@ function StudentCourses({ studentCourses }) {
               <td className="px-6 py-4">{course.code}</td>
               <td className="px-6 py-4">{course.dias}</td>
               <td className="px-6 py-4">{course.horario}</td>
-              <td className="px-6 py-4">{course.local}</td>
+              <td className="px-6 py-4">{course.sala}</td>
               <td className="px-6 py-4">{course.professor.nome}</td>
             </tr>
           ))}
