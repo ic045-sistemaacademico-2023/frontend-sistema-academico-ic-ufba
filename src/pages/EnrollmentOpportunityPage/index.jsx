@@ -4,17 +4,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
-
-function formatDate(inputDateString) {
-    const inputDate = new Date(inputDateString);
-    if (isNaN(inputDate.getTime())) {
-        return inputDateString;
-    }
-    const day = inputDate.getDate().toString().padStart(2, '0');
-    const month = (inputDate.getMonth() + 1).toString().padStart(2, '0');
-    const year = inputDate.getFullYear();
-    return `${day}/${month}/${year}`;
-}
+import { formatDateDayMonthYear } from "../../utils/dateFormater";
 
 export default function EnrollmentOpportunityPage() {
     const { id } = useParams();
@@ -50,7 +40,6 @@ export default function EnrollmentOpportunityPage() {
         };
 
         getOpportunityData();
-        console.log("DISPARA")
     }, [id]);
 
     const navigate = useNavigate();
@@ -100,14 +89,14 @@ export default function EnrollmentOpportunityPage() {
                                 <div className="flex flex-col">
                                     <dt className="text-sm text-gray-500">Data Inicial:</dt>
                                     <dd className="text-lg font-medium text-primary-800">
-                                        {formatDate(opportunityData.dataInicial)}
+                                        {formatDateDayMonthYear(opportunityData.dataInicial)}
                                     </dd>
                                 </div>
 
                                 <div className="flex flex-col">
                                     <dt className="text-sm text-gray-500">Data Final:</dt>
                                     <dd className="text-lg font-medium text-primary-800">
-                                        {formatDate(opportunityData.dataFinal)}
+                                        {formatDateDayMonthYear(opportunityData.dataFinal)}
                                     </dd>
                                 </div>
                             </dl>

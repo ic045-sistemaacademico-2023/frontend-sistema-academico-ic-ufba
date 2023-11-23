@@ -15,6 +15,7 @@ import api from "../../utils/api";
 import { status } from "./data";
 import SubjectsSelectForm from "./subjectsSelect";
 import { Backspace } from "@phosphor-icons/react";
+import { formatDateYearMonthDay } from "../../utils/dateFormater";
 
 
 const schema = yup.object().shape({
@@ -86,14 +87,34 @@ function RegisterEnrollmentOpportunity() {
     useEffect(() => {
         const getEnrollmentOportunity = async () => {
             try {
-                const response = await api.get(`disciplina/${id}`);
+                const response = await api.get(`oportunidade/${id}`);
                 if (response.status === 200) {
-                    const subject = response.data;
-                    setValue("nome", subject.nome);
-                    setValue("aberta", subject.aberta);
-                    setValue("descricao", subject.descricao);
-                    setValue("dataInicial", subject.dataInicial);
-                    setValue("dataFinal", subject.dataFinal);
+                    setValue("nome", response.data.oportunidadeMatricula.nome);
+                    setValue("aberta", response.data.oportunidadeMatricula.aberta);
+                    setValue("descricao", response.data.oportunidadeMatricula.descricao);
+                    setValue("dataInicial", formatDateYearMonthDay(response.data.oportunidadeMatricula.dataInicial));
+                    setValue("dataFinal", formatDateYearMonthDay(response.data.oportunidadeMatricula.dataFinal));
+
+                    if(response.data.disciplinaTurmas.length > 0){
+                      const subjectClassesArray = [];
+                      response.data.disciplinaTurmas.map((subjectClasses) => {
+                        let subjectsArray = [];
+                        subjectClasses.turmas.map((subject) => subjectsArray.push({ //turmas da disciplina
+                          id: subject.id,
+                          value: subject.id,
+                          name: subject.code,
+                        }));
+                        subjectClassesArray.push({ //adiciona disciplina
+                          disciplina: {
+                            id: subjectClasses.disciplina.id,
+                            value: subjectClasses.disciplina.id,
+                            name: subjectClasses.disciplina.nome,
+                          },
+                          turmas: subjectsArray
+                        });
+                      });
+                      setDisciplinasSelecionadas(subjectClassesArray);
+                    }
                 }
             } catch (error) {
                 console.log(error);
