@@ -146,7 +146,7 @@ function RegisterEnrollmentOpportunity() {
             const response = await api.put(`oportunidade/${id}`, data);
             if (response.status === 200) {
               toast.success("Oportunidade editada com sucesso!");
-              navigate(`/oportunidades/${data.id}`);
+              navigate(`/oportunidades`);
             } else {
               toast.error("Error ao editar oportunidade");
             }
