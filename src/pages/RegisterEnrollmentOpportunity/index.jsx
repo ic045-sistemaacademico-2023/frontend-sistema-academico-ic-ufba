@@ -33,7 +33,7 @@ const initialValues = {
     dataFinal: "",
 };
 
-function RegisterEnrollment() {
+function RegisterEnrollmentOpportunity() {
 
     const { id } = useParams();
     const isEditing = id !== undefined;
@@ -57,6 +57,11 @@ function RegisterEnrollment() {
     useEffect(() => {
       async function getDisciplinas() {
         try {
+
+          // if(isEditing){
+          //   const selecionadas = await api.get("");
+          // }
+
           const response = await api.get("/disciplina/all");
           if (response.status === 200) {
             const disciplinas = response.data.map((disciplina) => {
@@ -119,9 +124,8 @@ function RegisterEnrollment() {
           try {
             const response = await api.put(`oportunidade/${id}`, data);
             if (response.status === 200) {
-              console.log(response.data);
               toast.success("Oportunidade editada com sucesso!");
-              navigate(`/oportunidades/${response.data.id}`);
+              navigate(`/oportunidades/${data.id}`);
             } else {
               toast.error("Error ao editar oportunidade");
             }
@@ -133,8 +137,9 @@ function RegisterEnrollment() {
           try {
             const response = await api.post(`oportunidade/`, data);
             if (response.status === 201) {
+              console.log(response.data);
               toast.success("Oportunidade cadastrada com sucesso!");
-              navigate(`/oportunidades/${data.id}`);
+              navigate(`/oportunidades`);
             } else {
               toast.error("Error ao cadastrar Oportunidade");
             }
@@ -256,4 +261,4 @@ function RegisterEnrollment() {
     );
 }
 
-export default RegisterEnrollment;
+export default RegisterEnrollmentOpportunity;
