@@ -1,4 +1,4 @@
-export const dias = {
+export let dias = {
   SEG: {
     7: false,
     8: false,

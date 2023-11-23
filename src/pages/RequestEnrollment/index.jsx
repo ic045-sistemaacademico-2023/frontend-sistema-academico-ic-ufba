@@ -6,6 +6,8 @@ import Button from "../../componentes/Button";
 import { dias } from "./data";
 import { Fragment, useEffect, useState } from "react";
 import api from "../../utils/api";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   classes: yup.array(),
@@ -22,12 +24,60 @@ export default function RequestEnrollment() {
     resolver: yupResolver(schema),
   });
 
+  const navigate = useNavigate();
+
+  const clearDias = () => {
+    Object.values(dias).forEach((dia) => {
+      for (let i = 0; i < 22; i++) {
+        dia[i] = false;
+      }
+    });
+  };
+
+  const { token } = useAuth();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (token) {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+        }
+      }
+    };
+
+    fetchUser();
+  }, [token]);
+
+  const userId = user?.id;
+
+  const [student, setStudent] = useState(null);
+
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        if (!userId) return;
+        const response = await api.get(`/aluno/${userId}`);
+        setStudent(response.data);
+      } catch (error) {
+        console.log(error);
+        toast.error(`Error ao carregar o aluno`);
+      }
+    };
+    fetchStudent();
+  }, [userId]);
+
+  const cursoId = student?.curso.id;
+
   const [turmas, setTurmas] = useState([]);
 
   useEffect(() => {
     const fetchTurmas = async () => {
+      if (!cursoId) return;
       try {
-        const response = await api.get("/turma/disponiveismatricula");
+        const response = await api.get(`/turma/disponiveisPorCurso/${cursoId}`);
         if (response.status === 200) {
           response.data.map((turma) => {
             turma.dias = turma.dias.split(",");
@@ -43,7 +93,7 @@ export default function RequestEnrollment() {
       }
     };
     fetchTurmas();
-  }, []);
+  }, [cursoId]);
 
   const turmasPorDisciplina = turmas.reduce((acc, turma) => {
     const { disciplina } = turma;
@@ -106,6 +156,8 @@ export default function RequestEnrollment() {
       }
     });
 
+    clearDias();
+
     if (error) return;
 
     turmas.forEach((turma) => {
@@ -121,6 +173,7 @@ export default function RequestEnrollment() {
 
     console.log(data);
     toast.success("Solicitação de matrícula enviada com sucesso!");
+    navigate("/comprovante-matricula");
   };
 
   return (

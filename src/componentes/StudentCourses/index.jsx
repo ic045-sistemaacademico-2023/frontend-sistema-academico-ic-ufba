@@ -56,11 +56,23 @@ function StudentCourses({ studentCourses }) {
               >
                 {course.disciplina.codigo}
               </th>
-              <td className="px-6 py-4">{course.disciplina.nome}</td>
+              <td className="px-6 py-4 max-w-[8rem] truncate">
+                {course.disciplina.nome}
+              </td>
               <td className="px-6 py-4">{course.disciplina.chTotal}</td>
-              <td className="px-6 py-4">{course.code}</td>
-              <td className="px-6 py-4">{course.dias}</td>
-              <td className="px-6 py-4">{course.horario}</td>
+              <td className="px-6 py-4 max-w-[10rem] truncate">
+                {course.code}
+              </td>
+              <td className="px-6 py-4">
+                {course.dias.split(",").map((dia, index) => {
+                  return <div key={index}>{dia} </div>;
+                })}
+              </td>
+              <td className="px-6 py-4">
+                {course.horario.split("/").map((horario, index) => {
+                  return <div key={index}>{horario} </div>;
+                })}
+              </td>
               <td className="px-6 py-4">{course.sala}</td>
               <td className="px-6 py-4">{course.professor.nome}</td>
             </tr>
