@@ -2,11 +2,32 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/userContext";
+import useAuth from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
 
 function CourseClasses({ courseClasses, fetchClasses, entity }) {
-  const { user } = useContext(UserContext);
+  const { token } = useAuth();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) return;
+
+      try {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.log("Erro ao obter usuário");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
 
   const USER_ROLE = user?.role;
 
@@ -52,7 +73,7 @@ function CourseClasses({ courseClasses, fetchClasses, entity }) {
               Horários
             </th>
             <th scope="col" className="px-6 py-3">
-              Local
+              Sala
             </th>
             <th scope="col" className="px-6 py-3">
               Docente
@@ -86,18 +107,16 @@ function CourseClasses({ courseClasses, fetchClasses, entity }) {
                   <div key={index}>{horario}</div>
                 ))}
               </td>
-              <td className="px-6 py-4 h-full">
-                {classItem.local.split("/").map((local, index) => (
-                  <div key={index}>{local}</div>
-                ))}
-              </td>
+              <td className="px-6 py-4 h-full">{classItem.sala}</td>
               <td className="px-6 py-4 h-full">{classItem.professor}</td>
               <td className="px-2 py-2 h-full">
                 <div className="flex flex-wrap gap-2 justify-center items-center">
                   <Button onClick={() => navigate(`/turma/${classItem.id}`)}>
                     Visualizar
                   </Button>
-                  {["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+                  {["ADMIN", "COORDENADOR_DE_CURSO", "PROFESSOR"].includes(
+                    USER_ROLE,
+                  ) && (
                     <>
                       <Button
                         secondary

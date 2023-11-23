@@ -1,6 +1,3 @@
-import Sidebar from "../../componentes/Sidebar/index.jsx";
-import Button from "../../componentes/Button/index.jsx";
-
 import api from "../../utils/api.js";
 import { useEffect, useState } from "react";
 
@@ -13,7 +10,7 @@ function UsersPage() {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get("/user/all");
+      const response = await api.get("/user/approved");
       setUsers(response.data);
     } catch (error) {
       console.log(error);
@@ -27,12 +24,7 @@ function UsersPage() {
 
   return (
     <div className="w-full pl-64 pt-10 mb-6">
-      <Sidebar />
-      <h1 className="text-xl text-gray-700 font-bold">Usuários</h1>
-      <UserTable users={users} fetchUsers={fetchUsers} />
-      <Button secondary href={"/gerenciar-usuarios"}>
-        Gerenciar Usuários
-      </Button>
+      <UserTable users={users} fetchUsers={fetchUsers} pageTitle="Usuários" />
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { cpf as cpfValidator } from "cpf-cnpj-validator";
 import Button from "../../componentes/Button";
 import InputField from "../../componentes/Forms/InputField";
 import SelectField from "../../componentes/Forms/SelectField";
-import Sidebar from "../../componentes/Sidebar";
+
 import { roles } from "./roles";
 
 import { useForm } from "react-hook-form";
@@ -128,7 +128,6 @@ function RegisterUser() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-primary-100 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"

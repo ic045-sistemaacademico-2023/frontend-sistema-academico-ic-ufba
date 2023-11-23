@@ -1,5 +1,3 @@
-import Sidebar from "../../componentes/Sidebar";
-
 import SubjectInfos from "../../componentes/SubjectInfos";
 import CourseClasses from "../../componentes/CourseClasses";
 import Button from "../../componentes/Button";
@@ -51,7 +49,6 @@ function SubjectSillabus() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <SubjectInfos subjectData={subject} />
       <CourseClasses
         courseClasses={classes}

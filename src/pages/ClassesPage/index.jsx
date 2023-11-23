@@ -1,11 +1,37 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../../componentes/Sidebar";
+
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export default function ClassesPage() {
+  const { token } = useAuth();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) return;
+
+      try {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+        } else {
+          console.log("Erro ao obter usuário");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
+
+  const USER_ROLE = user?.role;
+
   const [classesObj, setClasses] = useState([]);
 
   const navigate = useNavigate();
@@ -41,7 +67,6 @@ export default function ClassesPage() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <h2 className="text-xl text-gray-700 font-bold mt-4">Turmas</h2>
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
         <table className="w-full text-sm text-center text-gray-700">
@@ -91,14 +116,20 @@ export default function ClassesPage() {
                     <Button onClick={() => navigate(`/turma/${classObj.id}`)}>
                       Visualizar
                     </Button>
+                    {["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+                      <>
+                        <Button
+                          secondary
+                          href={`/atualizar/turma/${classObj.id}`}
+                        >
+                          Editar
+                        </Button>
 
-                    <Button secondary href={`/atualizar/turma/${classObj.id}`}>
-                      Editar
-                    </Button>
-
-                    <Button onClick={() => deleteClass(classObj.id)}>
-                      Deletar
-                    </Button>
+                        <Button onClick={() => deleteClass(classObj.id)}>
+                          Deletar
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </td>
               </tr>

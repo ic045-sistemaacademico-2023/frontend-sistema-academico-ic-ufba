@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 
-import Sidebar from "../../componentes/Sidebar";
 import CourseClassInfos from "../../componentes/CourseClassInfos";
 import ClassStudents from "../../componentes/ClassStudents";
 import Button from "../../componentes/Button";
@@ -27,7 +26,6 @@ function CourseClassPage() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <CourseClassInfos course={data} />
       <ClassStudents classStudents={data?.alunos} />
 

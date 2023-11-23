@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 
-import Sidebar from "../../componentes/Sidebar";
 import StudentInfos from "../../componentes/StudentInfos";
 import StudentHistory from "../../componentes/StudentHistory";
 import Button from "../../componentes/Button";
@@ -16,7 +15,7 @@ function handlePrint() {
   window.print();
 }
 
-function exportToPDF() {
+function exportToPDF(studentData) {
   const doc = new jsPDF();
   const table = document.querySelector("table");
 
@@ -66,7 +65,6 @@ function HistoryPage() {
   return (
     studentData && (
       <div className="w-full pl-64">
-        <Sidebar />
         <div className="printable">
           <StudentInfos
             studentData={studentData}
@@ -75,7 +73,8 @@ function HistoryPage() {
           <StudentHistory studentHistory={studentHistory} />
         </div>
         <div className="mt-6 mb-5">
-          <Button onClick={exportToPDF}>Download</Button>
+          <Button onClick={() => exportToPDF(studentData)}>Download</Button>
+          <span style={{ margin: "0 8px" }}></span>
           <Button onClick={handlePrint}>Imprimir</Button>
         </div>
       </div>

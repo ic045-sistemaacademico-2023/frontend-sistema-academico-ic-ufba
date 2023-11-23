@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../../componentes/Sidebar";
+
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
@@ -41,7 +41,6 @@ export default function CoursesPage() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <h2 className="text-xl text-gray-700 font-bold mt-4">Cursos</h2>
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
         <table className="w-full text-sm text-center text-gray-700">

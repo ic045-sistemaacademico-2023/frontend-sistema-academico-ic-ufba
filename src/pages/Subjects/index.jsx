@@ -1,4 +1,3 @@
-import Sidebar from "../../componentes/Sidebar";
 import CourseSubjects from "../../componentes/CourseSubjects";
 import { useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
@@ -60,7 +59,6 @@ function SubjectsPage() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <CourseSubjects
         courseData={courseData}
         subjects={courseSubjects}

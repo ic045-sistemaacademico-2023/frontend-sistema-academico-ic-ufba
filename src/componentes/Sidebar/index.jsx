@@ -3,7 +3,7 @@ import {
   CirclesThreePlus,
   DiamondsFour,
   IdentificationBadge,
-  ListChecks,
+  // ListChecks,
   ListDashes,
   ListPlus,
   Plus,
@@ -14,17 +14,17 @@ import {
   Users,
 } from "@phosphor-icons/react";
 import SidebarItem from "./SidebarItem";
-import { useContext, useEffect } from "react";
-import { UserContext } from "../../contexts/userContext";
 import UserPopup from "../UserPopup";
 import api from "../../utils/api";
+import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
-function Sidebar() {
-  const { user, setUser } = useContext(UserContext);
+function Sidebar({ setToken }) {
+  const { token } = useAuth();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = localStorage.getItem("token");
       if (token) {
         const response = await api.get("/user/me");
 
@@ -35,7 +35,7 @@ function Sidebar() {
     };
 
     fetchUser();
-  }, [setUser]);
+  }, [token]);
 
   const USER_ROLE = user?.role;
 
@@ -57,25 +57,30 @@ function Sidebar() {
                 icon={<IdentificationBadge size={20} />}
               />
 
-              <SidebarItem
+              {/* <SidebarItem
                 title={"Histórico"}
                 link={"/historico"}
                 icon={<ListChecks size={20} />}
-              />
+              /> */}
 
               <SidebarItem
                 title={"Disciplinas"}
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
               />
-              <SidebarItem
+              {/* <SidebarItem
                 title={"Turmas"}
                 link={"/turmas"}
+                icon={<DiamondsFour size={20} />}
+              /> */}
+              <SidebarItem
+                title={"Solicitar Matrícula"}
+                link={"/solicitacao-de-matricula"}
                 icon={<DiamondsFour size={20} />}
               />
             </>
           )}
-          {["ADMIN", "COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+          {["ADMIN"].includes(USER_ROLE) && (
             <>
               <p className="text-white text-base bg-primary-700">
                 Administração
@@ -118,6 +123,12 @@ function Sidebar() {
               />
 
               <SidebarItem
+                title={"Gerenciar Usuários"}
+                link={"/gerenciar/usuarios"}
+                icon={<UserPlus size={20} />}
+              />
+
+              <SidebarItem
                 title={"Cursos"}
                 link={"/cursos"}
                 icon={<ListDashes size={20} />}
@@ -137,7 +148,38 @@ function Sidebar() {
             </>
           )}
 
-          {["COORDENADOR_DE_CURSO", "PROFESSOR"].includes(USER_ROLE) && (
+          {["COORDENADOR_DE_CURSO"].includes(USER_ROLE) && (
+            <>
+              <p className="text-white text-base bg-primary-700">
+                Administração
+              </p>
+
+              <SidebarItem
+                title={"Cadastrar Disciplina"}
+                link={"/cadastrar/disciplina"}
+                icon={<PlusCircle size={20} />}
+              />
+
+              <SidebarItem
+                title={"Cadastrar Turma"}
+                link={"/cadastrar/turma"}
+                icon={<PlusCircle size={20} />}
+              />
+
+              <SidebarItem
+                title={"Cursos"}
+                link={"/cursos"}
+                icon={<ListDashes size={20} />}
+              />
+              <SidebarItem
+                title={"Disciplinas"}
+                link={"/curso/1"}
+                icon={<SquaresFour size={20} />}
+              />
+            </>
+          )}
+
+          {["PROFESSOR"].includes(USER_ROLE) && (
             <>
               {USER_ROLE == "PROFESSOR" && (
                 <p className="text-white text-base bg-primary-700">
@@ -153,7 +195,7 @@ function Sidebar() {
 
               <SidebarItem
                 title={"Minhas turmas"}
-                link={"/professor/1/turmas"}
+                link={"/professor/turmas"}
                 icon={<Users size={20} />}
               />
             </>
@@ -161,7 +203,7 @@ function Sidebar() {
         </ul>
 
         <ul className="space-y-2 font-medium">
-          <UserPopup user={user} icon={<User />} />
+          <UserPopup user={user} setToken={setToken} icon={<User />} />
         </ul>
       </div>
     </aside>

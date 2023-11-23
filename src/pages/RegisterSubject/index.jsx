@@ -1,5 +1,3 @@
-import Sidebar from "../../componentes/Sidebar";
-
 import { useEffect, useState } from "react";
 import InputField from "../../componentes/Forms/InputField";
 import TextField from "../../componentes/Forms/TextField";
@@ -161,7 +159,6 @@ function RegisterSubject() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-primary-100 p-5 z-10 shadow-lg rounded-lg m-10 flex flex-col"

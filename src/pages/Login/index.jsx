@@ -6,13 +6,12 @@ import Button from "../../componentes/Button";
 import InputField from "../../componentes/Forms/InputField";
 import Link from "../../componentes/Link";
 
+import { toast } from "react-toastify";
+
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import api from "../../utils/api";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import { UserContext } from "../../contexts/userContext";
+import api from "../../utils/api";
 
 const schema = yup.object().shape({
   cpf: yup
@@ -30,7 +29,7 @@ const initialValues = {
   password: "",
 };
 
-function LoginPage() {
+function LoginPage({ setToken }) {
   const {
     register,
     handleSubmit,
@@ -42,7 +41,6 @@ function LoginPage() {
   });
 
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
 
   const onSubmit = async (data) => {
     try {
@@ -52,16 +50,7 @@ function LoginPage() {
       });
 
       if (response.status === 200) {
-        const { token } = response.data;
-        localStorage.setItem("token", token);
-
-        const userResponse = await api.get("/user/me");
-
-        if (userResponse.status === 200) {
-          setUser(userResponse.data);
-        }
-
-        toast.success(`Usuário ${userResponse.data.nome} logado com sucesso!`);
+        setToken(response.data.token);
         navigate("/");
       } else {
         toast.error("Usuário ou senha incorretos!");
@@ -103,7 +92,8 @@ function LoginPage() {
               <Button type="submit">Login</Button>
             </form>
 
-            <Link href="/password-reset">Recuperar senha</Link>
+            <Link href="/recuperar-senha">Recuperar senha</Link>
+            <Link href="/cadastro">Cadastrar no Sistema</Link>
           </div>
         </div>
       </div>
