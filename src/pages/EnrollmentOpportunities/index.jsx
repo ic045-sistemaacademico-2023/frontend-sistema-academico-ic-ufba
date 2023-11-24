@@ -42,7 +42,9 @@ export default function EnrollmentOpportunities() {
   return (
     <div className="w-full pl-64">
       <Sidebar />
-      <h2 className="text-xl text-gray-700 font-bold mt-4">Oportunidades de Matrícula</h2>
+      <h2 className="text-xl text-gray-700 font-bold mt-4">
+        Oportunidades de Matrícula
+      </h2>
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
         <table className="w-full text-sm text-center text-gray-700">
           <thead className="text-xs text-gray-900 uppercase bg-gray-5">
@@ -72,21 +74,46 @@ export default function EnrollmentOpportunities() {
                   oportunidadeIndex % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
                 } border border-gray-100 hover:bg-primary-100 whitespace-nowrap text-sm text-gray-900`}
               >
-                <td className="px-6 py-4">{oportunidade.oportunidadeMatricula.id}</td>
-                <td className="px-6 py-4">{oportunidade.oportunidadeMatricula.nome}</td>
-                <td className="px-6 py-4">{oportunidade.oportunidadeMatricula.coordenador?.nome}</td>
-                <td className="px-6 py-4 text-center">{oportunidade.oportunidadeMatricula.aberta? "Aberta" : "Fechada"}</td>
+                <td className="px-6 py-4">
+                  {oportunidade.oportunidadeMatricula.id}
+                </td>
+                <td className="px-6 py-4">
+                  {oportunidade.oportunidadeMatricula.nome}
+                </td>
+                <td className="px-6 py-4">
+                  {oportunidade.oportunidadeMatricula.coordenador?.nome}
+                </td>
+                <td className="px-6 py-4 text-center">
+                  {oportunidade.oportunidadeMatricula.aberta
+                    ? "Aberta"
+                    : "Fechada"}
+                </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-wrap justify-center items-center gap-2">
-                    <Button onClick={() => navigate(`/oportunidade/${oportunidade.oportunidadeMatricula.id}`)}>
+                    <Button
+                      onClick={() =>
+                        navigate(
+                          `/oportunidade/${oportunidade.oportunidadeMatricula.id}`,
+                        )
+                      }
+                    >
                       Visualizar
                     </Button>
 
-                    <Button secondary href={`/atualizar/oportunidade/${oportunidade.oportunidadeMatricula.id}`}>
+                    <Button
+                      secondary
+                      href={`/atualizar/oportunidade/${oportunidade.oportunidadeMatricula.id}`}
+                    >
                       Editar
                     </Button>
 
-                    <Button onClick={() => deleteEnrollmentOpportunity(oportunidade.oportunidadeMatricula.id)}>
+                    <Button
+                      onClick={() =>
+                        deleteEnrollmentOpportunity(
+                          oportunidade.oportunidadeMatricula.id,
+                        )
+                      }
+                    >
                       Deletar
                     </Button>
                   </div>

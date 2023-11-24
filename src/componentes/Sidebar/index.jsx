@@ -132,7 +132,6 @@ function Sidebar({ setToken }) {
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
               />
-
             </>
           )}
 
@@ -165,7 +164,6 @@ function Sidebar({ setToken }) {
                 link={"/oportunidades"}
                 icon={<Article size={21} />}
               />
-
 
               <SidebarItem
                 title={"Cursos"}

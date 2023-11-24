@@ -180,18 +180,33 @@ export default function AppRoutes() {
             </Route>
           </Route>
 
-           {/* Oportunidade Matricula */}
-        <Route
+          {/* Oportunidade Matricula */}
+          <Route
             element={
               <ProtectedRoute roles={["ADMIN", "COORDENADOR_DE_CURSO"]} />
             }
           >
-            <Route exact path="/cadastrar/oportunidade" element={<RegisterEnrollmentOpportunity />} />
-            <Route exact path="/atualizar/oportunidade/:id" element={<RegisterEnrollmentOpportunity />} />
-            <Route exact path="/oportunidades" element={<EnrollmentOpportunities />} />
-            <Route exact path="/oportunidade/:id" element={<EnrollmentOpportunityPage />} />
+            <Route
+              exact
+              path="/cadastrar/oportunidade"
+              element={<RegisterEnrollmentOpportunity />}
+            />
+            <Route
+              exact
+              path="/atualizar/oportunidade/:id"
+              element={<RegisterEnrollmentOpportunity />}
+            />
+            <Route
+              exact
+              path="/oportunidades"
+              element={<EnrollmentOpportunities />}
+            />
+            <Route
+              exact
+              path="/oportunidade/:id"
+              element={<EnrollmentOpportunityPage />}
+            />
           </Route>
-
         </Route>
       </Routes>
     </BrowserRouter>
