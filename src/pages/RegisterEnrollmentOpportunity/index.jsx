@@ -11,6 +11,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import useAuth from "../../hooks/useAuth";
 import api from "../../utils/api";
 import { status } from "./data";
 import SubjectsSelectForm from "./subjectsSelect";
@@ -39,9 +40,11 @@ function RegisterEnrollmentOpportunity() {
     const { id } = useParams();
     const isEditing = id !== undefined;
     const navigate = useNavigate();
+    const { token } = useAuth();
 
     const [disciplinas, setDisciplinas] = useState([]);
     const [disciplinasSelecionadas, setDisciplinasSelecionadas] = useState([]);
+    const [coordenador, setCoordenador] = useState();
 
     const {
         register,
@@ -54,6 +57,31 @@ function RegisterEnrollmentOpportunity() {
         defaultValues: initialValues,
         resolver: yupResolver(schema),
     });
+
+    useEffect(() => {
+      const fetchUser = async () => {
+        if (!token) return;
+  
+        try {
+          const response = await api.get("/user/me");
+  
+          if (response.status === 200) {
+            let userId = response.data.id;
+            const coordenadorResponse = await api.get(`/coordenador/byusuario/${userId}`);
+            if(response.status === 200)
+              setCoordenador(coordenadorResponse.data);
+            else 
+              console.log("Erro ao obter coordenador");
+          } else {
+            console.log("Erro ao obter usuário");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+  
+      fetchUser();
+    }, [token]);
 
     useEffect(() => {
       async function getDisciplinas() {
@@ -141,6 +169,7 @@ function RegisterEnrollmentOpportunity() {
           turmas: item.turmas.map(turma => turma.id)
         }));
         data.disciplinaTurmas = disciplinaTurmas;
+        data.coordenador = coordenador.id;
         if (isEditing) {
           try {
             const response = await api.put(`oportunidade/${id}`, data);

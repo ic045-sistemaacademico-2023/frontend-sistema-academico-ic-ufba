@@ -12,7 +12,6 @@ export default function EnrollmentOpportunityPage() {
     const [opportunitySubjectClasses, setOpportunitySubjectClasses] = useState([]);
     const [opportunityData, setOpportunityData] = useState({});
 
-
     async function fetchOpportunityData(){
         try {
             const response = await api.get(`/oportunidade/${id}`);
@@ -44,9 +43,9 @@ export default function EnrollmentOpportunityPage() {
 
     const navigate = useNavigate();
 
-    async function deleteSubjectClass(idSubject,idClass){
+    async function deleteSubjectClass(idOpportunity,idSubject,idClass){
         try {
-            const response = await api.put(`/oportunidade/removeturma/${idSubject}/${idClass}`);
+            const response = await api.put(`/oportunidade/removeturma/${idOpportunity}/${idSubject}/${idClass}`);
             if (response.status === 204) {
               toast.success("Turma deletada com sucesso!");
               await fetchOpportunityData();
@@ -146,7 +145,7 @@ export default function EnrollmentOpportunityPage() {
                                                             >
                                                                 Visualizar
                                                             </Button>
-                                                            <Button onClick={() => deleteSubjectClass(subjectClasses.disciplina.id,subjectClass.id)}>
+                                                            <Button onClick={() => deleteSubjectClass(opportunityData.id,subjectClasses.disciplina.id,subjectClass.id)}>
                                                                 Deletar
                                                             </Button>
                                                         </div>
