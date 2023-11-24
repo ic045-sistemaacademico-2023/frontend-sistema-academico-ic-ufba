@@ -1,9 +1,11 @@
 import {
+  Article,
   CirclesThreePlus,
   DiamondsFour,
   IdentificationBadge,
   // ListChecks,
   ListDashes,
+  ListPlus,
   Plus,
   PlusCircle,
   SquaresFour,
@@ -130,6 +132,7 @@ function Sidebar({ setToken }) {
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
               />
+
             </>
           )}
 
@@ -150,6 +153,19 @@ function Sidebar({ setToken }) {
                 link={"/cadastrar/turma"}
                 icon={<PlusCircle size={20} />}
               />
+
+              <SidebarItem
+                title={"Cadastrar Oportunidade"}
+                link={"/cadastrar/oportunidade"}
+                icon={<ListPlus size={20} />}
+              />
+
+              <SidebarItem
+                title={"Oportunidades Matrícula"}
+                link={"/oportunidades"}
+                icon={<Article size={21} />}
+              />
+
 
               <SidebarItem
                 title={"Cursos"}
