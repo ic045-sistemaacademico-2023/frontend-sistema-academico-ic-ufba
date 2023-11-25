@@ -77,7 +77,7 @@ export default function RequestEnrollment() {
     const fetchTurmas = async () => {
       if (!cursoId) return;
       try {
-        const response = await api.get(`/turma/disponiveisPorCurso/${cursoId}`);
+        const response = await api.get(`/turma/disponiveis/curso/${cursoId}`);
         if (response.status === 200) {
           response.data.map((turma) => {
             turma.dias = turma.dias.split(",");
@@ -103,16 +103,6 @@ export default function RequestEnrollment() {
     acc[disciplina.nome].push(turma);
     return acc;
   }, {});
-
-  const [disciplinaExpandida, setDisciplinaExpandida] = useState(null);
-
-  const handleDisciplinaClick = (disciplinaNome) => {
-    if (disciplinaExpandida === disciplinaNome) {
-      setDisciplinaExpandida(null);
-    } else {
-      setDisciplinaExpandida(disciplinaNome);
-    }
-  };
 
   const onSubmit = (data) => {
     const turmasSelectionadas = [];
@@ -204,7 +194,7 @@ export default function RequestEnrollment() {
               </th>
               <th scope="col" className="px-6 py-3"></th>
               <th scope="col" className="px-6 py-3">
-                Código
+                Turma
               </th>
               <th scope="col" className="px-6 py-3">
                 Professor
@@ -235,140 +225,75 @@ export default function RequestEnrollment() {
           <tbody>
             {Object.keys(turmasPorDisciplina).map((nomeDisciplina, index) => (
               <Fragment key={index}>
-                <tr
-                  className="bg-gray-50 border border-gray-100 hover:bg-primary-100 cursor-pointer"
-                  onClick={() => handleDisciplinaClick(nomeDisciplina)}
-                >
+                <tr className="bg-gray-50 border border-gray-100 hover:bg-slate-200">
                   <td
-                    className={`px-6 py-4 whitespace-nowrap text-clip ${
-                      disciplinaExpandida === nomeDisciplina &&
-                      "font-bold bg-slate-200"
-                    }`}
+                    className={` py-2 whitespace-nowrap text-clip font-medium bg-slate-200`}
                   >
                     {nomeDisciplina}
                   </td>
                 </tr>
-                {disciplinaExpandida === nomeDisciplina &&
-                  turmasPorDisciplina[nomeDisciplina].map((turma, idx) => (
-                    <tr
-                      key={idx}
-                      className={`${
-                        idx % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
-                      } border border-gray-100 hover:bg-primary-100 h-full`}
-                    >
-                      <td></td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <label
-                          className="relative flex items-centerrounded-md cursor-pointer"
-                          htmlFor={`checkbox${turma.id}`}
-                          data-ripple-dark="true"
-                        >
-                          <input
-                            type="checkbox"
-                            name="classes"
-                            className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 transition-all before:absolute before:top-2/4 before:left-2/4 checked:border-primary-400 checked:bg-primary-400 checked:before:bg-primary-400 hover:before:opacity-10"
-                            id={`checkbox${turma.id}`}
-                            {...register(`turma${turma.id}`)}
-                          />
-                          <div className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-[0.65rem]  -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-3.5 w-3.5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              stroke="currentColor"
-                              strokeWidth="1"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                clipRule="evenodd"
-                              ></path>
-                            </svg>
-                          </div>
-                        </label>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap max-w-[10rem] truncate">
-                        {turma.code}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {turma.professor.nome}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {turma.dias.map((dia, index) => (
-                          <div key={index}>{dia}</div>
-                        ))}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {turma.horario.map((horario, index) => (
-                          <div key={index}>{horario}</div>
-                        ))}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {turma.sala}
-                      </td>
-                    </tr>
-                  ))}
+                {turmasPorDisciplina[nomeDisciplina].map((turma, idx) => (
+                  <tr
+                    key={idx}
+                    className={`${
+                      idx % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
+                    } border border-gray-100 hover:bg-primary-100 h-full`}
+                  >
+                    <td></td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <label
+                        className="relative flex items-centerrounded-md cursor-pointer"
+                        htmlFor={`checkbox${turma.id}`}
+                        data-ripple-dark="true"
+                      >
+                        <input
+                          type="checkbox"
+                          name="classes"
+                          className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 transition-all before:absolute before:top-2/4 before:left-2/4 checked:border-primary-400 checked:bg-primary-400 checked:before:bg-primary-400 hover:before:opacity-10"
+                          id={`checkbox${turma.id}`}
+                          {...register(`turma${turma.id}`)}
+                        />
+                        <div className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-[0.65rem]  -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-3.5 w-3.5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            stroke="currentColor"
+                            strokeWidth="1"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            ></path>
+                          </svg>
+                        </div>
+                      </label>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap max-w-[10rem] truncate">
+                      {turma.code}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {turma.professor.nome}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {turma.dias.map((dia, index) => (
+                        <div key={index}>{dia}</div>
+                      ))}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {turma.horario.map((horario, index) => (
+                        <div key={index}>{horario}</div>
+                      ))}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {turma.sala}
+                    </td>
+                  </tr>
+                ))}
               </Fragment>
             ))}
-            {/* {turmas.map((turma, index) => (
-              <tr
-                key={index}
-                className={`${
-                  index % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
-                } border border-gray-100 hover:bg-primary-100 h-full`}
-              >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <label
-                    className="relative flex items-centerrounded-md cursor-pointer"
-                    htmlFor={`checkbox${turma.id}`}
-                    data-ripple-dark="true"
-                  >
-                    <input
-                      type="checkbox"
-                      name="classes"
-                      className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 transition-all before:absolute before:top-2/4 before:left-2/4 checked:border-primary-400 checked:bg-primary-400 checked:before:bg-primary-400 hover:before:opacity-10"
-                      id={`checkbox${turma.id}`}
-                      {...register(`turma${turma.id}`)}
-                    />
-                    <div className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-[0.65rem]  -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-3.5 w-3.5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </div>
-                  </label>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">{turma.code}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {turma.disciplina.nome}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {turma.professor.nome}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {turma.dias.map((dia, index) => (
-                    <div key={index}>{dia}</div>
-                  ))}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {turma.horario.map((horario, index) => (
-                    <div key={index}>{horario}</div>
-                  ))}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">{turma.sala}</td>
-              </tr>
-            ))} */}
           </tbody>
         </table>
       </form>

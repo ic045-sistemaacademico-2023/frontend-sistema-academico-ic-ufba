@@ -1,28 +1,59 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Sidebar from "../../componentes/Sidebar";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export default function EnrollmentOpportunities() {
   const [enrollmentOpportunities, setEnrollmentOpportunies] = useState([]);
+  const { token } = useAuth();
+  const [coordenador, setCoordenador] = useState({});
 
   const navigate = useNavigate();
 
-  const fetchEnrollmentOpportunies = async () => {
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) return;
+
+      try {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          let userId = response.data.id;
+          const coordenadorResponse = await api.get(
+            `/coordenador/byusuario/${userId}`,
+          );
+          if (response.status === 200) setCoordenador(coordenadorResponse.data);
+          else console.log("Erro ao obter coordenador");
+        } else {
+          console.log("Erro ao obter usuário");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
+
+  const fetchEnrollmentOpportunies = useCallback(async () => {
+    if (!coordenador.id) return;
     try {
-      const response = await api.get("/oportunidade/all");
+      const response = await api.get(
+        `/oportunidade/bycoordenadorid/${coordenador.id}`,
+      );
       setEnrollmentOpportunies(response.data);
     } catch (error) {
       console.log(error);
       toast.error("Error ao carregar oportunidades de matrícula");
     }
-  };
+  }, [coordenador.id]);
 
   useEffect(() => {
     fetchEnrollmentOpportunies();
-  }, []);
+  }, [fetchEnrollmentOpportunies]);
 
   async function deleteEnrollmentOpportunity(id) {
     try {

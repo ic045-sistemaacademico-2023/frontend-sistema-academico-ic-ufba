@@ -4,6 +4,7 @@ import Button from "../../componentes/Button";
 import api from "../../utils/api.js";
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
@@ -11,6 +12,7 @@ function SubjectSillabus() {
   const [subject, setSubject] = useState({});
   const [classes, setClasses] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const fetchClasses = useCallback(async () => {
     try {
@@ -56,7 +58,7 @@ function SubjectSillabus() {
         entity="Disciplina"
       />
       <div className="py-4 mb-4">
-        <Button href={`/curso/${subject?.curso?.id}`} secondary>
+        <Button onClick={() => navigate(-1)} secondary>
           Voltar
         </Button>
       </div>

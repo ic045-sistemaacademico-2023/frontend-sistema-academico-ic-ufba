@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import CourseClasses from "../../componentes/CourseClasses";
 import Button from "../../componentes/Button";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 function ProfessorClasses() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [classes, setClasses] = useState([]);
 
@@ -77,7 +79,7 @@ function ProfessorClasses() {
         entity="Professor"
       />
       <div className="py-4 mb-4">
-        <Button href="/cursos" secondary>
+        <Button onClick={() => navigate(-1)} secondary>
           Voltar
         </Button>
       </div>

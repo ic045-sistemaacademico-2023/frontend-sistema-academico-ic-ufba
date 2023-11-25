@@ -6,10 +6,13 @@ import Button from "../../componentes/Button";
 import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function CourseClassPage() {
   const { id } = useParams();
   const [data, setData] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -30,7 +33,7 @@ function CourseClassPage() {
       <ClassStudents classStudents={data?.alunos} />
 
       <div className="py-4 mb-4">
-        <Button href={`/disciplina/${data?.disciplina?.id}`} secondary>
+        <Button onClick={() => navigate(-1)} secondary>
           Voltar
         </Button>
       </div>

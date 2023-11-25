@@ -1,6 +1,6 @@
 import Sidebar from "../../componentes/Sidebar";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
@@ -14,7 +14,7 @@ export default function EnrollmentOpportunityPage() {
   );
   const [opportunityData, setOpportunityData] = useState({});
 
-  async function fetchOpportunityData() {
+  const fetchOpportunityData = useCallback(async () => {
     try {
       const response = await api.get(`/oportunidade/${id}`);
       if (response.status === 200) {
@@ -33,7 +33,7 @@ export default function EnrollmentOpportunityPage() {
       console.log(error);
       toast.error("Erro ao carregar dados da oportunidade de matrícula");
     }
-  }
+  }, [id, setOpportunityData, setOpportunitySubjectClasses]);
 
   useEffect(() => {
     const getOpportunityData = async () => {
@@ -41,7 +41,7 @@ export default function EnrollmentOpportunityPage() {
     };
 
     getOpportunityData();
-  }, [id]);
+  }, [id, fetchOpportunityData]);
 
   const navigate = useNavigate();
 
@@ -186,7 +186,7 @@ export default function EnrollmentOpportunityPage() {
       </div>
 
       <div className="py-4 mb-4">
-        <Button href={`/oportunidades`} secondary>
+        <Button onClick={() => navigate(-1)} secondary>
           Voltar
         </Button>
       </div>

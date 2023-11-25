@@ -4,9 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
+import { useNavigate } from "react-router-dom";
 
 function SubjectsPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [courseSubjects, setCourseSubjects] = useState([]);
   const [courseData, setCourseData] = useState({});
@@ -66,7 +68,7 @@ function SubjectsPage() {
       />
 
       <div className="py-4 mb-4">
-        <Button href={`/cursos`} secondary>
+        <Button onClick={() => navigate(-1)} secondary>
           Voltar
         </Button>
       </div>
