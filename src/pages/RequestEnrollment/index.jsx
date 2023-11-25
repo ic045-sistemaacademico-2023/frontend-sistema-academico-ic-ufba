@@ -69,15 +69,17 @@ export default function RequestEnrollment() {
     fetchStudent();
   }, [userId]);
 
-  const cursoId = student?.curso.id;
+  const coordenadorId = student?.curso.coordenadorDeCurso.id;
 
   const [turmas, setTurmas] = useState([]);
 
   useEffect(() => {
     const fetchTurmas = async () => {
-      if (!cursoId) return;
+      if (!coordenadorId) return;
       try {
-        const response = await api.get(`/turma/disponiveis/curso/${cursoId}`);
+        const response = await api.get(
+          `/turma/disponiveis/coordenador/${coordenadorId}`,
+        );
         if (response.status === 200) {
           response.data.map((turma) => {
             turma.dias = turma.dias.split(",");
@@ -93,7 +95,7 @@ export default function RequestEnrollment() {
       }
     };
     fetchTurmas();
-  }, [cursoId]);
+  }, [coordenadorId]);
 
   const turmasPorDisciplina = turmas.reduce((acc, turma) => {
     const { disciplina } = turma;
