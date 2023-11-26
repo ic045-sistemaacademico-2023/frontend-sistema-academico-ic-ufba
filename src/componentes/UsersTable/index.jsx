@@ -4,9 +4,16 @@ import Button from "../../componentes/Button";
 import api from "../../utils/api";
 
 import { roleFilterOptions, roles } from "./data";
+import { roleShowByPageOptions } from "./data";
 import SelectField from "../Forms/SelectField";
 import InputField from "../Forms/InputField";
 import { ArrowDown, ArrowUp, ArrowsDownUp } from "@phosphor-icons/react";
+import {
+  FaRegArrowAltCircleLeft,
+  FaRegArrowAltCircleRight,
+} from "react-icons/fa";
+import { useEffect } from "react";
+import { set } from "react-hook-form";
 
 function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
   const [searchString, setSearchString] = useState("");
@@ -93,6 +100,44 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
 
   filteredUsersList = filterListSelectRole();
 
+  const [showByPage, setShowByPage] = useState(0);
+  const [showUp, setShowUp] = useState(0);
+  const [showDown, setShowDown] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  useEffect(() => {
+    if (showByPage == 0) {
+      setShowUp(filteredUsersList.length);
+    } else {
+      setShowUp(showDown + showByPage);
+    }
+  }, [filteredUsersList, showByPage, showDown]);
+
+  function filterListSelectShowByPage() {
+    if (showByPage == 0) setShowUp(Number(filteredUsersList.length));
+    else setShowUp(Number(showDown) + Number(showByPage));
+  }
+
+  useEffect(() => {
+    filterListSelectShowByPage();
+  }, [showByPage]);
+
+  function NextPage() {
+    if (showUp < filteredUsersList.length) {
+      setShowDown(Number(showUp));
+      setShowUp(Number(showUp) + Number(showByPage));
+      setPageNumber(pageNumber + 1);
+    }
+  }
+
+  function PreviousPage() {
+    if (showDown > 0) {
+      setShowUp(Number(showDown));
+      setShowDown(Number(showDown) - Number(showByPage));
+      setPageNumber(pageNumber - 1);
+    }
+  }
+
   function sortUserByName() {
     if (sortByName == null) return;
     filteredUsersList.sort((user1, user2) => {
@@ -108,6 +153,17 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
       <div className="flex justify-between items-center">
         <h1 className="text-xl text-gray-700 font-bold ml-5">{pageTitle}</h1>
         <div className="pr-5 flex justify-end space-x-4">
+          <SelectField
+            id={"showByPageOptions"}
+            placeholder={"Selecione"}
+            label={"Mostar por página"}
+            options={roleShowByPageOptions}
+            onChange={(e) => {
+              setShowByPage(Number(e.target.value));
+              setShowDown(0);
+              setPageNumber(1);
+            }}
+          />
           <SelectField
             id={"searchInputRoleUserScreen"}
             placeholder={"Selecionar cargo"}
@@ -170,7 +226,7 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
           </tbody>
         )}
         <tbody>
-          {filteredUsersList.map((user, index) => (
+          {filteredUsersList.slice(showDown, showUp).map((user, index) => (
             <tr
               key={index}
               className={`${
@@ -212,6 +268,29 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
           ))}
         </tbody>
       </table>
+
+      <div className="flex justify-end items-center p-6">
+        {pageNumber !== 1 && (
+          <div
+            className="pr-3 pl-3 cursor-pointer"
+            onClick={() => PreviousPage()}
+          >
+            <FaRegArrowAltCircleLeft size={30} color="#1a84a0" />
+          </div>
+        )}
+
+        {showByPage !== 0 && (
+          <div className="pr-3 pl-3">
+            <p>Página {pageNumber}</p>
+          </div>
+        )}
+
+        {showUp < filteredUsersList.length && (
+          <div className="pr-3 pl-3 cursor-pointer" onClick={() => NextPage()}>
+            <FaRegArrowAltCircleRight size={30} color="#1a84a0" />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

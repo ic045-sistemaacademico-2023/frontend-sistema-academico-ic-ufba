@@ -206,6 +206,11 @@ export default function AppRoutes() {
               path="/oportunidade/:id"
               element={<EnrollmentOpportunityPage />}
             />
+            <Route
+              exact
+              path="/oportunidade/:id/solicitacoes"
+              element={<RequestEnrollment />}
+            />
           </Route>
         </Route>
       </Routes>

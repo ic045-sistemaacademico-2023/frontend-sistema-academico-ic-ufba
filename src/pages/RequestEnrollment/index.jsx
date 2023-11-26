@@ -10,11 +10,11 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
-  classes: yup.array(),
+  turmas: yup.array(),
 });
 
 const initialValues = {
-  classes: [],
+  turmas: [],
 };
 
 export default function RequestEnrollment() {
@@ -109,7 +109,7 @@ export default function RequestEnrollment() {
     return acc;
   }, {});
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const turmasSelectionadas = [];
 
     let error = false;
@@ -160,16 +160,28 @@ export default function RequestEnrollment() {
       delete data[`turma${turma.id}`];
     });
 
-    data.classes = turmasSelectionadas;
+    data.turmas = turmasSelectionadas;
+    data.aluno = student.id;
 
-    if (data.classes.length === 0) {
+    if (data.turmas.length === 0) {
       toast.error("Selecione pelo menos uma turma");
       return;
     }
 
-    console.log(data);
-    toast.success("Solicitação de matrícula enviada com sucesso!");
-    navigate("/comprovante-matricula");
+    try {
+      const response = await api.post("/solicitacao-matricula", data);
+      if (response.status === 200) {
+        toast.success("Solicitação de matrícula enviada com sucesso!");
+        navigate("/comprovante-matricula");
+      } else {
+        console.log(data);
+        toast.error("Erro ao solicitar matrícula");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Erro ao solicitar matrícula");
+      navigate("/comprovante-matricula");
+    }
   };
 
   return (
@@ -254,7 +266,7 @@ export default function RequestEnrollment() {
                       >
                         <input
                           type="checkbox"
-                          name="classes"
+                          name="turmas"
                           className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 transition-all before:absolute before:top-2/4 before:left-2/4 checked:border-primary-400 checked:bg-primary-400 checked:before:bg-primary-400 hover:before:opacity-10"
                           id={`checkbox${turma.id}`}
                           {...register(`turma${turma.id}`)}
