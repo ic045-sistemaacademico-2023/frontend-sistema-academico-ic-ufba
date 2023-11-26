@@ -175,11 +175,15 @@ export default function RequestEnrollment() {
         navigate("/comprovante-matricula");
       } else {
         console.log(data);
-        toast.error("Erro ao solicitar matrícula");
+        toast.error(
+          "Erro ao solicitar matrícula. Verifique se já não há outra solicitação em aberto.",
+        );
       }
     } catch (error) {
       console.log(error);
-      toast.error("Erro ao solicitar matrícula");
+      toast.error(
+        "Erro ao solicitar matrícula. Verifique se já não há outra solicitação em aberto.",
+      );
       navigate("/comprovante-matricula");
     }
   };

@@ -31,6 +31,8 @@ import PageLoyout from "./pages/PageLoyout";
 import SelfRegister from "./pages/SelfRegister";
 import RequestEnrollment from "./pages/RequestEnrollment";
 import EnrollmentProof from "./pages/EnrollmentProof";
+import EnrollmentRequests from "./pages/EnrollmentRequests";
+import EnrollmentRequestPage from "./pages/EnrollmentRequestPage";
 
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
@@ -214,8 +216,13 @@ export default function AppRoutes() {
             />
             <Route
               exact
-              path="/oportunidade/:id/solicitacoes"
-              element={<RequestEnrollment />}
+              path="/solicitacoes"
+              element={<EnrollmentRequests />}
+            />
+            <Route
+              exact
+              path="/solicitacao-matricula/:id"
+              element={<EnrollmentRequestPage />}
             />
           </Route>
         </Route>

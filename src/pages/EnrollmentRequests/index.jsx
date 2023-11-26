@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
+import Sidebar from "../../componentes/Sidebar";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 import Button from "../../componentes/Button";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { status } from "../../componentes/UsersTable/data";
 
-export default function EnrollmentOpportunities() {
-  const [enrollmentOpportunities, setEnrollmentOpportunies] = useState([]);
+export default function EnrollmentRequests() {
+  const [enrollmentRequests, setEnrollmentRequests] = useState([]);
   const { token } = useAuth();
   const [coordenador, setCoordenador] = useState({});
 
@@ -37,42 +39,29 @@ export default function EnrollmentOpportunities() {
     fetchUser();
   }, [token]);
 
-  const fetchEnrollmentOpportunies = useCallback(async () => {
+  const fetchEnrollmentRequests = useCallback(async () => {
     if (!coordenador.id) return;
     try {
       const response = await api.get(
-        `/oportunidade/bycoordenadorid/${coordenador.id}`,
+        `/solicitacao-matricula/coordenador/${coordenador.id}`,
       );
-      setEnrollmentOpportunies(response.data);
+      console.log(response.data);
+      setEnrollmentRequests(response.data);
     } catch (error) {
       console.log(error);
-      toast.error("Error ao carregar oportunidades de matrícula");
+      toast.error("Error ao carregar solicitações de matrícula");
     }
   }, [coordenador.id]);
 
   useEffect(() => {
-    fetchEnrollmentOpportunies();
-  }, [fetchEnrollmentOpportunies]);
-
-  async function deleteEnrollmentOpportunity(id) {
-    try {
-      const response = await api.delete(`/oportunidade/${id}`);
-      if (response.status === 204) {
-        toast.success("Oportunidade de matrícula deletada com sucesso!");
-        fetchEnrollmentOpportunies();
-      } else {
-        toast.error("Erro ao deletar oportundiade de matrícula");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Erro ao deletar oportundiade de matrícula");
-    }
-  }
+    fetchEnrollmentRequests();
+  }, [fetchEnrollmentRequests]);
 
   return (
     <div className="w-full pl-64">
+      <Sidebar />
       <h2 className="text-xl text-gray-700 font-bold mt-4">
-        Oportunidades de Matrícula
+        Solicitações de Matrícula
       </h2>
       <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
         <table className="w-full text-sm text-center text-gray-700">
@@ -82,13 +71,10 @@ export default function EnrollmentOpportunities() {
                 ID
               </th>
               <th scope="col" className="px-6 py-3">
-                Nome
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Coordenador
+                Aluno
               </th>
               <th scope="col" className="px-6 py-3 text-center">
-                Situação
+                Status
               </th>
               <th scope="col" className="px-6 py-3 text-center">
                 Ações
@@ -96,54 +82,26 @@ export default function EnrollmentOpportunities() {
             </tr>
           </thead>
           <tbody>
-            {enrollmentOpportunities.map((oportunidade, oportunidadeIndex) => (
+            {enrollmentRequests.map((solicitacao, solicitacaoIndex) => (
               <tr
-                key={oportunidade.oportunidadeMatricula.id}
+                key={solicitacao.id}
                 className={`${
-                  oportunidadeIndex % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
+                  solicitacaoIndex % 2 == 0 ? "bg-gray-50" : "bg-gray-100"
                 } border border-gray-100 hover:bg-primary-100 whitespace-nowrap text-sm text-gray-900`}
               >
-                <td className="px-6 py-4">
-                  {oportunidade.oportunidadeMatricula.id}
-                </td>
-                <td className="px-6 py-4">
-                  {oportunidade.oportunidadeMatricula.nome}
-                </td>
-                <td className="px-6 py-4">
-                  {oportunidade.oportunidadeMatricula.coordenador?.nome}
-                </td>
+                <td className="px-6 py-4">{solicitacao.id}</td>
+                <td className="px-6 py-4">{solicitacao.aluno?.nome}</td>
                 <td className="px-6 py-4 text-center">
-                  {oportunidade.oportunidadeMatricula.aberta
-                    ? "Aberta"
-                    : "Fechada"}
+                  {status[solicitacao.status]}
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-wrap justify-center items-center gap-2">
                     <Button
                       onClick={() =>
-                        navigate(
-                          `/oportunidade/${oportunidade.oportunidadeMatricula.id}`,
-                        )
+                        navigate(`/solicitacao-matricula/${solicitacao.id}`)
                       }
                     >
                       Visualizar
-                    </Button>
-
-                    <Button
-                      secondary
-                      href={`/atualizar/oportunidade/${oportunidade.oportunidadeMatricula.id}`}
-                    >
-                      Editar
-                    </Button>
-
-                    <Button
-                      onClick={() =>
-                        deleteEnrollmentOpportunity(
-                          oportunidade.oportunidadeMatricula.id,
-                        )
-                      }
-                    >
-                      Deletar
                     </Button>
                   </div>
                 </td>

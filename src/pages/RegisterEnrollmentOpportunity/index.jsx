@@ -1,5 +1,3 @@
-import Sidebar from "../../componentes/Sidebar";
-
 import Button from "../../componentes/Button";
 import InputField from "../../componentes/Forms/InputField";
 import SelectField from "../../componentes/Forms/SelectField";
@@ -245,7 +243,6 @@ function RegisterEnrollmentOpportunity() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
       <form onSubmit={handleSubmit(onSubmit)} className="z-10 m-6">
         <div className="bg-primary-100 shadow-lg rounded-lg flex flex-col p-5">
           <h1 className="text-xl text-gray-700 font-bold mb-6">
@@ -296,7 +293,7 @@ function RegisterEnrollmentOpportunity() {
         </div>
 
         <div className="grid md:grid-cols-1 md:gap-6 p-5 bg-primary-100 mt-4 rounded-lg">
-          <h2 className="text-lg font-bold text-center">Disciplinas</h2>
+          <h2 className="text-lg font-bold text-center">Turmas</h2>
           <table className="w-full text-sm text-center  text-gray-700">
             <thead className="text-xs text-gray-900 uppercase bg-gray-5">
               <tr>

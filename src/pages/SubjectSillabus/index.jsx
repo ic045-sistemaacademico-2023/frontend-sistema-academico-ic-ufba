@@ -23,7 +23,7 @@ function SubjectSillabus() {
             id: classItem.id,
             dias: classItem.dias,
             horario: classItem.horario,
-            local: classItem.local,
+            sala: classItem.sala,
             professor: classItem.professor.nome,
           };
         });

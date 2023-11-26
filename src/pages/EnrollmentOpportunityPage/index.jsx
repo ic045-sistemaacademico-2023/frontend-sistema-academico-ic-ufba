@@ -1,4 +1,3 @@
-import Sidebar from "../../componentes/Sidebar";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -64,8 +63,6 @@ export default function EnrollmentOpportunityPage() {
 
   return (
     <div className="w-full pl-64">
-      <Sidebar />
-
       <div className="pt-10">
         <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg overflow-auto">
           {opportunityData.nome && (

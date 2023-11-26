@@ -3,7 +3,7 @@ import {
   CirclesThreePlus,
   DiamondsFour,
   IdentificationBadge,
-  // ListChecks,
+  ArrowFatLineDown,
   ListDashes,
   ListPlus,
   Plus,
@@ -168,6 +168,12 @@ function Sidebar({ setToken }) {
                 title={"Oportunidades Matrícula"}
                 link={"/oportunidades"}
                 icon={<Article size={21} />}
+              />
+
+              <SidebarItem
+                title={"Solicitações"}
+                link={"/solicitacoes"}
+                icon={<ArrowFatLineDown size={20} />}
               />
 
               <SidebarItem
