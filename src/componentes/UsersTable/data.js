@@ -10,6 +10,7 @@ export const status = {
   DENIED: "Negado",
   WAITING_APPROVAL: "Aguardando Aprovação",
   EMAIL_CHECK: "Verificação de Email",
+  FINISHED: "Finalizado",
 };
 
 export const roleFilterOptions = [
