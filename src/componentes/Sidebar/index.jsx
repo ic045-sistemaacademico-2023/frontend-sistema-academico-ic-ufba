@@ -78,6 +78,11 @@ function Sidebar({ setToken }) {
                 link={"/solicitacao-de-matricula"}
                 icon={<DiamondsFour size={20} />}
               />
+              <SidebarItem
+                title={"Compr. Solicitação de Matrícula"}
+                link={"/compr-solicitacao-matricula"}
+                icon={<IdentificationBadge size={20} />}
+              />
             </>
           )}
           {["ADMIN"].includes(USER_ROLE) && (
