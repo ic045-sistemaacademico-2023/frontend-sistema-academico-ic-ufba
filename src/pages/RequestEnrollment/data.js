@@ -1,4 +1,4 @@
-export let dias = {
+export let diasData = {
   SEG: {
     7: false,
     8: false,
