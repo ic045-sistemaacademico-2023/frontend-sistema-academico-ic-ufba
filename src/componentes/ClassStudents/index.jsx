@@ -1,6 +1,30 @@
+import { useState } from "react";
 import Button from "../Button";
+import InputField from "../Forms/InputField";
 
 function ClassStudents({ classStudents }) {
+  const [editing, setEditing] = useState(false);
+  const [nota, setNota] = useState(0);
+  const [faltas, setFaltas] = useState(0);
+
+  const resetInputs = () => {
+    setNota(0);
+    setFaltas(0);
+  }
+
+  const onConfirm = (student) => {
+    student.nota = nota;
+    student.faltas = faltas;
+    setEditing(false);
+    resetInputs();
+  };
+
+  const onClickEdit = (student) => {
+    setNota(student.nota);
+    setFaltas(student.faltas);
+    setEditing(true);
+  }
+
   return (
     <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
       <h2 className="text-xl text-primary-700 font-bold mb-2">Alunos</h2>
@@ -44,10 +68,27 @@ function ClassStudents({ classStudents }) {
                 </th>
                 <td className="px-6 py-4">{student.usuario.nome}</td>
                 <td className="px-6 py-4">{student.curso.nome}</td>
-                <td className="px-6 py-4">{"6.4"}</td>
-                <td className="px-6 py-4">{"4"}</td>
+                {editing ? (
+                  <>
+                    <td className="px-6 py-4">
+                      <InputField name="nota" value={nota} onChange={(e) => setNota(e.target.value)} />
+                    </td>
+                    <td className="px-6 py-4">
+                      <InputField name="faltas" value={faltas} onChange={(e) => setFaltas(e.target.value)}/>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td className="px-6 py-4">{student?.nota}</td>
+                    <td className="px-6 py-4">{student?.faltas}</td>
+                  </>
+                )}
                 <td className="px-6 py-4">
-                  <Button>Editar</Button>
+                  <Button
+                    onClick={editing ? () => onConfirm(student) : () => onClickEdit(student)}
+                  >
+                    {editing ? "Confirmar" : "Editar"}
+                  </Button>
                 </td>
               </tr>
             ))}
