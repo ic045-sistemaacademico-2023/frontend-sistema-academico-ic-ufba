@@ -30,6 +30,7 @@ import useAuth from "./hooks/useAuth";
 import PageLoyout from "./pages/PageLoyout";
 import SelfRegister from "./pages/SelfRegister";
 import RequestEnrollment from "./pages/RequestEnrollment";
+import EnrollmentProof from "./pages/EnrollmentProof";
 
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
@@ -86,6 +87,11 @@ export default function AppRoutes() {
                 exact
                 path="/solicitacao-de-matricula"
                 element={<RequestEnrollment />}
+              />
+              <Route
+                exact
+                path="/compr-solicitacao-matricula"
+                element={<EnrollmentProof />}
               />
             </Route>
 
