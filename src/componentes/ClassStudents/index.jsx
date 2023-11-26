@@ -1,4 +1,4 @@
-import Button from "../Button";
+import StudentGrades from "./StudentGrades";
 
 function ClassStudents({ classStudents }) {
   return (
@@ -30,26 +30,7 @@ function ClassStudents({ classStudents }) {
           </thead>
           <tbody>
             {classStudents?.map((student, index) => (
-              <tr
-                key={index}
-                className={`${
-                  index % 2 == 0 ? "bg-white" : "bg-primary-50"
-                } border border-gray-100 hover:bg-primary-100`}
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
-                >
-                  {student.usuario.cpf}
-                </th>
-                <td className="px-6 py-4">{student.usuario.nome}</td>
-                <td className="px-6 py-4">{student.curso.nome}</td>
-                <td className="px-6 py-4">{"6.4"}</td>
-                <td className="px-6 py-4">{"4"}</td>
-                <td className="px-6 py-4">
-                  <Button>Editar</Button>
-                </td>
-              </tr>
+              <StudentGrades student={student} index={index} key={index} />
             ))}
           </tbody>
         </table>
