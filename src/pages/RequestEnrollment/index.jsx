@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import Button from "../../componentes/Button";
-import { dias } from "./data";
+import { diasData } from "./data";
 import { Fragment, useEffect, useState } from "react";
 import api from "../../utils/api";
 import useAuth from "../../hooks/useAuth";
@@ -18,6 +18,7 @@ const initialValues = {
 };
 
 export default function RequestEnrollment() {
+  const [dias, setDias] = useState(diasData);
   const { handleSubmit, register } = useForm({
     mode: "onSubmit",
     defaultValues: initialValues,
@@ -27,11 +28,13 @@ export default function RequestEnrollment() {
   const navigate = useNavigate();
 
   const clearDias = () => {
-    Object.values(dias).forEach((dia) => {
+    const diasClear = dias;
+    Object.values(diasClear).forEach((dia) => {
       for (let i = 0; i < 22; i++) {
         dia[i] = false;
       }
     });
+    setDias(diasClear);
   };
 
   const { token } = useAuth();
@@ -126,10 +129,10 @@ export default function RequestEnrollment() {
       }
     });
 
-    turmas.map((turma) => {
+    const diasModificados = dias;
+    turmas.forEach((turma) => {
       if (data[`turma${turma.id}`]) {
         turmasSelectionadas.push(turma.id);
-
         turma.dias.map((dia, index) => {
           const horario = turma.horario[index];
           const horarioInicio = parseInt(horario.split("-")[0].split(":")[0]);
@@ -142,12 +145,13 @@ export default function RequestEnrollment() {
               return;
             }
 
-            dias[dia][i] = true;
+            diasModificados[dia][i] = true;
           }
         });
       }
     });
 
+    setDias(diasModificados);
     clearDias();
 
     if (error) return;
