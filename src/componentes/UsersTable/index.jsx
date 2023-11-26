@@ -8,8 +8,11 @@ import { roleShowByPageOptions } from "./data";
 import SelectField from "../Forms/SelectField";
 import InputField from "../Forms/InputField";
 import { ArrowDown, ArrowUp, ArrowsDownUp } from "@phosphor-icons/react";
-import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
-import { useEffect } from 'react';
+import {
+  FaRegArrowAltCircleLeft,
+  FaRegArrowAltCircleRight,
+} from "react-icons/fa";
+import { useEffect } from "react";
 import { set } from "react-hook-form";
 
 function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
@@ -111,10 +114,8 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
   }, [filteredUsersList, showByPage, showDown]);
 
   function filterListSelectShowByPage() {
-    if (showByPage == 0)
-      setShowUp(Number(filteredUsersList.length));
-    else
-      setShowUp(Number(showDown) + Number(showByPage));
+    if (showByPage == 0) setShowUp(Number(filteredUsersList.length));
+    else setShowUp(Number(showDown) + Number(showByPage));
   }
 
   useEffect(() => {
@@ -158,9 +159,9 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
             label={"Mostar por página"}
             options={roleShowByPageOptions}
             onChange={(e) => {
-              setShowByPage(Number(e.target.value))
-              setShowDown(0)
-              setPageNumber(1)
+              setShowByPage(Number(e.target.value));
+              setShowDown(0);
+              setPageNumber(1);
             }}
           />
           <SelectField
@@ -228,8 +229,9 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
           {filteredUsersList.slice(showDown, showUp).map((user, index) => (
             <tr
               key={index}
-              className={`${index % 2 == 0 ? "bg-white" : "bg-primary-50"
-                } border border-gray-100 hover:bg-primary-100`}
+              className={`${
+                index % 2 == 0 ? "bg-white" : "bg-primary-50"
+              } border border-gray-100 hover:bg-primary-100`}
             >
               <td className="px-6 py-4 h-full">{user.cpf}</td>
               <td className="px-6 py-4 h-full">
@@ -265,7 +267,7 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
             </tr>
           ))}
         </tbody>
-      </table>     
+      </table>
 
       <div className="flex justify-end items-center p-6">
         {pageNumber !== 1 && (
@@ -278,20 +280,17 @@ function UserTable({ users, isManager = false, fetchUsers, pageTitle = "" }) {
         )}
 
         {showByPage !== 0 && (
-            <div className="pr-3 pl-3"><p>Página {pageNumber}</p></div>
-          )}
-       
-        {showUp < filteredUsersList.length && (
-            <div
-              className="pr-3 pl-3 cursor-pointer"
-              onClick={() =>
-                NextPage()
-              }>
-              <FaRegArrowAltCircleRight size={30} color="#1a84a0" />
-            </div>
-            )}
-      </div>
+          <div className="pr-3 pl-3">
+            <p>Página {pageNumber}</p>
+          </div>
+        )}
 
+        {showUp < filteredUsersList.length && (
+          <div className="pr-3 pl-3 cursor-pointer" onClick={() => NextPage()}>
+            <FaRegArrowAltCircleRight size={30} color="#1a84a0" />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

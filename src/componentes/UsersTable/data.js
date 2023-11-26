@@ -29,5 +29,5 @@ export const roleShowByPageOptions = [
   { id: "5", value: 5, name: "5" },
   { id: "10", value: 10, name: "10" },
   { id: "15", value: 15, name: "15" },
-  { id: "20", value: 20, name: "20" },  
+  { id: "20", value: 20, name: "20" },
 ];
