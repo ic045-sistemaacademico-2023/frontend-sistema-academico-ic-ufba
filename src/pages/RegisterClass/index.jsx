@@ -189,19 +189,14 @@ function RegisterClass() {
 
     const horarios = [];
 
-    diasDeAula.map((dia) => {
-      const inicio = data[`horarioInicio${dia.name}`];
-      const fim = data[`horarioFim${dia.name}`];
+    data["dias"].map((dia) => {
+      const sigDia = formatDia[dia];
+      const inicio = data[`horarioInicio${sigDia}`];
+      const fim = data[`horarioFim${sigDia}`];
 
       if (inicio && fim) {
         horarios.push(`${inicio}-${fim}`);
       }
-    });
-
-    diasDeAula.forEach((dia) => {
-      delete data[`horarioInicio${dia.name}`];
-      delete data[`horarioFim${dia.name}`];
-      delete data[`dia${dia.name}`];
     });
 
     data.horario = horarios.join("/");
