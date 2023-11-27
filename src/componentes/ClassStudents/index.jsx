@@ -1,6 +1,6 @@
 import StudentGrades from "./StudentGrades";
 
-function ClassStudents({ classStudents }) {
+function ClassStudents({ classStudents, turma }) {
   return (
     <div className="bg-primary-50 p-5 z-10 m-5 shadow-lg rounded-lg">
       <h2 className="text-xl text-primary-700 font-bold mb-2">Alunos</h2>
@@ -30,7 +30,12 @@ function ClassStudents({ classStudents }) {
           </thead>
           <tbody>
             {classStudents?.map((student, index) => (
-              <StudentGrades student={student} index={index} key={index} />
+              <StudentGrades
+                student={student}
+                index={index}
+                key={index}
+                turma={turma}
+              />
             ))}
           </tbody>
         </table>
