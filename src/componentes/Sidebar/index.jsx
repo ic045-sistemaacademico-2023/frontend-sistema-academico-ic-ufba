@@ -11,6 +11,7 @@ import {
   SquaresFour,
   User,
   UserPlus,
+  ListChecks,
   Users,
 } from "@phosphor-icons/react";
 import SidebarItem from "./SidebarItem";
@@ -67,6 +68,11 @@ function Sidebar({ setToken }) {
                 title={"Disciplinas"}
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
+              />
+              <SidebarItem
+                title={"Resultados"}
+                link={"/resultados"}
+                icon={<ListChecks size={20} />}
               />
               {/* <SidebarItem
                 title={"Turmas"}

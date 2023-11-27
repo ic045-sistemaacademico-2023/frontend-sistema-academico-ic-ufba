@@ -12,6 +12,7 @@ import SubjectSillabus from "./pages/SubjectSillabus";
 import SubjectsPage from "./pages/Subjects";
 import CourseClassPage from "./pages/CourseClass";
 import ClassesPage from "./pages/ClassesPage";
+import SubjectsResultsPage from "./pages/SubjectsResultsPage";
 import CoursesPage from "./pages/Courses";
 import RegisterCourse from "./pages/RegisterCourse";
 import UsersPage from "./pages/Users";
@@ -74,6 +75,7 @@ export default function AppRoutes() {
           <Route element={<ProtectedRoute user={user} redirectPath="/login" />}>
             <Route index element={<WelcomePage />} />
             <Route exact path="/curso/:id" element={<SubjectsPage />} />
+            <Route exact path="/resultados" element={<SubjectsResultsPage />} />
             <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
             <Route exact path="/turmas" element={<ClassesPage />} />
 
