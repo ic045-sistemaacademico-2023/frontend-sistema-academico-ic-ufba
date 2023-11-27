@@ -12,9 +12,7 @@ function SubjectsResultsPage() {
   const navigate = useNavigate();
 
   const [subjectsResults, setCourseResults] = useState();
-  const [user, setUser] = useState();
   const [student, setStudent] = useState();
-  const [courseData, setCourseData] = useState();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -24,7 +22,6 @@ function SubjectsResultsPage() {
         const response = await api.get("/user/me");
 
         if (response.status === 200) {
-          setUser(response.data);
           fetchStudent(response.data);
         } else {
           console.log("Erro ao obter usuário");
@@ -40,7 +37,6 @@ function SubjectsResultsPage() {
         const response = await api.get(`/aluno/${user?.id}`);
         setStudent(response.data);
         fetchSubjectResults(response.data?.id);
-        fetchCourseData(response.data?.id);
       } catch (error) {
         console.log(error);
         toast.error(`Error ao carregar o aluno`);
@@ -56,27 +52,6 @@ function SubjectsResultsPage() {
       } catch (error) {
         console.log(error);
         toast.error("Erro ao carregar disciplinas do curso");
-      }
-    };
-
-    const fetchCourseData = async (id) => {
-      try {
-        const response = await api.get(`/curso/${id}`);
-        if (response.status === 200) {
-          const course = {
-            nome: response.data.nome,
-            id: response.data.id,
-            coordenadorDeCurso: response.data.coordenadorDeCurso,
-            semestre: response.data.semestre,
-            turno: response.data.turno,
-            periodo_curriculo: response.data.periodo_curriculo,
-          };
-
-          setCourseData(course);
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Erro ao carregar dados do curso");
       }
     };
 
