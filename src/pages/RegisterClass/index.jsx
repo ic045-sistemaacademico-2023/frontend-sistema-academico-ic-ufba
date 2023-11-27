@@ -102,20 +102,7 @@ function RegisterClass() {
   useEffect(() => {
     async function getDisciplinas() {
       try {
-
-        let response =  await api.get("/user/me");
-        const user = response.data;
-        let disciplinaRoute = "/disciplina/all";
-
-        if(user.role == "COORDENADOR_DE_CURSO"){
-          response = await api.get(`/coordenador/byusuario/${user.id}`);
-          let coordenadorId = response.data.id;
-          response = await api.get(`/curso/bycoordenador/${coordenadorId}`);
-          let cursoId = response.data.id;
-          disciplinaRoute = `/disciplina/curso/${cursoId}`;
-        }
-
-        response = await api.get(disciplinaRoute);
+        const response = await api.get("/disciplina/all");
         if (response.status === 200) {
           const disciplinas = response.data.map((disciplina) => {
             return {

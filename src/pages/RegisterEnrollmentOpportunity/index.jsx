@@ -40,7 +40,6 @@ function RegisterEnrollmentOpportunity() {
 
   const [turmas, setTurmas] = useState([]);
   const [coordenador, setCoordenador] = useState();
-  const [curso, setCurso] = useState();
 
   const {
     register,
@@ -59,18 +58,14 @@ function RegisterEnrollmentOpportunity() {
       if (!token) return;
 
       try {
-        let response = await api.get("/user/me");
+        const response = await api.get("/user/me");
 
         if (response.status === 200) {
           let userId = response.data.id;
           const coordenadorResponse = await api.get(
             `/coordenador/byusuario/${userId}`,
           );
-          if (response.status === 200){
-            setCoordenador(coordenadorResponse.data);
-            response = await api.get(`/curso/bycoordenador/${coordenadorResponse.data.id}`);
-            if(response.status === 200) setCurso(response.data);
-          }
+          if (response.status === 200) setCoordenador(coordenadorResponse.data);
           else console.log("Erro ao obter coordenador");
         } else {
           console.log("Erro ao obter usuário");
@@ -86,13 +81,7 @@ function RegisterEnrollmentOpportunity() {
   useEffect(() => {
     async function getDisciplinas() {
       try {
-
-        let turmasRoute = "/turma/all";
-        if(curso != null){
-          turmasRoute = `/turma/all/bycurso/${curso.id}`;
-        }
-
-        const response = await api.get(turmasRoute);
+        const response = await api.get("/turma/all");
         if (response.status === 200) {
           response.data.map((turma) => {
             turma.dias = turma.dias.split(",");
@@ -109,7 +98,7 @@ function RegisterEnrollmentOpportunity() {
     }
 
     getDisciplinas();
-  }, [curso]);
+  }, []);
 
   useEffect(() => {
     const getEnrollmentOportunity = async () => {
