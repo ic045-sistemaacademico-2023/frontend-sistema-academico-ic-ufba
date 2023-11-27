@@ -72,6 +72,36 @@ export default function RequestEnrollment() {
     fetchStudent();
   }, [userId]);
 
+  const [solicitacao, setSolicitacao] = useState(null);
+  const studentId = student?.id;
+
+  useEffect(() => {
+    const fetchSolicitacao = async () => {
+      try {
+        if (!studentId) return;
+        const response = await api.get(
+          `/solicitacao-matricula/aluno/${studentId}`,
+        );
+        if (response.status === 200) {
+          setSolicitacao(response.data);
+        } else {
+          toast.error("Erro ao obter solicitação");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Erro ao obter solicitação");
+      }
+    };
+    fetchSolicitacao();
+  }, [studentId]);
+
+  useEffect(() => {
+    if (solicitacao?.id) {
+      navigate("/compr-solicitacao-matricula");
+      toast.warn("Você já possui uma solicitação de matrícula em aberto");
+    }
+  }, [solicitacao, navigate]);
+
   const coordenadorId = student?.curso.coordenadorDeCurso.id;
 
   const [turmas, setTurmas] = useState([]);
