@@ -69,16 +69,37 @@ function RegisterSubject() {
   useEffect(() => {
     const getCourses = async () => {
       try {
-        const response = await api.get(`curso/all`);
-        if (response.status === 200) {
-          const courses = response.data.map((course) => {
-            return {
-              id: course.id,
-              value: course.id,
-              name: course.nome,
-            };
-          });
 
+        let response = await api.get("/user/me");
+        const user = response.data;
+        let cursoRoute = "/curso/all";
+
+        if(user.role == "COORDENADOR_DE_CURSO"){
+          response = await api.get(`/coordenador/byusuario/${user.id}`);
+          let coordenadorId = response.data.id;
+          cursoRoute = `/curso/bycoordenador/${coordenadorId}`;
+        }
+        
+        response = await api.get(cursoRoute);
+        if (response.status === 200) {
+          let courses;
+          if(Array.isArray(response.data)){
+            courses = response.data.map((course) => {
+              return {
+                id: course.id,
+                value: course.id,
+                name: course.nome,
+              };
+            });
+          }else{
+            courses = [
+              {
+                id: response.data.id,
+                value: response.data.id,
+                name: response.data.nome,
+              }
+            ]
+          }
           setCourses(courses);
         }
       } catch (error) {
