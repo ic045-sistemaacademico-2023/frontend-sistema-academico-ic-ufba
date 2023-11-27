@@ -31,7 +31,6 @@ function StudentInfos({ studentData, pageTitle }) {
           <dt className="text-sm text-gray-500">Período de Ingresso:</dt>
           <dd className="text-lg font-medium text-primary-800">
             {studentData?.periodo_ingresso}
-            {/* {"2019.1"} */}
           </dd>
         </div>
 
@@ -39,7 +38,6 @@ function StudentInfos({ studentData, pageTitle }) {
           <dt className="text-sm text-gray-500">Ano do Currículo:</dt>
           <dd className="text-lg font-medium text-primary-800">
             {studentData?.curso.periodo_curriculo}
-            {/* {"2013.1"} */}
           </dd>
         </div>
 
