@@ -121,11 +121,11 @@ export default function Enroll() {
     sortStudentByName();
 
     async function enrollStudent(studentId){
-        console.log(`/solicitacao-matricula/matricular/ Student ${studentId}/ Oportunidade ${opid}/ Turma${turmaid}`);
         try{
             const response = await api.post(`/solicitacao-matricula/matricular/${studentId}/${opid}/${turmaid}`);
             if(response.status == 200){
                 toast.success("Aluno matriculado");
+                navigate(-1);
             }else{
                 toast.error("Não foi possível matricular o aluno")
             }
