@@ -78,7 +78,6 @@ function RegisterSubject() {
               name: course.nome,
             };
           });
-
           setCourses(courses);
         }
       } catch (error) {

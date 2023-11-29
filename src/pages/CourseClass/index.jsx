@@ -30,7 +30,7 @@ function CourseClassPage() {
   return (
     <div className="w-full pl-64">
       <CourseClassInfos course={data} />
-      <ClassStudents classStudents={data?.alunos} />
+      <ClassStudents classStudents={data?.alunos} turma={data} />
 
       <div className="py-4 mb-4">
         <Button onClick={() => navigate(-1)} secondary>

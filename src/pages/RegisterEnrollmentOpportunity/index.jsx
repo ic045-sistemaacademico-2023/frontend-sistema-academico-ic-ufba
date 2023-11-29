@@ -81,10 +81,6 @@ function RegisterEnrollmentOpportunity() {
   useEffect(() => {
     async function getDisciplinas() {
       try {
-        // if(isEditing){
-        //   const selecionadas = await api.get("");
-        // }
-
         const response = await api.get("/turma/all");
         if (response.status === 200) {
           response.data.map((turma) => {

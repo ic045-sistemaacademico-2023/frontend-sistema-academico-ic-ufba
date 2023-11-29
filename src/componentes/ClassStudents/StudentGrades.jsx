@@ -4,7 +4,7 @@ import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 
-function StudentGrades({ student, index }) {
+function StudentGrades({ student, index, turma }) {
   const [editing, setEditing] = useState(false);
   const [nota, setNota] = useState(student?.notas[0].nota);
   const [faltas, setFaltas] = useState(student?.notas[0].faltas);
@@ -21,7 +21,7 @@ function StudentGrades({ student, index }) {
           nota: student.nota,
           faltas: student.faltas,
           aluno: student.id,
-          turma: student.notas[0].disciplina.id,
+          turma: turma.id,
         },
       );
       if (response.status === 200) {

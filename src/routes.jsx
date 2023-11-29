@@ -77,7 +77,6 @@ export default function AppRoutes() {
           <Route element={<ProtectedRoute user={user} redirectPath="/login" />}>
             <Route index element={<WelcomePage />} />
             <Route exact path="/curso/:id" element={<SubjectsPage />} />
-            <Route exact path="/resultados" element={<SubjectsResultsPage />} />
             <Route exact path="/disciplina/:id" element={<SubjectSillabus />} />
             <Route exact path="/turmas" element={<ClassesPage />} />
 
@@ -88,6 +87,11 @@ export default function AppRoutes() {
                 exact
                 path="/comprovante-matricula"
                 element={<StudentPage />}
+              />
+              <Route
+                exact
+                path="/resultados"
+                element={<SubjectsResultsPage />}
               />
               <Route
                 exact
