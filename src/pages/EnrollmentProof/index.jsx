@@ -33,14 +33,22 @@ function exportToPDF(studentData) {
 
   doc.setFontSize(12);
   doc.text(`Nome: ${studentData?.nome}`, pdfOptions.margin.left, 30);
-  doc.text(`Matrícula: ${studentData?.matricula}`, pdfOptions.margin.left, 40);
-  doc.text(`Curso: ${studentData?.curso}`, pdfOptions.margin.left, 50);
   doc.text(
-    `Período de Ingresso: ${studentData?.periodoDeIngresso}`,
+    `Matrícula: ${studentData?.solicitacaoMatricula?.status}`,
+    pdfOptions.margin.left,
+    40,
+  );
+  doc.text(`Curso: ${studentData?.curso?.nome}`, pdfOptions.margin.left, 50);
+  doc.text(
+    `Período de Ingresso: ${studentData?.periodo_ingresso}`,
     pdfOptions.margin.left,
     60,
   );
-  doc.text(`Currículo: ${studentData?.curriculo}`, pdfOptions.margin.left, 70);
+  doc.text(
+    `Currículo: ${studentData?.curso?.periodo_curriculo}`,
+    pdfOptions.margin.left,
+    70,
+  );
   doc.text(`CR: ${studentData?.cr}`, pdfOptions.margin.left, 80);
 
   let y = pdfOptions.margin.top + 100;
