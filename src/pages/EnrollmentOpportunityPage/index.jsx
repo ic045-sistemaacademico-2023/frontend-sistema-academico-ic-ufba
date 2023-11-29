@@ -106,7 +106,7 @@ export default function EnrollmentOpportunityPage() {
           {opportunitySubjectClasses && opportunitySubjectClasses.length > 0 ? (
             <>
               {opportunitySubjectClasses.map((subjectClasses) => (
-                <>
+                <div key={subjectClasses.disciplina.id}>
                   <h2 className="text-lg text-gray-700 font-bold mt-10">
                     {`${subjectClasses.disciplina.nome} - ${subjectClasses.disciplina.codigo} / ${subjectClasses.disciplina.area}`}
                   </h2>
@@ -154,6 +154,17 @@ export default function EnrollmentOpportunityPage() {
                               >
                                 Visualizar
                               </Button>
+                              {opportunityData.aberta?
+                                <Button
+                                onClick={() =>
+                                  navigate(`/oportunidade/matricular/${opportunityData.id}/${subjectClass.id}`)
+                                }>
+                                  Matricular
+                                </Button>
+                                : <></>
+                              }
+
+
                               <Button
                                 onClick={() =>
                                   deleteSubjectClass(
@@ -171,7 +182,7 @@ export default function EnrollmentOpportunityPage() {
                       ))}
                     </tbody>
                   </table>
-                </>
+                </div>
               ))}
             </>
           ) : (

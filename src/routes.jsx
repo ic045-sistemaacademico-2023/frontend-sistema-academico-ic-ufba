@@ -34,6 +34,7 @@ import RequestEnrollment from "./pages/RequestEnrollment";
 import EnrollmentProof from "./pages/EnrollmentProof";
 import EnrollmentRequests from "./pages/EnrollmentRequests";
 import EnrollmentRequestPage from "./pages/EnrollmentRequestPage";
+import Enroll from "./pages/Enroll";
 
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
@@ -229,6 +230,11 @@ export default function AppRoutes() {
               exact
               path="/solicitacao-matricula/:id"
               element={<EnrollmentRequestPage />}
+            />
+            <Route
+              exact
+              path="/oportunidade/matricular/:opid/:turmaid"
+              element={<Enroll />}
             />
           </Route>
         </Route>
