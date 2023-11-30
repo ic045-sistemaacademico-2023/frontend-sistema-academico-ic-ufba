@@ -353,6 +353,42 @@ export default function EnrollmentRequestPage() {
           </table>
         </div>
       </div>
+      <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
+        <h2 className="text-lg font-bold text-center">Legendas</h2>
+        <table className="w-full text-sm text-center text-gray-700">
+          <thead className="text-xs text-gray-900 uppercase bg-gray-5">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Legenda
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="bg-gray-50 border border-gray-100 hover:bg-primary-100 whitespace-nowrap text-sm text-gray-900">
+              <td className="px-6 py-4">Aguardando Aprovação</td>
+              <td className="px-6 py-4">
+                O aluno realizou a solicitação de matrícula e está aguardando o
+                resultado.
+              </td>
+            </tr>
+            <tr className="bg-gray-50 border border-gray-100 hover:bg-primary-100 whitespace-nowrap text-sm text-gray-900">
+              <td className="px-6 py-4">Aprovado</td>
+              <td className="px-6 py-4">
+                A solicitão de matrícula do aluno foi aceita pela coordenação.
+              </td>
+            </tr>
+            <tr className="bg-gray-50 border border-gray-100 hover:bg-primary-100 whitespace-nowrap text-sm text-gray-900">
+              <td className="px-6 py-4">Reprovado</td>
+              <td className="px-6 py-4">
+                A solicitação de matrícula do aluno foi negada pela coordenação.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div className="my-4">
         <Button onClick={() => navigate("/solicitacoes")}>Voltar</Button>
       </div>
