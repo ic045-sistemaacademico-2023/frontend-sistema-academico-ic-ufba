@@ -19,6 +19,7 @@ function handlePrint() {
 function exportToPDF(studentData) {
   const doc = new jsPDF();
   const table = document.querySelector("table");
+  const table2 = document.getElementById("table2");
 
   const pdfOptions = {
     margin: { top: 10, right: 10, bottom: 10, left: 10 },
@@ -52,8 +53,11 @@ function exportToPDF(studentData) {
   doc.text(`CR: ${studentData?.cr}`, pdfOptions.margin.left, 80);
 
   let y = pdfOptions.margin.top + 100;
+  let x = pdfOptions.margin.top + 130;
 
   doc.autoTable({ html: table, startY: y, ...pdfOptions });
+
+  doc.autoTable({ html: table2, startY: x, ...pdfOptions });
 
   doc.save(
     `Comprovante de Solicitação de Matrícula - ${studentData?.nome}.pdf`,
@@ -242,7 +246,10 @@ function EnrollmentProof() {
         </div>
         <div className="bg-primary-100 p-5 z-10 m-5 shadow-lg rounded-lg">
           <h2 className="text-lg font-bold text-center">Legendas</h2>
-          <table className="w-full text-sm text-center text-gray-700">
+          <table
+            id="table2"
+            className="w-full text-sm text-center text-gray-700"
+          >
             <thead className="text-xs text-gray-900 uppercase bg-gray-5">
               <tr>
                 <th scope="col" className="px-6 py-3">
