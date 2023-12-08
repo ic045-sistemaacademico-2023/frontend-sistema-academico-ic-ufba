@@ -28,7 +28,7 @@ function exportToPDF(studentData) {
   doc.setFontSize(12);
   doc.text(`Nome: ${studentData?.nome}`, pdfOptions.margin.left, 30);
   doc.text(
-    `Matrícula: ${studentData?.numero_matricula}`,
+    `Matrícula: ${studentData?.numeroMatricula}`,
     pdfOptions.margin.left,
     40,
   );
