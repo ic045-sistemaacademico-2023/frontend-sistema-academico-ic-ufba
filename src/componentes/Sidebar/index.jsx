@@ -143,6 +143,11 @@ function Sidebar({ setToken }) {
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
               />
+              <SidebarItem
+                title={"Salas"}
+                link={"/salas"}
+                icon={<ListDashes size={20} />}
+              />
             </>
           )}
 
@@ -192,6 +197,11 @@ function Sidebar({ setToken }) {
                 link={"/curso/1"}
                 icon={<SquaresFour size={20} />}
               />
+              <SidebarItem
+                title={"Salas"}
+                link={"/salas"}
+                icon={<ListDashes size={20} />}
+              />
             </>
           )}
 
@@ -213,6 +223,11 @@ function Sidebar({ setToken }) {
                 title={"Minhas turmas"}
                 link={"/professor/turmas"}
                 icon={<Users size={20} />}
+              />
+              <SidebarItem
+                title={"Salas"}
+                link={"/salas"}
+                icon={<ListDashes size={20} />}
               />
             </>
           )}

@@ -34,6 +34,11 @@ import RequestEnrollment from "./pages/RequestEnrollment";
 import EnrollmentProof from "./pages/EnrollmentProof";
 import EnrollmentRequests from "./pages/EnrollmentRequests";
 import EnrollmentRequestPage from "./pages/EnrollmentRequestPage";
+import Enroll from "./pages/Enroll";
+
+import RoomsPage from "./pages/RoomsPage";
+
+import RoomsPage from "./pages/RoomsPage";
 
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
@@ -192,6 +197,18 @@ export default function AppRoutes() {
                 element={<RegisterCourse />}
               />
             </Route>
+
+            {/* Salas */}
+            <Route
+              element={
+                <ProtectedRoute
+                  user={user}
+                  roles={["ADMIN", "COORDENADOR_DE_CURSO", "PROFESSOR"]}
+                />
+              }
+            >
+              <Route exact path="/salas" element={<RoomsPage />} />
+            </Route>
           </Route>
 
           {/* Oportunidade Matricula */}
@@ -229,6 +246,11 @@ export default function AppRoutes() {
               exact
               path="/solicitacao-matricula/:id"
               element={<EnrollmentRequestPage />}
+            />
+            <Route
+              exact
+              path="/oportunidade/matricular/:opid/:turmaid"
+              element={<Enroll />}
             />
           </Route>
         </Route>
