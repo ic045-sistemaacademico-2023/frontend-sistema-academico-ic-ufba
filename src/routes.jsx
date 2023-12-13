@@ -38,6 +38,8 @@ import Enroll from "./pages/Enroll";
 
 import RoomsPage from "./pages/RoomsPage";
 
+import RoomsPage from "./pages/RoomsPage";
+
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
   const [user, setUser] = useState();
