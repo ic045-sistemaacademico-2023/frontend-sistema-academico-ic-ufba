@@ -36,6 +36,8 @@ import EnrollmentRequests from "./pages/EnrollmentRequests";
 import EnrollmentRequestPage from "./pages/EnrollmentRequestPage";
 import Enroll from "./pages/Enroll";
 
+import RoomsPage from "./pages/RoomsPage";
+
 export default function AppRoutes() {
   const { token, setToken } = useAuth();
   const [user, setUser] = useState();
@@ -192,6 +194,18 @@ export default function AppRoutes() {
                 path="/atualizar/curso/:id"
                 element={<RegisterCourse />}
               />
+            </Route>
+
+            {/* Salas */}
+            <Route
+              element={
+                <ProtectedRoute
+                  user={user}
+                  roles={["ADMIN", "COORDENADOR_DE_CURSO", "PROFESSOR"]}
+                />
+              }
+            >
+              <Route exact path="/salas" element={<RoomsPage />} />
             </Route>
           </Route>
 
