@@ -36,18 +36,20 @@ function StudentGrades({ student, index, turma }) {
   };
 
   const sendStudentGrade = async (student) => {
-    try{
-      const response = await api.post(`/nota/enviar/aluno/${student.id}/${turma.id}`);
-      if(response.status === 200){
+    try {
+      const response = await api.post(
+        `/nota/enviar/aluno/${student.id}/${turma.id}`,
+      );
+      if (response.status === 200) {
         toast.success("Nota enviada");
-      }else{
+      } else {
         toast.error("Nota não enviada");
       }
-    }catch (error) {
+    } catch (error) {
       console.error(error);
       toast.error("Nota não enviada");
     }
-  }
+  };
 
   return (
     <tr
@@ -87,17 +89,15 @@ function StudentGrades({ student, index, turma }) {
         </>
       )}
       <td className="px-6 py-4">
-      <div className="flex flex-wrap gap-2 justify-start items-center">
-        <Button
-          onClick={editing ? () => onConfirm(student) : () => setEditing(true)}
-        >
-          {editing ? "Confirmar" : "Editar"}
-        </Button>
+        <div className="flex flex-wrap gap-2 justify-start items-center">
           <Button
-            onClick={() => sendStudentGrade(student)}
+            onClick={
+              editing ? () => onConfirm(student) : () => setEditing(true)
+            }
           >
-            Enviar Nota
+            {editing ? "Confirmar" : "Editar"}
           </Button>
+          <Button onClick={() => sendStudentGrade(student)}>Enviar Nota</Button>
         </div>
       </td>
     </tr>
