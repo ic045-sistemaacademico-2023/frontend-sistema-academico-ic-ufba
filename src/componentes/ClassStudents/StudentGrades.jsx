@@ -35,6 +35,20 @@ function StudentGrades({ student, index, turma }) {
     }
   };
 
+  const sendStudentGrade = async (student) => {
+    try{
+      const response = await api.post(`/nota/enviar/aluno/${student.id}/${turma.id}`);
+      if(response.status === 200){
+        toast.success("Nota enviada");
+      }else{
+        toast.error("Nota não enviada");
+      }
+    }catch (error) {
+      console.error(error);
+      toast.error("Nota não enviada");
+    }
+  }
+
   return (
     <tr
       className={`${
@@ -73,11 +87,18 @@ function StudentGrades({ student, index, turma }) {
         </>
       )}
       <td className="px-6 py-4">
+      <div className="flex flex-wrap gap-2 justify-start items-center">
         <Button
           onClick={editing ? () => onConfirm(student) : () => setEditing(true)}
         >
           {editing ? "Confirmar" : "Editar"}
         </Button>
+          <Button
+            onClick={() => sendStudentGrade(student)}
+          >
+            Enviar Nota
+          </Button>
+        </div>
       </td>
     </tr>
   );
