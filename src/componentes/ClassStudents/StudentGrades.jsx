@@ -4,7 +4,7 @@ import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 
-function StudentGrades({ student, index, turma }) {
+function StudentGrades({ student, index, turma, user }) {
   const [editing, setEditing] = useState(false);
   const [nota, setNota] = useState(student?.notas[0].nota);
   const [faltas, setFaltas] = useState(student?.notas[0].faltas);
@@ -89,15 +89,23 @@ function StudentGrades({ student, index, turma }) {
         </>
       )}
       <td className="px-6 py-4">
-        <div className="flex flex-wrap gap-2 justify-start items-center">
-          <Button
-            onClick={
-              editing ? () => onConfirm(student) : () => setEditing(true)
-            }
-          >
-            {editing ? "Confirmar" : "Editar"}
-          </Button>
-          <Button onClick={() => sendStudentGrade(student)}>Enviar Nota</Button>
+      
+      <div className="flex flex-wrap gap-2 justify-start items-center">
+        <Button
+          onClick={editing ? () => onConfirm(student) : () => setEditing(true)}
+        >
+          {editing ? "Confirmar" : "Editar"}
+        </Button>
+        {
+            user != null && user.role == "COORDENADOR_DE_CURSO" ?
+              <Button
+                onClick={() => sendStudentGrade(student)}
+              >
+                Enviar Nota
+              </Button>
+              :
+              <></>
+          }
         </div>
       </td>
     </tr>
