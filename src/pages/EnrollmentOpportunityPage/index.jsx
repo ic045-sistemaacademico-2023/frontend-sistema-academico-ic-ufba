@@ -154,16 +154,19 @@ export default function EnrollmentOpportunityPage() {
                               >
                                 Visualizar
                               </Button>
-                              {opportunityData.aberta?
+                              {opportunityData.aberta ? (
                                 <Button
-                                onClick={() =>
-                                  navigate(`/oportunidade/matricular/${opportunityData.id}/${subjectClass.id}`)
-                                }>
+                                  onClick={() =>
+                                    navigate(
+                                      `/oportunidade/matricular/${opportunityData.id}/${subjectClass.id}`,
+                                    )
+                                  }
+                                >
                                   Matricular
                                 </Button>
-                                : <></>
-                              }
-
+                              ) : (
+                                <></>
+                              )}
 
                               <Button
                                 onClick={() =>
