@@ -4,7 +4,7 @@ import Button from "../Button";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 
-function StudentGrades({ student, index, turma }) {
+function StudentGrades({ student, index, turma, user }) {
   const [editing, setEditing] = useState(false);
   const [nota, setNota] = useState(student?.notas[0].nota);
   const [faltas, setFaltas] = useState(student?.notas[0].faltas);
@@ -93,11 +93,17 @@ function StudentGrades({ student, index, turma }) {
         >
           {editing ? "Confirmar" : "Editar"}
         </Button>
-          <Button
-            onClick={() => sendStudentGrade(student)}
-          >
-            Enviar Nota
-          </Button>
+        {
+            user != null && user.role == "COORDENADOR_DE_CURSO" ?
+              <Button
+                onClick={() => sendStudentGrade(student)}
+              >
+                Enviar Nota
+              </Button>
+              :
+              <></>
+          }
+         
         </div>
       </td>
     </tr>

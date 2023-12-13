@@ -2,8 +2,34 @@ import Button from "../Button";
 import StudentGrades from "./StudentGrades";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 function ClassStudents({ classStudents, turma }) {
+
+  const { token } = useAuth();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!token) return;
+
+      try {
+        const response = await api.get("/user/me");
+
+        if (response.status === 200) {
+          setUser(response.data);
+          console.log(response.data);
+        } else {
+          console.log("Erro ao obter usuário");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUser();
+  }, [token]);
 
   const sendStudentsGrades = async () => {
     try{
@@ -29,7 +55,7 @@ function ClassStudents({ classStudents, turma }) {
 
         <h2 className="text-xl text-primary-700 font-bold mb-2">Alunos</h2>
         {
-          classStudents && classStudents.length > 0?
+         user != null && user.role == "COORDENADOR_DE_CURSO" && classStudents && classStudents.length > 0?
             <div className="pr-5 flex  space-x-4">
             <Button onClick={() => sendStudentsGrades(classStudents)}>
               Enviar Notas
@@ -72,6 +98,7 @@ function ClassStudents({ classStudents, turma }) {
                 index={index}
                 key={index}
                 turma={turma}
+                user={user}
               />
             ))}
           </tbody>
